@@ -1,0 +1,89 @@
+.dialog-container {
+  background-color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  display: none;
+  z-index: 999;
+
+  &.show {
+    display: block;
+  }
+}
+
+.dialog-box {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  display: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dialog {
+  background-color: #fff;
+  width: 90%;
+  max-width: 300px;
+  border: 1px solid #ddd;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  border-radius: 6px;
+  z-index: 1000;
+
+  .dialog-title {
+    font-size: 1.25rem;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    cursor: all-scroll;
+  }
+
+  .dialog-content {
+    padding: 20px;
+  }
+
+  .dialog-action {
+    padding: 20px;
+    text-align: center;
+
+    button {
+      display: inline-block;
+      padding: 9px 35px 11px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      font-family: iranyekan;
+      transition: all 0.3s;
+      border-radius: 6px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #e6e6e6;
+        border-color: #bebebe;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+.dialog-enter {
+  transform: scale(0);
+  transition: all 300ms;
+}
+
+.dialog-enter-active {
+  transform: scale(1);
+}
+
+.dialog-exit {
+  transform: scale(1);
+  transition: all 300ms;
+}
+
+.dialog-exit-active {
+  transform: scale(0);
+}

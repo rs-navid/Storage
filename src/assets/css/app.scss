@@ -1,0 +1,74 @@
+@import "partials/fonts";
+@import "partials/colors";
+@import "partials/utilities";
+@import "partials/buttons";
+@import "partials/forms";
+@import "partials/dialog";
+@import "partials/spinner";
+
+body {
+  margin: 0;
+  direction: rtl;
+  font-family: iranyekan;
+
+  .login-screen {
+    background-color: #1d243d;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .container {
+      background-color: rgb(33, 41, 66);
+      box-shadow: 1px 1px 108.8px 19.2px rgb(25, 31, 53);
+      border-radius: 9px;
+      border-top: 10px solid #79a6fe;
+      border-bottom: 10px solid #8bd17c;
+      width: 90%;
+      max-width: 380px;
+      box-sizing: border-box;
+      padding: 25px 25px;
+
+      .check-container {
+        position: relative;
+        height: 100px;
+        margin-top: 50px;
+
+        .check {
+          position: absolute;
+          left: 55%;
+          width: 100px;
+          height: 18px;
+          background: #fff;
+          transform: translateX(-50%) rotate(-45deg);
+
+          &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 100%;
+            width: 18px;
+            height: 36px;
+            background: #fff;
+            box-shadow: inset -0.2rem -2rem 2rem rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
+    }
+
+    .remember {
+      .checkmark {
+        background-color: transparent;
+        box-sizing: border-box;
+        border: 2px solid #464d64;
+        border-radius: 2px;
+
+        &:after {
+          border-color: #896cec;
+          left: 5px;
+          top: 1px;
+        }
+      }
+    }
+  }
+}
