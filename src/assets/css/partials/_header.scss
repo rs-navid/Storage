@@ -1,40 +1,67 @@
 .header {
   background-color: #fff;
-  height: 60px;
+  height: 70px;
   border-bottom: 1px solid #ddd;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 25px;
-
+  padding: 0 20px;
+  box-shadow: 0 0px 9px 4px rgba(0, 0, 0, 0.1), 0 -5px 2px 2px rgba(0, 0, 0, 0.1);
 
   .user-name {
-    color: #2a2b3d;
+    color: #666;
     font-weight: bold;
+    font-size: 13px;
+    vertical-align: top;
 
+    & > .icon {
+      margin-left: 2px;
+    }
   }
+
 
   .menu-icon {
-    color: #607D8B;
-    font-size: 17px;
-    padding: 5px;
-    margin: 0 3px;
+    background-color: #f6f6f6;
+    border-radius: 50%;
+    padding: 5px 9px;
+    font-size: 15px;
+    color: #89949b;
+    margin: 0 5px;
     cursor: pointer;
+    transition: all 0.4s;
+
+    &:hover {
+      color: #666;
+    }
   }
-  
+
   .logout {
-    color: #607D8B;
-    font-size: 17px;
-    padding: 5px;
-    margin: 0 3px;
+    background-color: #f6f6f6;
+    border-radius: 50%;
+    padding: 5px 9px;
+    font-size: 15px;
+    color: #89949b;
+    margin: 0 5px;
     cursor: pointer;
+    transition: all 0.4s;
+
+    &:hover {
+      color: #666;
+    }
   }
-  
+
   .user-setting {
-    color: #607D8B;
-    font-size: 17px;
-    margin: 0 3px;
-    padding: 5px;
+    background-color: #f6f6f6;
+    border-radius: 50%;
+    padding: 5px 9px;
+    font-size: 15px;
+    color: #89949b;
+    margin: 0 5px;
     cursor: pointer;
+    transition: all 0.4s;
+
+    &:hover {
+      color: #666;
+    }
   }
 }

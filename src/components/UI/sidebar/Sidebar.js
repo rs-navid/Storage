@@ -16,7 +16,11 @@ const Sidebar = (props) => {
 
   const setActiveClass = (num) => {
     const activeClasses = ["", ""];
-    activeClasses[num] = "active";
+
+    if (getItems[num] !== "active") {
+      activeClasses[num] = "active";
+    }
+
     setItems(activeClasses);
   };
 

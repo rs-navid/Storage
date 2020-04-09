@@ -6,12 +6,13 @@ import { showDialog } from "../store/actions/dialogActions";
 
 const WithErrorHandler = (props) => {
   const url = "http://localhost:3000";
-  console.log(url);
-  axios.defaults.baseURL = url.toString();
+  axios.defaults.baseURL = url;
+  axios.defaults.headers["Authorization"] = props.token;
+
   axios.interceptors.response.use(
     (res) => res,
     (err) => {
-      if(err.response){
+      if (err.response) {
         props.showDialog({ type: "ok", title: "خطا", text: err.response.data.message });
       } else {
         props.showDialog({ type: "ok", title: "خطا", text: err.message });
@@ -21,4 +22,8 @@ const WithErrorHandler = (props) => {
   return <Fragment>{props.children}</Fragment>;
 };
 
-export default connect(null, { showDialog })(WithErrorHandler);
+const mapStateToProps = (state) => ({
+  token: state.userReducer.token,
+});
+
+export default connect(mapStateToProps, { showDialog })(WithErrorHandler);

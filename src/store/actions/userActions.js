@@ -1,4 +1,4 @@
-import { SET_USER, REMOVE_USER, HIDE_SPINNER } from "./actionTypes";
+import { SET_USER, REMOVE_USER, HIDE_SPINNER, GET_USER_PERIOD_NAME } from "./actionTypes";
 import axios from "axios";
 
 export const login = (username, password, platform, remember) => {
@@ -21,6 +21,8 @@ export const setUser = (data) => {
       token: data.token,
       name: data.name,
       userId: data.userId,
+      periodName: data.periodName,
+      periodId: data.periodId,
     },
   };
 };
@@ -30,5 +32,11 @@ export const removeUser = () => {
 
   return {
     type: REMOVE_USER,
+  };
+};
+
+export const getUserPeriodName = () => {
+  return async (dispatch) => {
+    const period = await axios.get("/user/period");
   };
 };
