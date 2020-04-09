@@ -20,7 +20,20 @@ export default (state = initialState, action) => {
       periodId: action.payload.periodId,
       periodName: action.payload.periodName,
     };
-  } else if (action.type === actionTypes.REMOVE_USER) {
+  }
+
+  if (action.type === actionTypes.SET_USER_TOKEN) {
+    return {
+      userId: null,
+      token: action.payload.token,
+      username: null,
+      name: null,
+      periodId: null,
+      periodName: null,
+    };
+  }
+
+  if (action.type === actionTypes.REMOVE_USER) {
     return {
       ...state,
       userId: null,
@@ -31,5 +44,6 @@ export default (state = initialState, action) => {
       periodName: null,
     };
   }
+
   return state;
 };

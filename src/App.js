@@ -8,7 +8,7 @@ import "./assets/css/app.scss";
 import Dialog from "./components/UI/dialog/Dialog";
 import Spinner from "./components/UI/spinner/Spinner";
 import WithErrorHandler from "./hoc/WithErrorHandler";
-import Router from "./components/router/Router";
+import Layout from "./components/layout/Layout";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
           <WithErrorHandler>
             <Dialog />
             <Spinner />
-            <Router />
+            <Layout />
           </WithErrorHandler>
         </div>
       </Provider>

@@ -1,17 +1,11 @@
-import React, { useState } from "react";
-
-import Header from "../UI/header/Header";
-import Sidebar from "../UI/sidebar/Sidebar";
+import React, { useEffect } from "react";
 
 const Dashboard = () => {
-  const [activeSidebar, setActiveSidebar] = useState(false);
-  return (
-    <div>
-      <Header onClick={setActiveSidebar} />
-      <Sidebar active={activeSidebar} onClick={setActiveSidebar} />
-      Dashboard
-    </div>
-  );
+  useEffect(() => {
+    document.title = "Dashboard";
+  }, []);
+
+  return <div>Dashboard</div>;
 };
 
 export default Dashboard;

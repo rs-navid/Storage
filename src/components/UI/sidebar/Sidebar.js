@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faCog, faChevronLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = (props) => {
   const overlayClass = ["sidebar-overlay"];
@@ -28,6 +28,9 @@ const Sidebar = (props) => {
     <Fragment>
       <div className={overlayClass.join(" ")} onClick={() => props.onClick(false)}></div>
       <div className={sidebarClass.join(" ")}>
+        <div className="close" onClick={() => props.onClick(false)}>
+          <FontAwesomeIcon icon={faArrowRight} />
+        </div>
         <ul className="nav">
           <li className={getItems[0]}>
             <FontAwesomeIcon icon={faCog} className="icon" />

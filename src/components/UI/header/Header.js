@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faPowerOff, faUserCog, faUserAlt } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faPowerOff, faUserCog } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -10,10 +10,6 @@ const Header = (props) => {
   return (
     <div className="header">
       <div className="info">
-        {/* <span className="user-name">
-        <FontAwesomeIcon icon={faUserAlt} className="icon"/>
-          {props.userName.length > 15 ? props.userName.slice(0, 15) + " ..." : props.userName}
-        </span> */}
         <span className="menu-icon" onClick={() => props.onClick(true)}>
           <FontAwesomeIcon icon={faBars} fixedWidth />
         </span>

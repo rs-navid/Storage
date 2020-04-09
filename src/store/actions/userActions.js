@@ -1,4 +1,4 @@
-import { SET_USER, REMOVE_USER, HIDE_SPINNER, GET_USER_PERIOD_NAME } from "./actionTypes";
+import { SET_USER, REMOVE_USER, HIDE_SPINNER, SET_USER_TOKEN } from "./actionTypes";
 import axios from "axios";
 
 export const login = (username, password, platform, remember) => {
@@ -7,8 +7,8 @@ export const login = (username, password, platform, remember) => {
     dispatch({ type: HIDE_SPINNER });
 
     if (user) {
-      localStorage.setItem("user", JSON.stringify(user.data));
-      dispatch(setUser(user.data));
+      localStorage.setItem("token", user.data.token);
+      dispatch(setUserToken(user.data));
     }
   };
 };
@@ -28,15 +28,18 @@ export const setUser = (data) => {
 };
 
 export const removeUser = () => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("token");
 
   return {
     type: REMOVE_USER,
   };
 };
 
-export const getUserPeriodName = () => {
-  return async (dispatch) => {
-    const period = await axios.get("/user/period");
+export const setUserToken = (token) => {
+  return {
+    type: SET_USER_TOKEN,
+    payload: {
+      token
+    },
   };
 };
