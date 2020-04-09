@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { setUser } from "../../store/actions/userActions";
 
 const Login = React.lazy(() => import("../login/Login"));
+const Dashboard = React.lazy(() => import("../dashboard/Dashboard"));
 
 const Router = (props) => {
   let user = localStorage.getItem("user");
@@ -19,7 +20,9 @@ const Router = (props) => {
             <Route exact path="/" component={Login} />
           </Switch>
         ) : (
-          "Lo"
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+          </Switch>
         )}
       </Suspense>
     </Fragment>

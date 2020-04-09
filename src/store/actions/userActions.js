@@ -1,9 +1,9 @@
-import { LOGIN_USER, SET_USER, REMOVE_USER, HIDE_SPINNER } from "./actionTypes";
+import { SET_USER, REMOVE_USER, HIDE_SPINNER } from "./actionTypes";
 import axios from "axios";
 
-export const login = (username, password, platform, rememebr) => {
+export const login = (username, password, platform, remember) => {
   return async (dispatch) => {
-    const user = await axios.post("/user/login", { username, password, platform });
+    const user = await axios.post("/user/login", { username, password, platform, remember });
     dispatch({ type: HIDE_SPINNER });
 
     if (user) {
@@ -26,6 +26,8 @@ export const setUser = (data) => {
 };
 
 export const removeUser = () => {
+  localStorage.removeItem("user");
+
   return {
     type: REMOVE_USER,
   };

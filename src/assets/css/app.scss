@@ -5,11 +5,14 @@
 @import "partials/forms";
 @import "partials/dialog";
 @import "partials/spinner";
+@import "partials/header";
+@import "partials/sidebar";
 
 body {
   margin: 0;
   direction: rtl;
   font-family: iranyekan;
+  background-color: #eee;
 
   .login-screen {
     background-color: #1d243d;
