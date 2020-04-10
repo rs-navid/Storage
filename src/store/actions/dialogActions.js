@@ -1,23 +1,24 @@
 import { SHOW_DIALOG, HIDE_DIALOG } from "./actionTypes";
 
-export const showDialog = action => {
+export const showDialog = (action) => {
   const payload = {
-    yes: action.yes,
     title: action.title,
-    text: action.text
+    text: action.text,
+    type: "ok"
   };
 
+  if (action.yse) payload["yse"] = action.yse;
   if (action.no) payload["no"] = action.no;
   if (action.type) payload["type"] = action.type;
 
   return {
     type: SHOW_DIALOG,
-    payload: payload
+    payload: payload,
   };
 };
 
 export const hideDialog = () => {
   return {
-    type: HIDE_DIALOG
+    type: HIDE_DIALOG,
   };
 };

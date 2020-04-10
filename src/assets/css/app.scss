@@ -8,52 +8,49 @@
 @import "partials/header";
 @import "partials/sidebar";
 
+@import "partials/screens/login";
+@import "partials/screens/user-setting";
+
 body {
   margin: 0;
   direction: rtl;
   font-family: iranyekan;
   background-color: #eee;
 
-  .login-screen {
-    background-color: #56baed;
-    min-height: 100vh;
+  .field-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .container {
-      background-color: #fff;
-      box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
-      border-radius: 9px;
-      width: 90%;
-      max-width: 380px;
-      box-sizing: border-box;
-      padding: 25px 25px;
-
-      .image-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 25px;
+    align-items: stretch;
+    
+    &.field-100 {
+      label {
+        flex-basis: 150px;
+        display: inline-block;
+        align-self: center;
       }
-    }
 
-    .remember {
-      color: #000;
-
-      .checkmark {
-        background-color: transparent;
-        box-sizing: border-box;
-        border: 2px solid #39ace7;
-        border-radius: 2px;
-
-        &:after {
-          border-color: #179fe4;
-          left: 5px;
-          top: 1px;
-        }
+      div{
+        flex: 1;
       }
     }
   }
-}
 
+  .ui {
+    font-family: iranyekan !important;
+
+    input {
+      text-align: right !important;
+      direction: rtl !important;
+      font-family: iranyekan !important;
+    }
+  }
+
+  .card {
+    background-color: #fff;
+    box-shadow: 0 1px 2px #ccc;
+    width: 95%;
+    margin: 10px auto;
+    padding: 10px;
+  }
+
+  
+}

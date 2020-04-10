@@ -1,5 +1,5 @@
 import React, { Fragment, Suspense, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { setUserToken } from "../../store/actions/userActions";
@@ -7,8 +7,9 @@ import { setUserToken } from "../../store/actions/userActions";
 import Header from "../UI/header/Header";
 import Sidebar from "../UI/sidebar/Sidebar";
 
-const Login = React.lazy(() => import("../login/Login"));
-const Dashboard = React.lazy(() => import("../dashboard/Dashboard"));
+const Login = React.lazy(() => import("../screens/login/Login"));
+const Dashboard = React.lazy(() => import("../screens/dashboard/Dashboard"));
+const UserSetting = React.lazy(() => import("../screens/user-setting/UserSetting"));
 
 const Layout = (props) => {
   let token = localStorage.getItem("token");
@@ -16,12 +17,14 @@ const Layout = (props) => {
 
   const [activeSidebar, setActiveSidebar] = useState(false);
 
+
   return (
     <Fragment>
       <Suspense fallback="Loading...">
         {!props.user.token ? (
           <Switch>
             <Route exact path="/" component={Login} />
+            <Redirect to="/"/>
           </Switch>
         ) : (
           <Fragment>
@@ -29,6 +32,7 @@ const Layout = (props) => {
             <Sidebar active={activeSidebar} onClick={setActiveSidebar} />
             <Switch>
               <Route exact path="/" component={Dashboard} />
+              <Route exact path="/usersetting" component={UserSetting} />
             </Switch>
           </Fragment>
         )}

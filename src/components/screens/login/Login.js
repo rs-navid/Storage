@@ -4,15 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserAlt, faLock } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 
-import Input from "../forms/Input";
-import Checkbox from "../forms/Checkbox";
-import Button from "../forms/Button";
+import Input from "../../forms/Input";
+import Checkbox from "../../forms/Checkbox";
+import Button from "../../forms/Button";
 
-import { showDialog } from "../../store/actions/dialogActions";
-import { login } from "../../store/actions/userActions";
-import { showSpinner } from "../../store/actions/spinnerActions";
+import { showDialog } from "../../../store/actions/dialogActions";
+import { login } from "../../../store/actions/userActions";
+import { showSpinner } from "../../../store/actions/spinnerActions";
 
-import profile from "../../assets/images/profile.png";
+import profile from "../../../assets/images/profile.png";
 
 const Login = (props) => {
   useEffect(() => {

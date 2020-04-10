@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
     };
   }
 
-  if (action.type === actionTypes.REMOVE_USER) {
+  if (action.type === actionTypes.REMOVE_USER_TOKEN) {
     return {
       ...state,
       userId: null,

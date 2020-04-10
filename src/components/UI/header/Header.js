@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faPowerOff, faUserCog } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-import { removeUser } from "../../../store/actions/userActions";
+import { removeUserToken } from "../../../store/actions/userActions";
 
 const Header = (props) => {
   return (
@@ -15,12 +16,14 @@ const Header = (props) => {
         </span>
       </div>
       <div>
+      <Link to={{pathname:'usersetting'}}>
         <span className="user-setting" title="تنظیمات کاربر">
           <FontAwesomeIcon icon={faUserCog} fixedWidth />
         </span>
-        <span className="logout" title="خروج" onClick={props.removeUser}>
+        <span className="logout" title="خروج" onClick={props.removeUserToken}>
           <FontAwesomeIcon icon={faPowerOff} fixedWidth />
         </span>
+      </Link>
       </div>
     </div>
   );
@@ -35,4 +38,4 @@ const mapStateToProps = (state) => ({
   periodName: state.userReducer.periodName,
 });
 
-export default connect(mapStateToProps, { removeUser })(Header);
+export default connect(mapStateToProps, { removeUserToken })(Header);
