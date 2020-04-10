@@ -1,4 +1,12 @@
-import { SET_USER, REMOVE_USER, HIDE_SPINNER, SET_USER_TOKEN, REMOVE_USER_TOKEN, SHOW_SPINNER, SHOW_DIALOG } from "./actionTypes";
+import {
+  SET_USER,
+  REMOVE_USER,
+  HIDE_SPINNER,
+  SET_USER_TOKEN,
+  REMOVE_USER_TOKEN,
+  SHOW_SPINNER,
+  SHOW_DIALOG,
+} from "./actionTypes";
 import axios from "axios";
 
 export const login = (username, password, platform, remember) => {
@@ -29,7 +37,7 @@ export const setUser = (data) => {
 
 export const removeUser = () => {
   localStorage.removeItem("token");
-  
+
   return {
     type: REMOVE_USER,
   };
@@ -47,7 +55,7 @@ export const setUserToken = (token) => {
 export const removeUserToken = () => {
   localStorage.removeItem("token");
   return {
-    type: REMOVE_USER_TOKEN
+    type: REMOVE_USER_TOKEN,
   };
 };
 
@@ -64,6 +72,33 @@ export const changePassword = (password, newPassword) => {
       return dispatch({
         type: SHOW_DIALOG,
         payload: { type: "ok", title: "تایید تغییر کلمه عبور", text: "کلمه عبور با موفقیت تغییر کرد." },
+      });
+    }
+  };
+};
+
+export const getUserPeriodAndAllPeriods = () => {
+  return async (dispatch) => {
+    dispatch({ type: SHOW_SPINNER });
+    const results = await axios.post('/user/getuserperiod');
+
+    if(results){
+      dispatch({ type: HIDE_SPINNER });
+      return results.data;
+    }
+  };
+};
+
+export const changePeriod = () => {
+  return async (dispatch) => {
+    dispatch({ type: SHOW_SPINNER });
+    const results = await axios.post('/user/changeperiod');
+
+    if(results){
+      dispatch({ type: HIDE_SPINNER });
+      return dispatch({
+        type: SHOW_DIALOG,
+        payload: { type: "ok", title: "تایید تغییر دوره", text: "دوره با موفقیت تغییر کرد." },
       });
     }
   };

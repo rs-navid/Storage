@@ -1,11 +1,65 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { connect } from "react-redux";
+import { Dropdown, Button, Icon } from "semantic-ui-react";
 
-const ChangePeriod = () => {
+import { showSpinner, hideSpinner } from "../../../store/actions/spinnerActions";
+import { getUserPeriodAndAllPeriods, changePeriod } from "../../../store/actions/userActions";
+
+const ChangePeriod = (props) => {
+  const [getPeriods, setPeriods] = useState([]);
+  const [getActive, setActive] = useState(0);
+
+  // Component did mount
+  useEffect(() => {
+    const loadData = async () => {
+      const results = await props.getUserPeriodAndAllPeriods();
+
+      if (results) {
+        setActive(results.periodId);
+
+        const periods = results.periods.map((p) => {
+          return {
+            key: p.id,
+            text: p.name,
+            value: p.id,
+          };
+        });
+        setPeriods(periods);
+      }
+    };
+    loadData();
+  }, []);
+
+  // Handle input change
+  const handleInput = (e, { value }) => {
+    setActive(value);
+  };
+
+  // Save
+  const saveHandler = async () => {
+    props.changePeriod();
+  };
+
   return (
     <div>
-      Change Period
+      <div className="field-wrapper field-100 label-sm">
+        <label>دوره:</label>
+        <Dropdown
+          placeholder="Select Friend"
+          fluid
+          selection
+          value={getActive}
+          onChange={handleInput}
+          options={getPeriods}
+        />
+      </div>
+      <Button icon labelPosition="right" color="blue" onClick={saveHandler}>
+        ثبت
+        <Icon name="save" />
+      </Button>
     </div>
-  )
-}
+  );
+};
 
-export default ChangePeriod
+export default connect(null, { showSpinner, hideSpinner, getUserPeriodAndAllPeriods, changePeriod })(ChangePeriod);

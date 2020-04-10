@@ -17,30 +17,34 @@ body {
   font-family: iranyekan;
   background-color: #eee;
 
-  .field-wrapper {
-    display: flex;
-    align-items: stretch;
-    
-    &.field-100 {
-      label {
-        flex-basis: 150px;
-        display: inline-block;
-        align-self: center;
-      }
-
-      div{
-        flex: 1;
-      }
-    }
-  }
-
   .ui {
     font-family: iranyekan !important;
+    direction: rtl;
 
     input {
       text-align: right !important;
       direction: rtl !important;
       font-family: iranyekan !important;
+    }
+
+    &.dropdown {
+      div.text {
+        text-align: right;
+        float: right;
+        direction: rtl;
+      }
+
+      i.icon {
+        float: left !important;
+        left: 1em;
+        right: unset !important;
+      }
+
+      div.item {
+        pointer-events: all;
+        direction: rtl;
+        text-align: right !important;
+      }
     }
   }
 
@@ -51,6 +55,4 @@ body {
     margin: 10px auto;
     padding: 10px;
   }
-
-  
 }

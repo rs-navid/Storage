@@ -23,8 +23,8 @@ const Layout = (props) => {
       <Suspense fallback="Loading...">
         {!props.user.token ? (
           <Switch>
-            <Route exact path="/" component={Login} />
-            <Redirect to="/"/>
+            <Route path="/" component={Login} />
+            {/* <Redirect to="/"/> */}
           </Switch>
         ) : (
           <Fragment>

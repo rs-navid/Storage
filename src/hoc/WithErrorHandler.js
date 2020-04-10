@@ -16,6 +16,7 @@ const WithErrorHandler = (props) => {
     (err) => {
       if (err.response) {
         if (err.response.data.notLogin) {
+          props.showDialog({ type: "ok", title: "خطا", text: err.response.data.message });
           props.removeUserToken();
         } else {
           props.showDialog({ type: "ok", title: "خطا", text: err.response.data.message });
