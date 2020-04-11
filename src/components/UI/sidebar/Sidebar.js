@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog, faChevronLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faCog, faSlidersH, faChevronRight, faUsers, faHistory, faVial, faVials, faCopy } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = (props) => {
   const overlayClass = ["sidebar-overlay"];
@@ -12,71 +12,42 @@ const Sidebar = (props) => {
     sidebarClass.push("active");
   }
 
-  const [getItems, setItems] = useState(["", ""]);
-
-  const setActiveClass = (num) => {
-    const activeClasses = ["", ""];
-
-    if (getItems[num] !== "active") {
-      activeClasses[num] = "active";
-    }
-
-    setItems(activeClasses);
-  };
-
   return (
     <Fragment>
       <div className={overlayClass.join(" ")} onClick={() => props.onClick(false)}></div>
       <div className={sidebarClass.join(" ")}>
         <div className="close" onClick={() => props.onClick(false)}>
-          <FontAwesomeIcon icon={faArrowRight} />
+          <FontAwesomeIcon icon={faChevronRight} />
         </div>
+
         <ul className="nav">
-          <li className={getItems[0]}>
-            <FontAwesomeIcon icon={faCog} className="icon" />
-            <a
-              href="#"
-              onClick={() => {
-                setActiveClass(0);
-              }}
-            >
-              مدیریت سیستم
-            </a>
-            <FontAwesomeIcon icon={faChevronLeft} className="arrow" />
-            <ul className="nav-dropdown">
-              <li>
-                <a href="#">مدیریت تنظیمات</a>
-              </li>
-              <li>
-                <a href="#">مدیریت تنظیمات پیشرفته</a>
-              </li>
-              <li>
-                <a href="#">مدیریت کاربران</a>
-              </li>
-            </ul>
+          <li>
+            <FontAwesomeIcon icon={faCog} fixedWidth className="icon" />
+            <div>تنظیمات</div>
           </li>
-          <li className={getItems[1]}>
-            <FontAwesomeIcon icon={faCog} className="icon" />
-            <a
-              href="#"
-              onClick={() => {
-                setActiveClass(1);
-              }}
-            >
-              مدیریت سیستم
-            </a>
-            <FontAwesomeIcon icon={faChevronLeft} className="arrow" />
-            <ul className="nav-dropdown">
-              <li>
-                <a href="#">مدیریت تنظیمات</a>
-              </li>
-              <li>
-                <a href="#">مدیریت تنظیمات پیشرفته</a>
-              </li>
-              <li>
-                <a href="#">مدیریت کاربران</a>
-              </li>
-            </ul>
+          <li>
+            <FontAwesomeIcon icon={faSlidersH} fixedWidth className="icon" />
+            <div>تنظیمات پیشرفته</div>
+          </li>
+          <li>
+            <FontAwesomeIcon icon={faUsers} fixedWidth className="icon" />
+            <div>مدیریت کاربران</div>
+          </li>
+          <li>
+            <FontAwesomeIcon icon={faHistory} fixedWidth className="icon" />
+            <div>مدیریت دوره ها</div>
+          </li>
+          <li>
+            <FontAwesomeIcon icon={faVial} fixedWidth className="icon" />
+            <div>مدیریت آزمون ها</div>
+          </li>
+          <li>
+            <FontAwesomeIcon icon={faVials} fixedWidth className="icon" />
+            <div>مدیریت روش های آزمون</div>
+          </li>
+          <li>
+            <FontAwesomeIcon icon={faCopy} fixedWidth className="icon" />
+            <div>مدیریت درخواست ها</div>
           </li>
         </ul>
       </div>

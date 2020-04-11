@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 899;
   display: none;
 
@@ -20,10 +20,12 @@
   width: calc(100vw - 25px);
   max-width: 250px;
   height: 100vh;
-  background-color: #32323a;
+  background-color: #fff;
   font-size: 12px;
   z-index: 900;
   transition: all 0.7s;
+  box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0px 6px 30px 5px rgba(0, 0, 0, 0.12);
 
   &.active {
     right: 0;
@@ -31,18 +33,21 @@
 
   .close {
     position: absolute;
-    top: 10px;
-    left: -15px;
-    color: #eee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    background-color: #32323a;
+    top: 5px;
+    left: 15px;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 15px;
     padding: 8px 9px;
-    border-radius: 50%;
-
     cursor: pointer;
+    text-align: left;
+    padding: 11px 15px;
+    border-radius: 50%;
+    // margin: 10px ;
+    // border-bottom: 1px solid rgba(0, 0, 0, 0.12);;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
   }
 
   ul {
@@ -52,68 +57,37 @@
   }
 
   ul.nav {
-    margin-top: 30px;
+    margin-top: 50px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
 
     & > li {
-      padding: 17px 40px 17px 30px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
       position: relative;
+      display: flex;
+      align-items: center;
+      padding: 10px 16px;
+      transition: all .4s;
+      cursor: pointer;
 
-      &.active {
-        & > .arrow {
-          transform: rotate(-90deg);
-        }
-
-        & > ul.nav-dropdown {
-          max-height: 100px;
-        }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04)
       }
 
       & > .icon {
-        margin-left: 7px;
-        font-size: 14px;
-        color: #ccc;
+        margin-left: 24px;
+        font-size: 18px;
+        color: rgba(0, 0, 0, 0.54);
+        margin-top: 5px;
       }
 
-      & > a {
+      & > div {
         vertical-align: text-top;
-        color: #aeb2b7;
+        color: rgba(0, 0, 0, 0.54);
         transition: all 0.3s;
         font-weight: bold;
-        padding: 7px 0;
-
-        &:hover {
-          color: #fff;
-        }
+        flex: 1;
+        font-size: .875rem;
       }
 
-      & > .arrow {
-        position: absolute;
-        left: 30px;
-        top: 25px;
-        font-size: 11px;
-        transition: all .4s;
-      }
-
-      & > ul.nav-dropdown {
-        overflow: hidden;
-        padding-right: 22px;
-        padding-top: 5px;
-        max-height: 0;
-        transition: all .4s;
-
-        & > li {
-          padding: 5px 0;
-
-          & > a {
-            color: #aeb2b7;
-
-            &:hover {
-              color: #fff;
-            }
-          }
-        }
-      }
     }
   }
 }

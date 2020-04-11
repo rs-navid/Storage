@@ -11,16 +11,24 @@
 @import "partials/screens/login";
 @import "partials/screens/user-setting";
 
+:root {
+  font-size: 16px;
+}
+
 body {
   margin: 0;
   direction: rtl;
   font-family: iranyekan;
   background-color: #eee;
 
+  input {
+    min-width: 10px;
+  }
+
   .tabular {
     background-color: #f5f5f5;
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
-      0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    // box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+    //   0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 
     button {
       font-family: iranyekan;

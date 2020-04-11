@@ -13,12 +13,19 @@
     }
     & > label {
       flex-basis: 150px;
+      min-width: 75px;
       display: inline-block;
       align-self: center;
+      font-size: .875rem;
     }
 
     & > div {
       flex: 1;
+      
+      & > input {
+        min-width: 10px;
+        width: 100%;
+      }
     }
   }
 }
