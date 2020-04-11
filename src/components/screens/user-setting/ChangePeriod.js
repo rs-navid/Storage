@@ -38,7 +38,7 @@ const ChangePeriod = (props) => {
 
   // Save
   const saveHandler = async () => {
-    props.changePeriod();
+    props.changePeriod(getActive);
   };
 
   return (

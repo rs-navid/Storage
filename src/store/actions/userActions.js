@@ -80,21 +80,21 @@ export const changePassword = (password, newPassword) => {
 export const getUserPeriodAndAllPeriods = () => {
   return async (dispatch) => {
     dispatch({ type: SHOW_SPINNER });
-    const results = await axios.post('/user/getuserperiod');
+    const results = await axios.post("/user/getuserperiod");
 
-    if(results){
+    if (results) {
       dispatch({ type: HIDE_SPINNER });
       return results.data;
     }
   };
 };
 
-export const changePeriod = () => {
+export const changePeriod = (id) => {
   return async (dispatch) => {
     dispatch({ type: SHOW_SPINNER });
-    const results = await axios.post('/user/changeperiod');
+    const results = await axios.post("/user/changeperiod", { periodId: id });
 
-    if(results){
+    if (results) {
       dispatch({ type: HIDE_SPINNER });
       return dispatch({
         type: SHOW_DIALOG,
