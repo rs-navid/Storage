@@ -3,7 +3,6 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { Dropdown, Button, Icon } from "semantic-ui-react";
 
-import { showSpinner, hideSpinner } from "../../../store/actions/spinnerActions";
 import { getUserPeriodAndAllPeriods, changePeriod } from "../../../store/actions/userActions";
 
 const ChangePeriod = (props) => {
@@ -62,4 +61,4 @@ const ChangePeriod = (props) => {
   );
 };
 
-export default connect(null, { showSpinner, hideSpinner, getUserPeriodAndAllPeriods, changePeriod })(ChangePeriod);
+export default connect(null, {getUserPeriodAndAllPeriods, changePeriod })(ChangePeriod);

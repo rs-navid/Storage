@@ -10,7 +10,6 @@ import Button from "../../forms/Button";
 
 import { showDialog } from "../../../store/actions/dialogActions";
 import { login } from "../../../store/actions/userActions";
-import { showSpinner } from "../../../store/actions/spinnerActions";
 
 import profile from "../../../assets/images/profile.png";
 
@@ -69,7 +68,6 @@ const Login = (props) => {
                   yes: null,
                 });
               } else {
-                props.showSpinner();
                 props.login(username, password, plat, remember);
               }
             }}
@@ -82,4 +80,4 @@ const Login = (props) => {
   );
 };
 
-export default connect(null, { showDialog, login, showSpinner })(Login);
+export default connect(null, { showDialog, login })(Login);
