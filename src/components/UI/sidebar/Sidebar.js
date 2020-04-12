@@ -1,9 +1,92 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog, faSlidersH, faChevronRight, faUsers, faHistory, faVial, faVials, faCopy } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCog,
+  faSlidersH,
+  faChevronRight,
+  faUsers,
+  faHistory,
+  faVial,
+  faVials,
+  faCopy,
+  faRestroom,
+} from "@fortawesome/free-solid-svg-icons";
+
+import { getPermissions } from "../../../store/actions/userActions";
+
+const menu = [
+  {
+    type: "sep",
+    container: [],
+  },
+  {
+    id: 100,
+    text: "تنظیمات",
+    icon: faCog,
+    path: "/setting",
+  },
+  {
+    id: 120,
+    text: "تنظیمات پیشرفته",
+    icon: faSlidersH,
+    path: "/advancesetting",
+  },
+  {
+    id: 200,
+    text: "مدیریت کاربران",
+    icon: faUsers,
+    path: "/users",
+  },
+  {
+    id: 300,
+    text: "مدیریت دوره ها",
+    icon: faHistory,
+    path: "/periods",
+  },
+  {
+    id: 400,
+    text: "مدیریت مشتریان",
+    icon: faRestroom,
+    path: "/clients",
+  },
+  {
+    type: "sep",
+    container: [100, 120, 200, 300, 400],
+  },
+  {
+    id: 500,
+    text: "مدیریت آزمون ها",
+    icon: faVial,
+    path: "/exams",
+  },
+  {
+    id: 550,
+    text: "مدیریت روش های آزمون",
+    icon: faVials,
+    path: "/methods",
+  },
+  {
+    id: 600,
+    text: "مدیریت درخواست ها",
+    icon: faCopy,
+    path: "/requests",
+  },
+  {
+    type: "sep",
+    container: [500, 550, 600],
+  },
+];
 
 const Sidebar = (props) => {
+  // Component did mount
+  useEffect(() => {
+    props.getPermissions();
+    // eslint-disable-next-line
+  }, []);
+
   const overlayClass = ["sidebar-overlay"];
   const sidebarClass = ["sidebar"];
 
@@ -11,6 +94,15 @@ const Sidebar = (props) => {
     overlayClass.push("active");
     sidebarClass.push("active");
   }
+
+  const checkPermission = (container) => {
+    if (container.length === 0) return true;
+    // if(!props.permissions) return false;
+
+    return props.permissions.some((val) => {
+      return container.includes(val);
+    });
+  };
 
   return (
     <Fragment>
@@ -21,34 +113,24 @@ const Sidebar = (props) => {
         </div>
 
         <ul className="nav">
-          <li>
-            <FontAwesomeIcon icon={faCog} fixedWidth className="icon" />
-            <div>تنظیمات</div>
-          </li>
-          <li>
-            <FontAwesomeIcon icon={faSlidersH} fixedWidth className="icon" />
-            <div>تنظیمات پیشرفته</div>
-          </li>
-          <li>
-            <FontAwesomeIcon icon={faUsers} fixedWidth className="icon" />
-            <div>مدیریت کاربران</div>
-          </li>
-          <li>
-            <FontAwesomeIcon icon={faHistory} fixedWidth className="icon" />
-            <div>مدیریت دوره ها</div>
-          </li>
-          <li>
-            <FontAwesomeIcon icon={faVial} fixedWidth className="icon" />
-            <div>مدیریت آزمون ها</div>
-          </li>
-          <li>
-            <FontAwesomeIcon icon={faVials} fixedWidth className="icon" />
-            <div>مدیریت روش های آزمون</div>
-          </li>
-          <li>
-            <FontAwesomeIcon icon={faCopy} fixedWidth className="icon" />
-            <div>مدیریت درخواست ها</div>
-          </li>
+          {menu.map((item,index) => {
+            if (item.type === "sep") {
+              if (checkPermission(item.container)) {
+                return <li className="sep" key={index}></li>;
+              }
+            } else {
+              if (props.permissions.includes(item.id)) {
+                return (
+                  <Link to={{ pathname: item.path }} key={index}>
+                    <li className="item">
+                      <FontAwesomeIcon icon={item.icon} fixedWidth className="icon" />
+                      <div>{item.text}</div>
+                    </li>
+                  </Link>
+                );
+              }
+            }
+          })}
         </ul>
       </div>
     </Fragment>
@@ -60,4 +142,8 @@ Sidebar.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default Sidebar;
+const mapStateToProps = (state) => ({
+  permissions: state.userReducer.permissions,
+});
+
+export default connect(mapStateToProps, { getPermissions })(Sidebar);

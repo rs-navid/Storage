@@ -15,7 +15,7 @@ import profile from "../../../assets/images/profile.png";
 
 const Login = (props) => {
   useEffect(() => {
-    document.title = "Login";
+    document.title = "ورود";
   }, []);
 
   const [username, setUsername] = useState("");

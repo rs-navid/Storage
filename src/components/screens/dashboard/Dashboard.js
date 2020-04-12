@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 const Dashboard = () => {
   useEffect(() => {
-    document.title = "Dashboard";
+    document.title = "داشبورد";
   }, []);
 
   return <div>Dashboard</div>;

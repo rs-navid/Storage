@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -6,7 +6,8 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import SwipeableViews from 'react-swipeable-views';
+import SwipeableViews from "react-swipeable-views";
+import { withRouter } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -20,7 +21,11 @@ function TabPanel(props) {
       aria-labelledby={`scrollable-auto-tab-${index}`}
       {...other}
     >
-      {value === index && <Box p={3} className="tabular-content">{children}</Box>}
+      {value === index && (
+        <Box p={3} className="tabular-content">
+          {children}
+        </Box>
+      )}
     </Typography>
   );
 }
@@ -34,14 +39,26 @@ function a11yProps(index) {
 
 const theme = createMuiTheme({
   direction: "rtl",
-  fontFamily: ["iranyekan"]
+  fontFamily: ["iranyekan"],
 });
 
 const Tabular = (props) => {
   const [value, setValue] = useState(0);
 
+  // Component did mount
+  useEffect(() => {
+    if (props.hash && props.location.hash) {
+      let index = props.hash.indexOf(props.location.hash.slice(1));
+      if (index === -1) index = 0;
+
+      handleChangeIndex(index);
+    }
+    // eslint-disable-next-line
+  }, []);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    props.history.replace({ hash: props.hash[newValue] });
   };
 
   const handleChangeIndex = (index) => {
@@ -62,23 +79,23 @@ const Tabular = (props) => {
           aria-label="scrollable auto tabs example"
         >
           {props.tabs.map((val, index) => {
-            return <Tab label={val} {...a11yProps({ index })} />;
+            return <Tab label={val} {...a11yProps({ index })} key={index} />;
           })}
         </Tabs>
         <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-        className="tabular-swipeable"
+          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+          index={value}
+          onChangeIndex={handleChangeIndex}
+          className="tabular-swipeable"
         >
-        {props.panels.map((Cmp, index) => {
-          return (
-            <TabPanel value={value} index={index}>
-              {<Cmp />}
-            </TabPanel>
-          );
-        })}
-      </SwipeableViews>
+          {props.panels.map((Cmp, index) => {
+            return (
+              <TabPanel value={value} index={index} key={index}>
+                {<Cmp />}
+              </TabPanel>
+            );
+          })}
+        </SwipeableViews>
       </div>
     </ThemeProvider>
   );
@@ -89,4 +106,4 @@ Tabular.propTypes = {
   panels: PropTypes.array.isRequired,
 };
 
-export default Tabular;
+export default withRouter(Tabular);

@@ -1,5 +1,5 @@
 import React, { Fragment, Suspense, useState } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { setUserToken } from "../../store/actions/userActions";
@@ -10,6 +10,7 @@ import Sidebar from "../UI/sidebar/Sidebar";
 const Login = React.lazy(() => import("../screens/login/Login"));
 const Dashboard = React.lazy(() => import("../screens/dashboard/Dashboard"));
 const UserSetting = React.lazy(() => import("../screens/user-setting/UserSetting"));
+const Setting = React.lazy(() => import("../screens/setting/Setting"));
 
 const Layout = (props) => {
   let token = localStorage.getItem("token");
@@ -33,6 +34,7 @@ const Layout = (props) => {
             <Switch>
               <Route exact path="/" component={Dashboard} />
               <Route exact path="/usersetting" component={UserSetting} />
+              <Route exact path="/setting" component={Setting} />
             </Switch>
           </Fragment>
         )}

@@ -18,13 +18,14 @@
       align-self: center;
       font-size: .875rem;
     }
-
+    
     & > div {
       flex: 1;
       
       & > input {
         min-width: 10px;
         width: 100%;
+        font-size: .875rem;
       }
     }
   }

@@ -1,0 +1,39 @@
+@mixin bp-down($size) {
+  @if $size == sm {
+    @media screen and (max-width: $bp-sm) {
+      @content
+        }
+  } @else if $size == md {
+    @media screen and (max-width: $bp-md) {
+      @content
+        }
+  } @else if $size == lg {
+    @media screen and (max-width: $bp-lg) {
+      @content
+        }
+  } @else if $size == xl {
+    @media screen and (max-width: $bp-xl) {
+      @content
+        }
+  }
+}
+
+@mixin bp-up($size) {
+  @if $size == sm {
+    @media screen and (min-width: 577px) {
+      @content
+        }
+  } @else if $size == md {
+    @media screen and (min-width: 769px) {
+      @content
+        }
+  } @else if $size == lg {
+    @media screen and (min-width: 993px) {
+      @content
+        }
+  } @else if $size == xl {
+    @media screen and (min-width: 1200px) {
+      @content
+        }
+  }
+}

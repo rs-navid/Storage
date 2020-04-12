@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import { Dropdown, Button, Icon } from "semantic-ui-react";
 
@@ -28,6 +27,7 @@ const ChangePeriod = (props) => {
       }
     };
     loadData();
+    // eslint-disable-next-line
   }, []);
 
   // Handle input change

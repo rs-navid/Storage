@@ -1,8 +1,7 @@
 import {
-  SET_USER,
-  REMOVE_USER,
   SET_USER_TOKEN,
   REMOVE_USER_TOKEN,
+  SET_USER_PERMISSIONS,
   SHOW_DIALOG,
 } from "./actionTypes";
 import axios from "axios";
@@ -15,28 +14,6 @@ export const login = (username, password, platform, remember) => {
       localStorage.setItem("token", user.data.token);
       dispatch(setUserToken(user.data.token));
     }
-  };
-};
-
-export const setUser = (data) => {
-  return {
-    type: SET_USER,
-    payload: {
-      username: data.username,
-      token: data.token,
-      name: data.name,
-      userId: data.userId,
-      periodName: data.periodName,
-      periodId: data.periodId,
-    },
-  };
-};
-
-export const removeUser = () => {
-  localStorage.removeItem("token");
-
-  return {
-    type: REMOVE_USER,
   };
 };
 
@@ -73,7 +50,7 @@ export const changePassword = (password, newPassword) => {
 };
 
 export const getUserPeriodAndAllPeriods = () => {
-  return async (dispatch) => {
+  return async () => {
     const results = await axios.post("/user/getuserperiod");
 
     if (results) {
@@ -90,6 +67,19 @@ export const changePeriod = (id) => {
       return dispatch({
         type: SHOW_DIALOG,
         payload: { type: "ok", title: "تایید تغییر دوره", text: "دوره با موفقیت تغییر کرد." },
+      });
+    }
+  };
+};
+
+export const getPermissions = () => {
+  return async (dispatch) => {
+    const results = await axios.get("/user/permissions");
+
+    if (results) {
+      dispatch({
+        type: SET_USER_PERMISSIONS,
+        payload: results.data.permissions,
       });
     }
   };
