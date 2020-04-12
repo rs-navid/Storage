@@ -36,6 +36,10 @@ body {
   font-family: iranyekan;
   background-color: #eee;
 
+  &.disable-scroll {
+    overflow: hidden;
+  }
+
   input {
     min-width: 10px;
   }

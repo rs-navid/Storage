@@ -19,10 +19,6 @@ import { getPermissions } from "../../../store/actions/userActions";
 
 const menu = [
   {
-    type: "sep",
-    container: [],
-  },
-  {
     id: 100,
     text: "تنظیمات",
     icon: faCog,
@@ -93,6 +89,9 @@ const Sidebar = (props) => {
   if (props.active) {
     overlayClass.push("active");
     sidebarClass.push("active");
+    document.body.classList.add('disable-scroll')
+  } else {
+    document.body.classList.remove('disable-scroll')
   }
 
   const checkPermission = (container) => {
@@ -111,7 +110,7 @@ const Sidebar = (props) => {
         <div className="close" onClick={() => props.onClick(false)}>
           <FontAwesomeIcon icon={faChevronRight} />
         </div>
-
+        <div className="sep"></div>
         <ul className="nav">
           {menu.map((item,index) => {
             if (item.type === "sep") {
