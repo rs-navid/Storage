@@ -3,9 +3,8 @@
   align-items: stretch;
   flex-wrap: wrap;
   margin: 20px 0;
-  
+
   &.field-100 {
-    
     &.label-sm {
       & > label {
         flex-basis: 75px;
@@ -13,37 +12,49 @@
         align-self: center;
       }
     }
+
     & > label {
       flex-basis: 150px;
       min-width: 75px;
       display: inline-block;
       align-self: center;
       font-size: 0.875rem;
-      
-      @include bp-down(sm) {
+
+      @include bp-down(md) {
         min-width: 100%;
         padding-bottom: 10px;
       }
     }
-    
+
     & > div {
       flex: 1;
-      
+
       & > input {
-        min-width: 250px;
+        min-width: 25px;
         width: 100%;
         font-size: 0.875rem;
       }
     }
+
+    & > textarea {
+      flex: 1;
+      min-width: 25px;
+      width: 100%;
+      font-size: 0.875rem;
+      font-family: iranyekan;
+    }
   }
-  
+
   &.field-50 {
-    // margin: 10px 0;
     width: calc(50% - 10px);
-    
+
+    @include bp-up(sm) {
+      margin: 0;
+    }
+
     &.right-50 {
       float: right;
-      
+
       @include bp-down(sm) {
         width: 100%;
         float: none;
@@ -52,7 +63,7 @@
 
     &.left-50 {
       float: left;
-      
+
       @include bp-down(sm) {
         float: none;
         width: 100%;
@@ -87,6 +98,51 @@
         width: 100%;
         font-size: 0.875rem;
       }
+    }
+  }
+}
+
+.clearfix {
+  clear: both;
+}
+
+.line-break {
+  margin-top: 20px;
+}
+
+input {
+  min-width: 10px;
+}
+
+.ui {
+  font-family: iranyekan !important;
+  direction: rtl;
+
+  input {
+    text-align: right !important;
+    direction: rtl !important;
+    font-family: iranyekan !important;
+  }
+
+  &.dropdown {
+    div.text {
+      text-align: right;
+      float: right;
+      direction: rtl;
+      font-size: 0.875rem !important;
+    }
+
+    i.icon {
+      float: left !important;
+      left: 1em;
+      right: unset !important;
+    }
+
+    div.item {
+      pointer-events: all;
+      direction: rtl;
+      text-align: right !important;
+      font-size: 0.875rem !important;
     }
   }
 }

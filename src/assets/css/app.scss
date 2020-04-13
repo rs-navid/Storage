@@ -40,45 +40,6 @@ body {
     overflow: hidden;
   }
 
-  input {
-    min-width: 10px;
-  }
-
-  
-
-  .ui {
-    font-family: iranyekan !important;
-    direction: rtl;
-
-    input {
-      text-align: right !important;
-      direction: rtl !important;
-      font-family: iranyekan !important;
-    }
-    
-    &.dropdown {
-      div.text {
-        text-align: right;
-        float: right;
-        direction: rtl;
-        font-size: .875rem !important;
-      }
-      
-      i.icon {
-        float: left !important;
-        left: 1em;
-        right: unset !important;
-      }
-      
-      div.item {
-        pointer-events: all;
-        direction: rtl;
-        text-align: right !important;
-        font-size: .875rem !important;
-      }
-    }
-  }
-
   .card {
     background-color: #fff;
     box-shadow: 0 1px 2px #ccc;
