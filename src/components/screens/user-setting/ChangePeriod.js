@@ -26,6 +26,7 @@ const ChangePeriod = (props) => {
         setPeriods(periods);
       }
     };
+
     loadData();
     // eslint-disable-next-line
   }, []);
@@ -61,4 +62,4 @@ const ChangePeriod = (props) => {
   );
 };
 
-export default connect(null, {getUserPeriodAndAllPeriods, changePeriod })(ChangePeriod);
+export default connect(null, { getUserPeriodAndAllPeriods, changePeriod })(ChangePeriod);

@@ -31,16 +31,16 @@ const menu = [
     path: "/advancesetting",
   },
   {
-    id: 200,
-    text: "مدیریت کاربران",
-    icon: faUsers,
-    path: "/users",
-  },
-  {
     id: 300,
     text: "مدیریت دوره ها",
     icon: faHistory,
     path: "/periods",
+  },
+  {
+    id: 200,
+    text: "مدیریت کاربران",
+    icon: faUsers,
+    path: "/users",
   },
   {
     id: 400,
@@ -89,10 +89,14 @@ const Sidebar = (props) => {
   if (props.active) {
     overlayClass.push("active");
     sidebarClass.push("active");
-    document.body.classList.add('disable-scroll')
+    document.body.classList.add("disable-scroll");
   } else {
-    document.body.classList.remove('disable-scroll')
+    document.body.classList.remove("disable-scroll");
   }
+
+  const handleClose = () => {
+    props.onClick(false);
+  };
 
   const checkPermission = (container) => {
     if (container.length === 0) return true;
@@ -105,14 +109,14 @@ const Sidebar = (props) => {
 
   return (
     <Fragment>
-      <div className={overlayClass.join(" ")} onClick={() => props.onClick(false)}></div>
+      <div className={overlayClass.join(" ")} onClick={handleClose}></div>
       <div className={sidebarClass.join(" ")}>
-        <div className="close" onClick={() => props.onClick(false)}>
+        <div className="close" onClick={handleClose}>
           <FontAwesomeIcon icon={faChevronRight} />
         </div>
         <div className="sep"></div>
         <ul className="nav">
-          {menu.map((item,index) => {
+          {menu.map((item, index) => {
             if (item.type === "sep") {
               if (checkPermission(item.container)) {
                 return <li className="sep" key={index}></li>;
@@ -120,7 +124,7 @@ const Sidebar = (props) => {
             } else {
               if (props.permissions.includes(item.id)) {
                 return (
-                  <Link to={{ pathname: item.path }} key={index}>
+                  <Link to={{ pathname: item.path }} key={index} onClick={handleClose}>
                     <li className="item">
                       <FontAwesomeIcon icon={item.icon} fixedWidth className="icon" />
                       <div>{item.text}</div>
@@ -129,6 +133,8 @@ const Sidebar = (props) => {
                 );
               }
             }
+
+            return null;
           })}
         </ul>
       </div>

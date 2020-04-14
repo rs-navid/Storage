@@ -54,6 +54,7 @@
 
     &.right-50 {
       float: right;
+      font-size: .875rem;
 
       @include bp-down(sm) {
         width: 100%;
@@ -63,6 +64,7 @@
 
     &.left-50 {
       float: left;
+      font-size: .875rem;
 
       @include bp-down(sm) {
         float: none;
