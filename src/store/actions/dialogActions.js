@@ -4,10 +4,12 @@ export const showDialog = (action) => {
   const payload = {
     title: action.title,
     text: action.text,
-    type: "ok"
+    type: "ok",
+    yes: null,
+    no: null,
   };
 
-  if (action.yse) payload["yse"] = action.yse;
+  if (action.yes) payload["yes"] = action.yes;
   if (action.no) payload["no"] = action.no;
   if (action.type) payload["type"] = action.type;
 

@@ -1,0 +1,58 @@
+.list-item {
+  padding: 10px;
+  flex-wrap: wrap;
+  margin: 15px 0;
+  border: 1px solid #ddd;
+  border-bottom: 3px solid #ddd;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+
+  .checkbox {
+    flex-basis: 25px;
+    padding: 0 12px;
+  }
+
+  .info {
+    flex: 1;
+
+    .data {
+      position: relative;
+      font-size: 0.85rem;
+      color: #000;
+      display: flex;
+      flex-wrap: wrap;
+
+      .sub-data {
+        display: flex;
+        flex: 1;
+        // flex-wrap: wrap;
+        padding: 5px 15px;
+        align-items: center;
+
+        @include bp-down(sm) {
+          flex-basis: 100%;
+        }
+
+        .right {
+          text-align: right;
+          font-weight: bold;
+          flex-basis: 100px;
+        }
+        
+        .left {
+          flex: 1;
+          text-align: right;
+
+          @include bp-down(sm) {
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+
+  .action {
+    // text-align: left;
+    margin: 10px 0 0;
+  }
+}
