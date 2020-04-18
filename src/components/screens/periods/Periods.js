@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Tab from "../../UI/tabular/Tabular";
 
-import Period from './Period'
+import Period from "./Period";
 
 const Periods = () => {
   useEffect(() => {

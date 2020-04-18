@@ -12,7 +12,7 @@ const ListItemWithCheckboxAndEdit = (props) => {
       <div className="info">
         {props.children}
         <div className="action align-left mt-2 pl-3">
-          <Button icon labelPosition="right" size="mini">
+          <Button icon labelPosition="right" size="mini" onClick={props.onClick}>
             ویرایش
             <Icon name="edit" />
           </Button>
@@ -24,7 +24,8 @@ const ListItemWithCheckboxAndEdit = (props) => {
 
 ListItemWithCheckboxAndEdit.propTypes = {
   id: PropTypes.any.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export const SubItems = (props) => {

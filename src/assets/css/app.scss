@@ -50,9 +50,28 @@ body {
     // padding: 10px;
   }
 
-  .modal-title {
-    h2{
-      font-family: iranyekan;
+  .DatePicker  > input {
+    padding: 10px;
+    border-radius: .28571429rem;
+    text-align: right;
+  }
+
+  .modal {
+    [class*="MuiPaper-root"] {
+      overflow: visible;
+    }
+
+    .modal-title {
+      padding: 10px 20px;
+
+      h2 {
+        font-size: 1rem;
+        font-family: iranyekan;
+      }
+    }
+
+    .modal-content {
+      overflow: visible;
     }
   }
 }

@@ -10,10 +10,11 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { Button, Icon } from "semantic-ui-react";
 
+
 function PaperComponent(props) {
   return (
     <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-      <Paper {...props} />
+      <Paper className="modal-paper" {...props} />
     </Draggable>
   );
 }
@@ -30,13 +31,15 @@ const Modal = (props) => {
       <Dialog
         disableBackdropClick
         disableEscapeKeyDown
-        maxWidth="lg"
+        maxWidth={props.maxWidth || "lg"}
+        fullWidth={true}
         // onEntering={handleEntering}
         scroll="paper"
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
         open={props.open}
         // {...other}
+        className="modal"
       >
         <DialogTitle id="draggable-dialog-title" className="modal-title" style={{ cursor: "move" }}>
           {props.title}
@@ -45,11 +48,11 @@ const Modal = (props) => {
           {props.children}
         </DialogContent>
         <DialogActions className="modal-actions">
-          <Button icon basic labelPosition="right" size="small" onClick={props.save}>
+          <Button icon labelPosition="right" color="blue" size="small" onClick={props.save}>
             <Icon name="check" />
             تایید
           </Button>
-          <Button icon basic labelPosition="right" size="small" onClick={props.cancel}>
+          <Button icon labelPosition="right" size="small" onClick={props.cancel}>
             انصراف
             <Icon name="close" />
           </Button>
