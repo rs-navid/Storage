@@ -6,7 +6,7 @@
   top: 0;
   height: 100vh;
   display: none;
-  z-index: 950;
+  z-index: 9500;
 
   &.show {
     display: block;
@@ -14,7 +14,7 @@
 }
 
 .spinner-box {
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 0;
@@ -23,6 +23,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9501;
 
   .spinner {
     background-color: #fff;
@@ -32,7 +33,6 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     border-radius: 6px;
     padding: 20px;
-    z-index: 951;
 
     .sk-folding-cube {
       margin: 20px auto;

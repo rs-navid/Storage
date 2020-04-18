@@ -40,6 +40,8 @@ const Dialog = props => {
 
   const cls = ["dialog-container"];
   if (props.show) cls.push("show");
+  if (props.show) document.body.classList.add('disable-scroll');
+  if (!props.show) document.body.classList.remove('disable-scroll');
 
   return (
     <Fragment>

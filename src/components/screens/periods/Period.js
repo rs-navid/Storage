@@ -3,13 +3,15 @@ import { connect } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
 import moment from "jalali-moment";
 
-import ListWithCheckboxAndEdit from "../../UI/list/ListWithCheckboxAndEdit";
+import ListItemWithCheckboxAndEdit, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEdit";
+import Modal from "../../UI/modal/Modal";
 
 import { getPeriods, deletePeriods } from "../../../store/actions/periodActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
 const Period = (props) => {
   const [periods, setPeriods] = useState([]);
+  const [open, setOpen] = React.useState(true);
   const [selected, setSelected] = useState([]);
 
   // Component did mount
@@ -37,7 +39,7 @@ const Period = (props) => {
 
   const handleDelete = () => {
     if (selected.length === 0) {
-      props.showDialog({ title: "خطا", text: "لطفا حداقل یک مورد را برای حذف انتحاب نمایید." });
+      props.showDialog({ title: "خطا", text: "لطفا حداقل یک مورد را برای حذف انتخاب نمایید." });
     } else {
       props.showDialog({
         title: "حذف",
@@ -58,8 +60,24 @@ const Period = (props) => {
     }
   };
 
+  const handleInput = () => {
+    console.log('this');
+  }
+
   return (
     <div className="periods-screen">
+      <Modal
+        open={open}
+        title="نمایش"
+        cancel={() => {
+          setOpen(false);
+        }}
+        save = {()=>{
+          props.showDialog({title:'here', text: 'OK'})
+        }}
+      >
+        <input type="text" onChange={handleInput} />
+      </Modal>
       <div className="actions pt-4 pb-5 align-left">
         <Button icon labelPosition="right" color="blue" size="small" onClick={handleDelete}>
           حذف
@@ -71,21 +89,14 @@ const Period = (props) => {
         </Button>
       </div>
       {periods.map((item) => {
+        const start = moment.from(item.start, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD");
+        const end = moment.from(item.end, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD");
+
         return (
-          <ListWithCheckboxAndEdit
-            id={item.id}
-            key={item.id}
-            onChange={() => handleChange(item.id)}
-            items={[
-              { firstName: "دوره:", firstVal: item.name, secondName: "مشخصه دوره:", secondVal: item.key },
-              {
-                firstName: "تاریخ شروع:",
-                firstVal: moment.from(item.start, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD"),
-                secondName: "تاریخ پایان:",
-                secondVal: moment.from(item.end, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD"),
-              },
-            ]}
-          />
+          <ListItemWithCheckboxAndEdit id={item.id} key={item.id} onChange={() => handleChange(item.id)}>
+            <SubItems data={["دوره:", item.name, "مشخصه دوره:", item.key]} />
+            <SubItems data={["تاریخ شروع:", start, "تاریخ پایان:", end]} />
+          </ListItemWithCheckboxAndEdit>
         );
       })}
     </div>

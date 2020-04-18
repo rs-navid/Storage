@@ -53,6 +53,7 @@ const ChangePeriod = (props) => {
           onChange={handleInput}
           options={getPeriods}
         />
+
       </div>
       <Button icon labelPosition="right" color="blue" onClick={saveHandler}>
         ثبت
