@@ -88,3 +88,48 @@ export const getUsers = (query) => {
     }
   };
 };
+
+export const deleteUsers = (ids) => {
+  return async () => {
+    const results = await axios.delete(`/user`, { data: { ids: ids } });
+    if (results) {
+      return true;
+    }
+
+    return false;
+  };
+};
+
+export const createUser = (user) => {
+  return async () => {
+    const result = await axios.post("/user", {
+      ...user,
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
+export const updateUser = (user) => {
+  return async () => {
+    const result = await axios.put(`/user/${user.id}`, {
+      ...user,
+    });
+    if (!result) {
+      return false;
+    }
+    return true;
+  };
+};
+
+export const getUserPermissions = (userId) => {
+  return async () => {
+    const result = await axios.get(`/user/permissionsbyid/${userId}`);
+    if (!result) {
+      return [];
+    }
+    return result.data.permissions;
+  };
+};

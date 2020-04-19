@@ -14,7 +14,7 @@ import { Button, Icon } from "semantic-ui-react";
 function PaperComponent(props) {
   return (
     <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-      <Paper className="modal-paper" {...props} />
+      <Paper {...props} />
     </Draggable>
   );
 }
@@ -33,12 +33,9 @@ const Modal = (props) => {
         disableEscapeKeyDown
         maxWidth={props.maxWidth || "lg"}
         fullWidth={true}
-        // onEntering={handleEntering}
-        scroll="paper"
+        scroll="body"
         PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title"
         open={props.open}
-        // {...other}
         className="modal"
       >
         <DialogTitle id="draggable-dialog-title" className="modal-title" style={{ cursor: "move" }}>

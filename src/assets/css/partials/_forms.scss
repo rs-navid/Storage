@@ -54,7 +54,7 @@
 
     &.right-50 {
       float: right;
-      font-size: .875rem;
+      font-size: 0.875rem;
 
       @include bp-down(sm) {
         width: 100%;
@@ -64,7 +64,7 @@
 
     &.left-50 {
       float: left;
-      font-size: .875rem;
+      font-size: 0.875rem;
 
       @include bp-down(sm) {
         float: none;
@@ -146,5 +146,16 @@ input {
       text-align: right !important;
       font-size: 0.875rem !important;
     }
+  }
+}
+
+.checkbox > label {
+  padding-right: 1.85714em;
+  padding-left: 0 !important;
+
+  &::after,
+  &::before {
+    right: 0;
+    left: unset !important;
   }
 }

@@ -16,7 +16,7 @@ const Header = (props) => {
         </span>
       </div>
       <div>
-      <Link to={{pathname:'usersetting'}}>
+      <Link to={{pathname:'/'}}>
         <span className="user-setting" title="تنظیمات کاربر">
           <FontAwesomeIcon icon={faUserCog} fixedWidth />
         </span>

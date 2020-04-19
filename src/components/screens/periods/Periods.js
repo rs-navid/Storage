@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Tab from "../../UI/tabular/Tabular";
 
 import Period from "./Period";

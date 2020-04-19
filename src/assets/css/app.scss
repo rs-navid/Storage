@@ -55,14 +55,25 @@ body {
     margin: 15px 0;
   }
 
-  .DatePicker  > input {
+  .pagination {
+    ul {
+      justify-content: center;
+
+      li button {
+        font-family: iranyekan;
+      }
+    }
+  }
+
+  .DatePicker > input {
     padding: 10px;
-    border-radius: .28571429rem;
+    border-radius: 0.28571429rem;
     text-align: right;
   }
 
   .modal {
     [class*="MuiPaper-root"] {
+      text-align: right !important;
       overflow: visible;
     }
 
@@ -81,7 +92,8 @@ body {
   }
 
   @include bp-down(sm) {
-    .orderby, .order {
+    .orderby,
+    .order {
       min-width: 100% !important;
     }
   }

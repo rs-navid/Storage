@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import { showDialog } from "../store/actions/dialogActions";
 import { showSpinner, hideSpinner } from "../store/actions/spinnerActions";
@@ -14,7 +15,7 @@ const WithErrorHandler = (props) => {
   axios.interceptors.request.use(
     (res) => {
       props.showSpinner();
-      return res
+      return res;
     },
     (err) => {
       if (err.response) {
@@ -34,13 +35,15 @@ const WithErrorHandler = (props) => {
   axios.interceptors.response.use(
     (res) => {
       props.hideSpinner();
-      return res
+      return res;
     },
     (err) => {
       if (err.response) {
         if (err.response.data.notLogin) {
           props.showDialog({ type: "ok", title: "خطا", text: err.response.data.message });
           props.removeUserToken();
+        } else if (err.response.status === 403) {
+          props.history.replace({ pathname: "/" });
         } else {
           props.showDialog({ type: "ok", title: "خطا", text: err.response.data.message });
         }
@@ -57,4 +60,6 @@ const mapStateToProps = (state) => ({
   token: state.userReducer.token,
 });
 
-export default connect(mapStateToProps, { showDialog, hideSpinner, showSpinner, removeUserToken })(WithErrorHandler);
+export default withRouter(
+  connect(mapStateToProps, { showDialog, hideSpinner, showSpinner, removeUserToken })(WithErrorHandler)
+);

@@ -3,78 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCog,
-  faSlidersH,
-  faChevronRight,
-  faUsers,
-  faHistory,
-  faVial,
-  faVials,
-  faCopy,
-  faRestroom,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 import { getPermissions } from "../../../store/actions/userActions";
-
-const menu = [
-  {
-    id: 100,
-    text: "تنظیمات",
-    icon: faCog,
-    path: "/setting",
-  },
-  {
-    id: 120,
-    text: "تنظیمات پیشرفته",
-    icon: faSlidersH,
-    path: "/advancesetting",
-  },
-  {
-    id: 300,
-    text: "مدیریت دوره ها",
-    icon: faHistory,
-    path: "/periods",
-  },
-  {
-    id: 200,
-    text: "مدیریت کاربران",
-    icon: faUsers,
-    path: "/users",
-  },
-  {
-    id: 400,
-    text: "مدیریت مشتریان",
-    icon: faRestroom,
-    path: "/clients",
-  },
-  {
-    type: "sep",
-    container: [100, 120, 200, 300, 400],
-  },
-  {
-    id: 500,
-    text: "مدیریت آزمون ها",
-    icon: faVial,
-    path: "/exams",
-  },
-  {
-    id: 550,
-    text: "مدیریت روش های آزمون",
-    icon: faVials,
-    path: "/methods",
-  },
-  {
-    id: 600,
-    text: "مدیریت درخواست ها",
-    icon: faCopy,
-    path: "/requests",
-  },
-  {
-    type: "sep",
-    container: [500, 550, 600],
-  },
-];
+import permissions from "../../../configs/permissions";
 
 const Sidebar = (props) => {
   // Component did mount
@@ -116,7 +48,7 @@ const Sidebar = (props) => {
         </div>
         <div className="sep"></div>
         <ul className="nav">
-          {menu.map((item, index) => {
+          {permissions.map((item, index) => {
             if (item.type === "sep") {
               if (checkPermission(item.container)) {
                 return <li className="sep" key={index}></li>;
