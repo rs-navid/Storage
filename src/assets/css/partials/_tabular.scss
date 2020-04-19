@@ -7,11 +7,16 @@
   }
 }
 
-.tabular-swipeable > div > div {
-  direction: rtl;
-}
+.tabular-swipeable {
+  overflow: visible !important;
 
-.tabular-content {
-  font-family: iranyekan;
-  min-height: 350px;
+  & > div > div {
+    direction: rtl;
+    overflow: visible !important;
+  }
+  
+  .tabular-content {
+    font-family: iranyekan;
+  }
+
 }

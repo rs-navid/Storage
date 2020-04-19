@@ -50,6 +50,11 @@ body {
     // padding: 10px;
   }
 
+  .divider {
+    border-bottom: 1px solid #eee;
+    margin: 15px 0;
+  }
+
   .DatePicker  > input {
     padding: 10px;
     border-radius: .28571429rem;
@@ -72,6 +77,12 @@ body {
 
     .modal-content {
       overflow: visible;
+    }
+  }
+
+  @include bp-down(sm) {
+    .orderby, .order {
+      min-width: 100% !important;
     }
   }
 }

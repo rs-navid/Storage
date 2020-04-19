@@ -1,9 +1,4 @@
-import {
-  SET_USER_TOKEN,
-  REMOVE_USER_TOKEN,
-  SET_USER_PERMISSIONS,
-  SHOW_DIALOG,
-} from "./actionTypes";
+import { SET_USER_TOKEN, REMOVE_USER_TOKEN, SET_USER_PERMISSIONS, SHOW_DIALOG } from "./actionTypes";
 import axios from "axios";
 
 export const login = (username, password, platform, remember) => {
@@ -81,6 +76,15 @@ export const getPermissions = () => {
         type: SET_USER_PERMISSIONS,
         payload: results.data.permissions,
       });
+    }
+  };
+};
+
+export const getUsers = (query) => {
+  return async () => {
+    const results = await axios.get(`/user?${query}`);
+    if (results) {
+      return results.data;
     }
   };
 };
