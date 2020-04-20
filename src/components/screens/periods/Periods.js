@@ -11,7 +11,6 @@ const Periods = () => {
 
   return (
     <div>
-    <h2 className="wow fadeInUp">I'm animated!</h2>
       <Tab tabs={["مدیریت دوره ها"]} panels={[Period]} hash={["period"]} />
     </div>
   );

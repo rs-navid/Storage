@@ -133,3 +133,13 @@ export const getUserPermissions = (userId) => {
     return result.data.permissions;
   };
 };
+
+export const getUserInfo = () => {
+  return async () => {
+    const info = await axios.get("/user/info");
+    if (info) {
+      return info.data;
+    }
+    return false;
+  };
+};

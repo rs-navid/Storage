@@ -2,26 +2,24 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Icon } from "semantic-ui-react";
 import { Checkbox } from "semantic-ui-react";
+import ReactWOW from "react-wow";
 
 const ListItemWithCheckboxAndEdit = (props) => {
   return (
-    <div
-      key={props.id}
-      className="list-item d-flex align-items-center"
-      data-wow-duration="2s"
-      data-wow-delay="5s"
-    >
-      <div className="checkbox">
-        <Checkbox onChange={props.onChange} />
+    <ReactWOW animation="fadeInUp" key={props.id} duration="2s">
+      <div className="list-item d-flex align-items-center">
+        <div className="checkbox">
+          <Checkbox onChange={props.onChange} />
+        </div>
+        <div className="info">{props.children}</div>
+        <div className="action align-left mt-2 pl-3">
+          <Button icon labelPosition="right" size="mini" onClick={props.onClick}>
+            ویرایش
+            <Icon name="edit" />
+          </Button>
+        </div>
       </div>
-      <div className="info">{props.children}</div>
-      <div className="action align-left mt-2 pl-3">
-        <Button icon labelPosition="right" size="mini" onClick={props.onClick}>
-          ویرایش
-          <Icon name="edit" />
-        </Button>
-      </div>
-    </div>
+    </ReactWOW>
   );
 };
 

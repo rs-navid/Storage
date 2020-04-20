@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
-import { Input, Button, Icon, Dropdown, Checkbox } from "semantic-ui-react";
+import { Input, Button, Icon, Dropdown } from "semantic-ui-react";
 import qs from "query-string";
 import { withRouter } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 
+import EditModal from "./EditModal";
 import ListItemWithCheckboxAndEdit, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEdit";
-import Modal from "../../UI/modal/Modal";
-import permissions from "../../../configs/permissions";
+import Sidemenu, { Menu } from "../../UI/sidemenu/Sidemenu";
 
 import { getUsers, deleteUsers, createUser, updateUser, getUserPermissions } from "../../../store/actions/userActions";
 import { showDialog } from "../../../store/actions/dialogActions";
@@ -265,8 +265,6 @@ const User = (props) => {
       page: value - 1,
     };
 
-    console.log(query);
-
     setPage(value);
     pushHistory(query);
 
@@ -274,81 +272,17 @@ const User = (props) => {
   };
 
   return (
-    <div>
+    <Fragment>
       {/* Start modal */}
-      <Modal
+      <EditModal
         open={open}
-        title={editingUser.id === 0 ? "کاربر جدید" : "ویرایش کاربر"}
-        cancel={() => {
-          setOpen(false);
-        }}
-        save={handleSaveUser}
-      >
-        <div className="field-wrapper field-50 right-50">
-          <label>نام و نام خانوادگی:</label>
-          <Input
-            placeholder="نام و نام خانوادگی"
-            type="text"
-            name="name"
-            value={editingUser.name}
-            onChange={handleInput}
-          />
-        </div>
-        <div className="field-wrapper field-50 left-50">
-          <label>نام کاربری:</label>
-          <Input
-            placeholder="نام کاربری"
-            type="text"
-            name="username"
-            value={editingUser.username}
-            onChange={handleInput}
-          />
-        </div>
-        <div className="clearfix"></div>
-        <div className="line-break"></div>
-        <div className="field-wrapper field-50 right-50">
-          <label>کلمه عبور:</label>
-          <Input
-            placeholder="کلمه عبور"
-            type="password"
-            name="password"
-            value={editingUser.password}
-            onChange={handleInput}
-          />
-        </div>
-        <div className="field-wrapper field-50 left-50">
-          <label>تکرار کلمه عبور:</label>
-          <Input
-            placeholder="تکرار کلمه عبور"
-            type="password"
-            name="password_confirm"
-            value={editingUser.password_confirm}
-            onChange={handleInput}
-          />
-        </div>
-        <div className="clearfix"></div>
-        <div className="line-break"></div>
-        <div className="listbox p-2" style={{ height: "300px", overflowY: "auto", border: "1px solid #eee" }}>
-          {permissions.map((item) => {
-            if (!item.type && !item.isHidden) {
-              return (
-                <div key={item.id}>
-                  <Checkbox
-                    value={item.id}
-                    label={item.text}
-                    onClick={() => {
-                      handleCheckbox(item.id);
-                    }}
-                    defaultChecked={handleCheckmark(item.id)}
-                    className="checkbox py-1"
-                    style={{ fontSize: ".875rem" }}
-                  />
-                </div>
-              );
-            }
-          })}
-        </div>
-      </Modal>
+        editingUser={editingUser}
+        setOpen={setOpen}
+        handleSaveUser={handleSaveUser}
+        handleInput={handleInput}
+        handleCheckbox={handleCheckbox}
+        handleCheckmark={handleCheckmark}
+      />
       {/* End modal */}
 
       {/* Start actions */}
@@ -364,97 +298,104 @@ const User = (props) => {
       </div>
       {/* End actions */}
 
-      {/* Start search */}
-      <div className="search-wrapper">
-        <div className="field-wrapper field-50 right-50">
-          <label>نام و نام خانوادگی:</label>
-          <Input
-            placeholder="نام و نام خانوادگی"
-            type="text"
-            name="name"
-            value={search.name}
-            onChange={handleSearchInputs}
-          />
-        </div>
-        <div className="field-wrapper field-50 left-50">
-          <label>نام کاربری:</label>
-          <Input
-            placeholder="نام کاربری"
-            type="text"
-            name="username"
-            value={search.username}
-            onChange={handleSearchInputs}
-          />
-        </div>
-        <div className="clearfix"></div>
-        <div className="line-break"></div>
-        <div className="search-button align-left">
-          <Button icon labelPosition="right" size="tiny" onClick={handleSearchClick}>
-            جستجو
-            <Icon name="search" />
-          </Button>
+      <div className="page-wrapper">
+        <Sidemenu>
+          {/* Start search */}
+          <Menu title="جستجو">
+            <div className="search-wrapper">
+              <div className="field-wrapper field-100 wrap">
+                <label>نام و نام خانوادگی:</label>
+                <Input
+                  placeholder="نام و نام خانوادگی"
+                  type="text"
+                  name="name"
+                  value={search.name}
+                  onChange={handleSearchInputs}
+                />
+              </div>
+              <div className="field-wrapper field-100 wrap">
+                <label>نام کاربری:</label>
+                <Input
+                  placeholder="نام کاربری"
+                  type="text"
+                  name="username"
+                  value={search.username}
+                  onChange={handleSearchInputs}
+                />
+              </div>
+              <div className="clearfix"></div>
+              <div className="line-break"></div>
+              <div className="search-button align-left">
+                <Button icon labelPosition="right" size="tiny" onClick={handleSearchClick}>
+                  جستجو
+                  <Icon name="search" />
+                </Button>
+              </div>
+            </div>
+          </Menu>
+          {/* End search */}
+
+          {/* Start sort */}
+          <Menu title="مرتب سازی">
+            <div className="sort-wrapper d-flex align-items-center" style={{ flexWrap: "wrap" }}>
+              <Dropdown
+                selection
+                className="orderby my-3"
+                options={orderbyValues}
+                style={{ minWidth: "180px" }}
+                fluid
+                value={orderby}
+                onChange={(e, value) => handleSortInputs(e, value, "orderby")}
+                name="orderby"
+              />
+              <Dropdown
+                selection
+                fluid
+                className="order"
+                options={orderValues}
+                style={{ minWidth: "120px" }}
+                value={order}
+                onChange={(e, value) => handleSortInputs(e, value, "order")}
+                name="order"
+              />
+            </div>
+          </Menu>
+          {/* End sort */}
+        </Sidemenu>
+
+        <div className="page-content">
+          {/* Start list */}
+          {users.map((item) => {
+            return (
+              <ListItemWithCheckboxAndEdit
+                id={item.id}
+                key={item.id}
+                onClick={() => handleEditButtonClick(item.id)}
+                onChange={() => handleSelectionChange(item.id)}
+              >
+                <SubItems data={["نام و نام خانوادگی:", item.name, "نام کاربری:", item.username]} />
+              </ListItemWithCheckboxAndEdit>
+            );
+          })}
+          {/* End list */}
+
+          <div>
+            <Pagination
+              className="pagination"
+              count={totalPages}
+              variant="outlined"
+              shape="rounded"
+              style={{ textAlign: "center" }}
+              showFirstButton
+              showLastButton
+              siblingCount={0}
+              page={page}
+              onChange={handlePageChange}
+            />
+          </div>
         </div>
       </div>
-      {/* End search */}
-
-      <div className="divider"></div>
-
-      {/* Start sort */}
-      <div className="sort-wrapper d-flex align-items-center" style={{ flexWrap: "wrap" }}>
-        <span style={{ display: "inline-block" }} className="pl-3 py-3">
-          نمایش:
-        </span>
-        <Dropdown
-          selection
-          className="orderby ml-3 my-3"
-          options={orderbyValues}
-          style={{ minWidth: "180px" }}
-          value={orderby}
-          onChange={(e, value) => handleSortInputs(e, value, "orderby")}
-          name="orderby"
-        />
-        <Dropdown
-          selection
-          className="order"
-          options={orderValues}
-          style={{ minWidth: "120px" }}
-          value={order}
-          onChange={(e, value) => handleSortInputs(e, value, "order")}
-          name="order"
-        />
-      </div>
-      {/* End sort */}
-
-      {/* Start list */}
-      {users.map((item) => {
-        return (
-          <ListItemWithCheckboxAndEdit
-            id={item.id}
-            key={item.id}
-            onClick={() => handleEditButtonClick(item.id)}
-            onChange={() => handleSelectionChange(item.id)}
-          >
-            <SubItems data={["نام و نام خانوادگی:", item.name, "نام کاربری:", item.username]} />
-          </ListItemWithCheckboxAndEdit>
-        );
-      })}
-      {/* End list */}
-
-      <div>
-        <Pagination
-          className="pagination"
-          count={totalPages}
-          variant="outlined"
-          shape="rounded"
-          style={{ textAlign: "center" }}
-          showFirstButton
-          showLastButton
-          siblingCount={0}
-          page={page}
-          onChange={handlePageChange}
-        />
-      </div>
-    </div>
+    </Fragment>
   );
 };
 

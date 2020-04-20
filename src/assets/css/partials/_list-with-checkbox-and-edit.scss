@@ -6,6 +6,11 @@
   border-top: 1px solid #eee;
   background-color: #fff;
   border-radius: 3px;
+  transition: all 0.4s;
+
+  &:hover {
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  }
 
   .checkbox {
     flex-basis: 25px;
@@ -43,7 +48,7 @@
           font-weight: bold;
           flex: 1;
         }
-        
+
         .left {
           flex: 1;
 
