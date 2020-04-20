@@ -16,14 +16,16 @@ const Header = (props) => {
         </span>
       </div>
       <div>
-      <Link to={{pathname:'/'}}>
-        <span className="user-setting" title="تنظیمات کاربر">
-          <FontAwesomeIcon icon={faUserCog} fixedWidth />
-        </span>
-        <span className="logout" title="خروج" onClick={props.removeUserToken}>
-          <FontAwesomeIcon icon={faPowerOff} fixedWidth />
-        </span>
-      </Link>
+        <Link to={{ pathname: "/usersetting" }}>
+          <span className="user-setting" title="تنظیمات کاربر">
+            <FontAwesomeIcon icon={faUserCog} fixedWidth />
+          </span>
+        </Link>
+        <Link to={{ pathname: "/" }}>
+          <span className="logout" title="خروج" onClick={props.removeUserToken}>
+            <FontAwesomeIcon icon={faPowerOff} fixedWidth />
+          </span>
+        </Link>
       </div>
     </div>
   );

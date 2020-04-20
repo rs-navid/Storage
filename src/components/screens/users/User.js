@@ -178,8 +178,6 @@ const User = (props) => {
 
   // Save
   const handleSaveUser = async () => {
-    const reg = new RegExp("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{8,}$");
-
     if (editingUser.name.trim() === "") {
       props.showDialog({ title: "خطا", text: "نام و نام خانوادگی معتبر نمی باشد." });
     } else if (editingUser.username.trim() === "") {
@@ -191,12 +189,8 @@ const User = (props) => {
       props.showDialog({ title: "خطا", text: "کلمه عبور معتبر نمی باشد." });
     } else if (editingUser.password.trim() !== editingUser.password_confirm.trim()) {
       props.showDialog({ title: "خطا", text: "کلمات عبور وارد شده یکسان نمی باشند." });
-    } else if (editingUser.password.trim() !== "" && !reg.test(editingUser.password.trim())) {
-      props.showDialog({
-        title: "خطا",
-        text:
-          "کلمه عبور باید حداقل 8 کاراکتر و حداقل شامل یک حرف کوچک انگلیسی، یک حرف بزرگ انگلیسی، یک عدد و یکی از حروف !، @، #، $، %، ^، & یا * باشد.",
-      });
+    } else if (editingUser.password.trim() !== "" && editingUser.password.trim().length < 8) {
+      props.showDialog({ title: "خطا", text: "کلمه عبور باید حداقل 8 کاراکتر باشد." });
     } else {
       let result = null;
       if (editingUser.id === 0) {

@@ -3,6 +3,7 @@
 @import "partials/utilities";
 @import "partials/variables";
 @import "partials/mixins";
+
 @import "partials/buttons";
 @import "partials/forms";
 @import "partials/dialog";
@@ -40,6 +41,10 @@ body {
 
   &.disable-scroll {
     overflow: hidden;
+  }
+
+  .wow {
+    visibility: hidden;
   }
 
   .card {

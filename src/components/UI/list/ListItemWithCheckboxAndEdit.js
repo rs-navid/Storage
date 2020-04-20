@@ -5,18 +5,21 @@ import { Checkbox } from "semantic-ui-react";
 
 const ListItemWithCheckboxAndEdit = (props) => {
   return (
-    <div key={props.id} className="list-item d-flex align-items-center">
+    <div
+      key={props.id}
+      className="list-item d-flex align-items-center"
+      data-wow-duration="2s"
+      data-wow-delay="5s"
+    >
       <div className="checkbox">
         <Checkbox onChange={props.onChange} />
       </div>
-      <div className="info">
-        {props.children}
-        <div className="action align-left mt-2 pl-3">
-          <Button icon labelPosition="right" size="mini" onClick={props.onClick}>
-            ویرایش
-            <Icon name="edit" />
-          </Button>
-        </div>
+      <div className="info">{props.children}</div>
+      <div className="action align-left mt-2 pl-3">
+        <Button icon labelPosition="right" size="mini" onClick={props.onClick}>
+          ویرایش
+          <Icon name="edit" />
+        </Button>
       </div>
     </div>
   );

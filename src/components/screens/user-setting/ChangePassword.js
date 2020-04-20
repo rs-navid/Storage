@@ -13,20 +13,14 @@ const ChangePassword = (props) => {
   };
 
   const saveHandler = () => {
-    const reg = new RegExp("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{8,}$");
-
     if (!passwords.password) {
       props.showDialog({ title: "خطا", text: "کلمه عبور فعلی معتبر نمی باشد." });
     } else if (!passwords.newPassword || !passwords.newPasswordConfirm) {
       props.showDialog({ title: "خطا", text: "کلمه عبور جدید یا تکرار آن معتبر نمی باشد." });
     } else if (passwords.newPassword !== passwords.newPasswordConfirm) {
       props.showDialog({ title: "خطا", text: "کلمات عبور جدید یکسان نمی باشند." });
-    } else if (!reg.test(passwords.newPassword)) {
-      props.showDialog({
-        title: "خطا",
-        text:
-          "کلمه عبور باید حداقل 8 کاراکتر و حداقل شامل یک حرف کوچک انگلیسی، یک حرف بزرگ انگلیسی، یک عدد و یکی از حروف !، @، #، $، %، ^، & یا * باشد.",
-      });
+    } else if (passwords.newPassword.length < 8) {
+      props.showDialog({ title: "خطا", text: "کلمه عبور باید حداقل 8 کاراکتر باشد." });
     } else {
       props.changePassword(passwords.password, passwords.newPassword);
     }

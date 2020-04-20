@@ -139,6 +139,7 @@ const Period = (props) => {
 
   return (
     <div className="periods-screen">
+    
       {/* Start modal */}
       <Modal
         open={open}
