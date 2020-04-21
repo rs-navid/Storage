@@ -15,6 +15,7 @@ const Setting = React.lazy(() => import("../screens/setting/Setting"));
 const AdvanceSetting = React.lazy(() => import("../screens/advance-setting/AdvanceSetting"));
 const Periods = React.lazy(() => import("../screens/periods/Periods"));
 const Users = React.lazy(() => import("../screens/users/Users"));
+const Clients = React.lazy(() => import("../screens/clients/Clients"));
 
 const Layout = (props) => {
   let token = localStorage.getItem("token");
@@ -41,6 +42,7 @@ const Layout = (props) => {
               <Route exact path="/advancesetting" component={AdvanceSetting} />
               <Route exact path="/periods" component={Periods} />
               <Route exact path="/users" component={Users} />
+              <Route exact path="/clients" component={Clients} />
             </Switch>
           </Fragment>
         )}
