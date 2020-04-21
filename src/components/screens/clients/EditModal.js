@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Form, Input, TextArea } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
 
 import Modal from "../../UI/modal/Modal";
 
@@ -34,7 +35,7 @@ const EditModal = (props) => {
         }
 
         props.showDialog({ title: "ثبت", text: "مشتری با موفقیت ثبت گردید." });
-        props.loadData();
+        props.loadData(props.location.search);
       }
     }
   };
@@ -166,4 +167,4 @@ EditModal.propTypes = {
   showDialog: PropTypes.func.isRequired,
 };
 
-export default EditModal;
+export default withRouter(EditModal);

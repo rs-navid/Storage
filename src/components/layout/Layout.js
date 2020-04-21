@@ -17,6 +17,8 @@ const Periods = React.lazy(() => import("../screens/periods/Periods"));
 const Users = React.lazy(() => import("../screens/users/Users"));
 const Clients = React.lazy(() => import("../screens/clients/Clients"));
 
+const Exams = React.lazy(() => import("../screens/exams/Exams"));
+
 const Layout = (props) => {
   let token = localStorage.getItem("token");
   if (!props.user.token && token) props.setUserToken(token);
@@ -43,6 +45,7 @@ const Layout = (props) => {
               <Route exact path="/periods" component={Periods} />
               <Route exact path="/users" component={Users} />
               <Route exact path="/clients" component={Clients} />
+              <Route exact path="/exams" component={Exams} />
             </Switch>
           </Fragment>
         )}
