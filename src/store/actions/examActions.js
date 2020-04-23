@@ -10,6 +10,16 @@ export const getExams = (query) => {
   };
 };
 
+export const getFirstExam = () => {
+  return async () => {
+    const results = await axios.get(`/exam/first`);
+    if (results) {
+      return results.data;
+    }
+    return false;
+  };
+};
+
 export const getExam = (id) => {
   return async () => {
     const results = await axios.get(`/exam/${id}`);

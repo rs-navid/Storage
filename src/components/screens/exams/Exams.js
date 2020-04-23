@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Tab from "../../UI/tabular/Tabular";
 import Exam from "./Exam";
 
-const Clients = () => {
+const Exams = () => {
   useEffect(() => {
     document.title = "مدیریت آزمون ها";
     // eslint-disable-next-line
@@ -16,4 +16,4 @@ const Clients = () => {
   );
 };
 
-export default Clients;
+export default Exams;

@@ -128,6 +128,26 @@ input {
   font-family: iranyekan !important;
   direction: rtl;
 
+  &.input.left {
+    direction: ltr;
+
+    &.disabled {
+      opacity: .85;
+    }
+
+    input {
+      width: auto;
+    }
+
+    button {
+      @include bp-down(sm){
+        padding-right: 5px;
+        padding-left: 5px;
+        font-size: .9rem;
+      }
+    }
+  }
+
   input {
     text-align: right !important;
     direction: rtl !important;

@@ -16,6 +16,7 @@ const AdvanceSetting = React.lazy(() => import("../screens/advance-setting/Advan
 const Periods = React.lazy(() => import("../screens/periods/Periods"));
 const Users = React.lazy(() => import("../screens/users/Users"));
 const Clients = React.lazy(() => import("../screens/clients/Clients"));
+const Methods = React.lazy(() => import("../screens/methods/Methods"));
 
 const Exams = React.lazy(() => import("../screens/exams/Exams"));
 
@@ -46,6 +47,7 @@ const Layout = (props) => {
               <Route exact path="/users" component={Users} />
               <Route exact path="/clients" component={Clients} />
               <Route exact path="/exams" component={Exams} />
+              <Route exact path="/methods" component={Methods} />
             </Switch>
           </Fragment>
         )}

@@ -1,30 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Icon, Checkbox } from "semantic-ui-react";
-import ReactWOW from "react-wow";
+import { Button, Icon } from "semantic-ui-react";
 
-const ListItemWithCheckboxAndEdit = (props) => {
+const ListItemWithSelect = (props) => {
   return (
-    <ReactWOW animation="fadeInUp" key={props.id} duration="2s">
-      <div className="list-item d-flex align-items-center">
-        <div className="checkbox">
-          <Checkbox onChange={props.onChange} />
-        </div>
+      <div className="list-item d-flex align-items-center with-select">
         <div className="info">{props.children}</div>
         <div className="action align-left mt-2 pl-3">
           <Button icon labelPosition="right" size="mini" onClick={props.onClick}>
-            ویرایش
-            <Icon name="edit" />
+            انتخاب
+            <Icon name="hand pointer" />
           </Button>
         </div>
       </div>
-    </ReactWOW>
   );
 };
 
-ListItemWithCheckboxAndEdit.propTypes = {
+ListItemWithSelect.propTypes = {
   id: PropTypes.any.isRequired,
-  onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
@@ -62,4 +55,4 @@ SubItem.propTypes = {
   data: PropTypes.array.isRequired,
 };
 
-export default ListItemWithCheckboxAndEdit;
+export default ListItemWithSelect;

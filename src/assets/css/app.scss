@@ -45,8 +45,10 @@ body {
     overflow: hidden;
   }
 
-  .wow {
-    visibility: hidden;
+  .container {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 0px 15px;
   }
 
   .card {
@@ -57,9 +59,14 @@ body {
     // padding: 10px;
   }
 
-  .divider {
-    border-bottom: 1px solid #eee;
-    margin: 15px 0;
+  .page-wrapper {
+    font-family: iranyekan;
+    display: flex;
+    flex-wrap: wrap;
+
+    .page-content {
+      flex: 1;
+    }
   }
 
   .pagination {

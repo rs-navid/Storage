@@ -12,6 +12,14 @@
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   }
 
+  &.with-select {
+    .action {
+      @include bp-down(md) {
+        margin-right: 10px !important;
+      }
+    }
+  }
+
   .checkbox {
     flex-basis: 25px;
     padding-right: 8px;

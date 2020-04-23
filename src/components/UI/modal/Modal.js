@@ -10,7 +10,6 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { Button, Icon } from "semantic-ui-react";
 
-
 function PaperComponent(props) {
   return (
     <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
@@ -31,7 +30,7 @@ const Modal = (props) => {
       <Dialog
         disableBackdropClick
         disableEscapeKeyDown
-        maxWidth={props.maxWidth || "lg"}
+        maxWidth={props.maxWidth || "xl"}
         fullWidth={true}
         scroll="body"
         PaperComponent={PaperComponent}
@@ -45,10 +44,12 @@ const Modal = (props) => {
           {props.children}
         </DialogContent>
         <DialogActions className="modal-actions">
-          <Button icon labelPosition="right" color="blue" size="small" onClick={props.save}>
-            <Icon name="check" />
-            تایید
-          </Button>
+          {props.save ? (
+            <Button icon labelPosition="right" color="blue" size="small" onClick={props.save}>
+              <Icon name="check" />
+              تایید
+            </Button>
+          ) : null}
           <Button icon labelPosition="right" size="small" onClick={props.cancel}>
             انصراف
             <Icon name="close" />
@@ -62,7 +63,7 @@ const Modal = (props) => {
 Modal.propTypes = {
   title: PropTypes.string.isRequired,
   cancel: PropTypes.func.isRequired,
-  save: PropTypes.func.isRequired,
+  save: PropTypes.func,
   open: PropTypes.bool.isRequired,
 };
 
