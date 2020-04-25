@@ -60,9 +60,9 @@ const EditModal = (props) => {
     } else {
       let result = null;
       if (props.editingMethod.id === 0) {
-        result = await props.createMethod({...props.editingMethod, examId: props.examId} );
+        result = await props.createMethod({ ...props.editingMethod, examId: props.examId });
       } else {
-        result = await props.updateMethod({...props.editingMethod, examId : props.examId});
+        result = await props.updateMethod({ ...props.editingMethod, examId: props.examId });
       }
 
       if (result) {
@@ -114,6 +114,16 @@ const EditModal = (props) => {
         <div className="line-break"></div>
 
         <div className="field-wrapper field-50 right-50">
+          <label>روش انجام آزمون:</label>
+          <Input
+            placeholder="روش انجام آزمون"
+            type="text"
+            name="way"
+            value={props.editingMethod.way}
+            onChange={handleInput}
+          />
+        </div>
+        <div className="field-wrapper field-50 left-50">
           <label>هزینه:</label>
           <Input
             placeholder="هزینه"
@@ -123,7 +133,11 @@ const EditModal = (props) => {
             onChange={handleInput}
           />
         </div>
-        <div className="field-wrapper field-50 left-50">
+
+        <div className="clearfix"></div>
+        <div className="line-break"></div>
+
+        <div className="field-wrapper field-50 right-50">
           <label>مقدار استاندارد:</label>
           <Input
             placeholder="مقدار استاندارد"
@@ -133,15 +147,15 @@ const EditModal = (props) => {
             onChange={handleInput}
           />
         </div>
+        <div className="field-wrapper field-50 left-50">
+          <label>واحد:</label>
+          <Input placeholder="واحد" type="text" name="unit" value={props.editingMethod.unit} onChange={handleInput} />
+        </div>
 
         <div className="clearfix"></div>
         <div className="line-break"></div>
 
         <div className="field-wrapper field-50 right-50">
-          <label>واحد:</label>
-          <Input placeholder="واحد" type="text" name="unit" value={props.editingMethod.unit} onChange={handleInput} />
-        </div>
-        <div className="field-wrapper field-50 left-50">
           <label>نوع روش آزمون:</label>
           <Dropdown
             fluid
@@ -152,11 +166,7 @@ const EditModal = (props) => {
             options={methodTypeValues}
           />
         </div>
-
-        <div className="clearfix"></div>
-        <div className="line-break"></div>
-
-        <div className="field-wrapper field-50 right-50">
+        <div className="field-wrapper field-50 left-50">
           <label>نوع نقص:</label>
           <Dropdown
             placeholder="Select Frind"
@@ -168,7 +178,11 @@ const EditModal = (props) => {
             options={faultValues}
           />
         </div>
-        <div className="field-wrapper field-50 left-50">
+
+        <div className="clearfix"></div>
+        <div className="line-break"></div>
+
+        <div className="field-wrapper field-50 right-50">
           <label>پیمانکار خارجی:</label>
           <Dropdown
             fluid
@@ -179,7 +193,6 @@ const EditModal = (props) => {
             options={contractorValues}
           />
         </div>
-
         <div className="clearfix"></div>
       </Form>
     </Modal>

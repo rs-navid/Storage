@@ -24,6 +24,7 @@ import faults from "../../../configs/faults";
 const methodObject = {
   code: "",
   name: "",
+  way: "",
   id: 0,
   price: 0,
   range: "",

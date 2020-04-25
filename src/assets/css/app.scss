@@ -79,10 +79,19 @@ body {
     }
   }
 
-  .DatePicker > input {
-    padding: 10px;
-    border-radius: 0.28571429rem;
-    text-align: right;
+  .DatePicker {
+    z-index: auto;
+
+    & > input {
+      padding: 10px;
+      border-radius: 0.28571429rem;
+      text-align: right;
+    }
+
+    .DatePicker__calendarContainer,
+    .DatePicker__calendarArrow {
+      z-index: 100;
+    }
   }
 
   .modal {

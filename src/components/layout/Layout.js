@@ -17,6 +17,7 @@ const Periods = React.lazy(() => import("../screens/periods/Periods"));
 const Users = React.lazy(() => import("../screens/users/Users"));
 const Clients = React.lazy(() => import("../screens/clients/Clients"));
 const Methods = React.lazy(() => import("../screens/methods/Methods"));
+const Requests = React.lazy(() => import("../screens/request/Requests"));
 
 const Exams = React.lazy(() => import("../screens/exams/Exams"));
 
@@ -48,6 +49,7 @@ const Layout = (props) => {
               <Route exact path="/clients" component={Clients} />
               <Route exact path="/exams" component={Exams} />
               <Route exact path="/methods" component={Methods} />
+              <Route exact path="/requests" component={Requests} />
             </Switch>
           </Fragment>
         )}
