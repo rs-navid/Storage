@@ -64,7 +64,6 @@ const EditModal = (props) => {
     const date = props.editingRequest.date;
     const start = props.editingRequest.startDate;
     const end = props.editingRequest.endDate;
-    console.log(props.editingRequest);
 
     if (!moment(`${date.year}/${date.month}/${date.day}`, "jYYYY/jM/jD")) {
       props.showDialog({ title: "خطا", text: "تاریخ درخواست معتبر نمی باشد." });
@@ -88,6 +87,7 @@ const EditModal = (props) => {
         if (result.data) {
           props.setEditingRequest({
             ...props.editingRequest,
+            num: result.data.num,
             id: result.data.id,
           });
         }

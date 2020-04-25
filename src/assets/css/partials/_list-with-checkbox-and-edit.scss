@@ -70,9 +70,21 @@
 
   .action {
     text-align: right;
+
     @include bp-down(md) {
       width: 100%;
       margin-right: 55px;
+    }
+
+    .break {
+      @include bp-down(md) {
+        display: inline-block;
+      }
+    }
+
+    button {
+      width: 120px;
+      margin: 5px;
     }
   }
 }

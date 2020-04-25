@@ -7,10 +7,11 @@ import Pagination from "@material-ui/lab/Pagination";
 import moment from "jalali-moment";
 import { utils } from "react-modern-calendar-datepicker";
 
-import ListItemWithCheckboxAndEdit, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEdit";
+import ListItemWithCheckboxAndEditAndOther, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEditAndOther";
 import Sidemenu from "../../UI/sidemenu/Sidemenu";
 
 import EditModal from "./EditModal";
+import SamplesModal from "./SamplesModal";
 import Filter from "./Filter";
 
 import {
@@ -56,6 +57,8 @@ const Request = (props) => {
   const [open, setOpen] = useState(false);
   const [pageInfo, setPageInfo] = useState({ totalPages: 0, page: 1 });
   const [editingRequest, setEditingRequest] = useState(requestObject);
+  const [modalSampleStatus, setModalSampleStatus] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState(0);
 
   // Component did mount
   useEffect(() => {
@@ -70,7 +73,7 @@ const Request = (props) => {
 
     setFilter(query);
     loadData(qs.stringify(query));
-    replaceHistory(query)
+    replaceHistory(query);
 
     setPageInfo({
       ...pageInfo,
@@ -176,6 +179,12 @@ const Request = (props) => {
     loadData(qs.stringify(query));
   };
 
+  // Handle samples button click
+  const handleSampleClick = (id) => {
+    setSelectedRequest(id);
+    setModalSampleStatus(true);
+  }
+
   return (
     <Fragment>
       {/* Start modal */}
@@ -190,6 +199,14 @@ const Request = (props) => {
         showDialog={props.showDialog}
       />
       {/* End modal */}
+
+      {/* Start samples modal */}
+      <SamplesModal
+        open={modalSampleStatus}
+        setOpen={setModalSampleStatus}
+        requestId= {selectedRequest}
+      />
+      {/* End samples modal */}
 
       {/* Start actions */}
       <div className="actions pt-4 pb-5 align-left">
@@ -222,15 +239,18 @@ const Request = (props) => {
             const date = moment.from(item.date, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD");
 
             return (
-              <ListItemWithCheckboxAndEdit
+              <ListItemWithCheckboxAndEditAndOther
                 id={item.id}
                 key={item.id}
                 onClick={() => handleEditButtonClick(item.id)}
                 onChange={() => handleSelectionChange(item.id)}
+                onOther = {() => handleSampleClick(item.id)}
+                otherTitle="نمونه ها"
+                otherIcon="list layout"
               >
                 <SubItems data={["شماره درخواست:", item.num, "تاریخ درخواست:", date]} />
                 <SubItems data={["نام مشتری:", item["client.name"], "نام درخواست کننده:", item.requester]} />
-              </ListItemWithCheckboxAndEdit>
+              </ListItemWithCheckboxAndEditAndOther>
             );
           })}
           {/* End list */}
