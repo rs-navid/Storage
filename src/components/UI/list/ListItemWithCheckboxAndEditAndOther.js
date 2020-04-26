@@ -5,7 +5,7 @@ import ReactWOW from "react-wow";
 
 const ListItemWithCheckboxAndEdit = (props) => {
   return (
-    <ReactWOW animation="fadeInUp" key={props.id} duration="2s">
+    // <ReactWOW animation="fadeInUp" key={props.id} duration="2s">
       <div className="list-item d-flex align-items-center">
         <div className="checkbox">
           <Checkbox onChange={props.onChange} />
@@ -23,7 +23,7 @@ const ListItemWithCheckboxAndEdit = (props) => {
           </Button>
         </div>
       </div>
-    </ReactWOW>
+    // {/* </ReactWOW> */}
   );
 };
 

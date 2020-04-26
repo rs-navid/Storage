@@ -187,3 +187,10 @@ input {
     left: unset !important;
   }
 }
+
+.input-left {
+  input {
+    // text-align: left !important;
+    direction: ltr !important;
+  }
+}

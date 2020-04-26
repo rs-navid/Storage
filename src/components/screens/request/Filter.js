@@ -21,6 +21,7 @@ const Filter = (props) => {
       ...query,
       name: props.filter.name,
       num: props.filter.num,
+      code: props.filter.code,
       order: props.filter.order,
       orderby: props.filter.orderby,
     };
@@ -67,6 +68,10 @@ const Filter = (props) => {
           <div className="field-wrapper field-100 wrap">
             <label>نام مشتری:</label>
             <Input placeholder="نام مشتری" type="text" name="name" value={props.filter.name} onChange={handleSearchInputs} />
+          </div>
+          <div className="field-wrapper field-100 wrap">
+            <label>کد شناسایی نمونه:</label>
+            <Input placeholder="کد شناسایی نمونه" type="text" name="code" value={props.filter.code} onChange={handleSearchInputs} />
           </div>
           <div className="clearfix"></div>
           <div className="line-break"></div>

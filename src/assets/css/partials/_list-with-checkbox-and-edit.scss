@@ -9,7 +9,7 @@
   transition: all 0.4s;
 
   &:hover {
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    // box-shadow: 0 2px 8px #bbb;
   }
 
   &.with-select {
@@ -27,6 +27,14 @@
 
     @include bp-down(md) {
       margin-top: 20px;
+    }
+
+    @include bp-down(sm) {
+      flex-basis: 100%;
+      text-align: center;
+      margin-top: 10px;
+      padding: 0;
+      padding-right: 3px;
     }
   }
 
@@ -51,17 +59,33 @@
           flex-basis: 100%;
         }
 
+        @include bp-down(sm) {
+          flex-wrap: wrap;
+          padding: 5px;
+        }
+        
         .right {
           text-align: right;
           font-weight: bold;
           flex: 1;
-        }
 
+          @include bp-down(sm) {
+            text-align: center;
+            flex-basis: 100%;
+          }
+        }
+        
         .left {
           flex: 1;
-
+          
           @include bp-down(md) {
             text-align: left;
+          }
+          
+          @include bp-down(sm) {
+            text-align: center;
+            flex-basis: 100%;
+            padding-top: 3px;
           }
         }
       }
@@ -73,7 +97,14 @@
 
     @include bp-down(md) {
       width: 100%;
-      margin-right: 55px;
+      margin-right: 45px;
+    }
+
+    @include bp-down(sm) {
+      margin: 0;
+      margin-top: 3px;
+      text-align: center;
+      padding: 0;
     }
 
     .break {
@@ -84,7 +115,11 @@
 
     button {
       width: 120px;
-      margin: 5px;
+      margin: 3px;
+
+      @include bp-down(sm) {
+        width: 110px;
+      }
     }
   }
 }

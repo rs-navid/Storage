@@ -10,9 +10,9 @@ export const getSamples = (requestId) => {
   };
 };
 
-export const getRequest = (id) => {
+export const getSample = (id) => {
   return async () => {
-    const results = await axios.get(`/request/${id}`);
+    const results = await axios.get(`/sample/${id}`);
     if (results) {
       return results.data;
     }
@@ -20,9 +20,9 @@ export const getRequest = (id) => {
   };
 };
 
-export const deleteRequests = (ids) => {
+export const deleteSamples = (ids) => {
   return async () => {
-    const results = await axios.delete(`/request`, { data: { ids: ids } });
+    const results = await axios.delete(`/sample`, { data: { ids: ids } });
     if (results) {
       return true;
     }
@@ -31,10 +31,10 @@ export const deleteRequests = (ids) => {
   };
 };
 
-export const createRequest = (request) => {
+export const createSample = (sample) => {
   return async () => {
-    const result = await axios.post("/request", {
-      ...request,
+    const result = await axios.post("/sample", {
+      ...sample,
     });
     if (!result) {
       return false;
@@ -43,10 +43,10 @@ export const createRequest = (request) => {
   };
 };
 
-export const updateRequest = (request) => {
+export const updateSample = (sample) => {
   return async () => {
-    const result = await axios.put(`/request/${request.id}`, {
-      ...request,
+    const result = await axios.put(`/sample/${sample.id}`, {
+      ...sample,
     });
     if (!result) {
       return false;

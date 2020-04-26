@@ -205,6 +205,7 @@ const Request = (props) => {
         open={modalSampleStatus}
         setOpen={setModalSampleStatus}
         requestId= {selectedRequest}
+        setRequestId = {setSelectedRequest}
       />
       {/* End samples modal */}
 
