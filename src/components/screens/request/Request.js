@@ -35,7 +35,7 @@ const orderValues = [
 ];
 
 const requestObject = {
-  num: "",
+  num: 0,
   date: utils("fa").getToday(),
   startDate: utils("fa").getToday(),
   endDate: utils("fa").getToday(),

@@ -37,7 +37,7 @@ const SamplesModal = (props) => {
 
   // Handle on new click
   const handleNewButtonClick = () => {
-    setSelectedSample(0);
+    selectedSample === 0 ? setSelectedSample("") : setSelectedSample(0);
     setSampleModalStatus(true);
   };
 
