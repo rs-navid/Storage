@@ -6,6 +6,7 @@ import { Button, Icon } from "semantic-ui-react";
 import Modal from "../../UI/modal/Modal";
 import ListItemWithCheckboxAndEditAndOther, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEditAndOther";
 import SampleModal from "./SampleModal";
+import MethodsModal from "./MethodsModal";
 
 import { getSamples, deleteSamples } from "../../../store/actions/sampleActions";
 import { showDialog } from "../../../store/actions/dialogActions";
@@ -14,10 +15,14 @@ const SamplesModal = (props) => {
   const [samples, setSamples] = useState([]);
   const [selectedSample, setSelectedSample] = useState(0);
   const [sampleModalStatus, setSampleModalStatus] = useState(false);
+  const [MethodsModalStatus, setMethodsModalStatus] = useState(false);
   const [selectedSamples, setSelectedSamples] = useState([]);
+  const [periodKey, setPeriodKey] = useState("-");
 
   useEffect(() => {
-    loadSamples();
+    if (props.open) {
+      loadSamples();
+    }
   }, [props.requestId]);
 
   // Load samples
@@ -25,7 +30,9 @@ const SamplesModal = (props) => {
     const results = await props.getSamples(props.requestId);
 
     if (results) {
-      setSamples(results);
+      setSamples(results.rows);
+      setPeriodKey(results.key);
+      setSelectedSamples([]);
     }
   };
 
@@ -37,7 +44,7 @@ const SamplesModal = (props) => {
 
   // Handle on new click
   const handleNewButtonClick = () => {
-    selectedSample === 0 ? setSelectedSample("") : setSelectedSample(0);
+    setSelectedSample(0);
     setSampleModalStatus(true);
   };
 
@@ -75,6 +82,12 @@ const SamplesModal = (props) => {
     }
   };
 
+  // Handle methods button click
+  const handleMethodClick = (id) => {
+    setSelectedSample(id);
+    setMethodsModalStatus(true);
+  };
+
   return (
     <Fragment>
       <Modal
@@ -108,11 +121,11 @@ const SamplesModal = (props) => {
                 key={item.id}
                 onClick={() => handleEditButtonClick(item.id)}
                 onChange={() => handleSelectionChange(item.id)}
-                // onOther = {() => handleMethodClick(item.id)}
+                onOther={() => handleMethodClick(item.id)}
                 otherTitle="آزمون ها"
                 otherIcon="list layout"
               >
-                <SubItems data={["کد شناسایی نمونه:", item.num, "نام نمونه:", item.name]} />
+                <SubItems data={["کد شناسایی نمونه:", periodKey + "-" + item.num, "نام نمونه:", item.name]} />
                 <SubItems data={["نام تجاری:", item.businnessName, "نام شرکت:", item.company]} />
               </ListItemWithCheckboxAndEditAndOther>
             );
@@ -120,12 +133,21 @@ const SamplesModal = (props) => {
         </div>
         {/* End list */}
       </Modal>
+
       <SampleModal
         setOpen={setSampleModalStatus}
         open={sampleModalStatus}
         selectedSample={selectedSample}
         requestId={props.requestId}
         loadSamples={loadSamples}
+        setSelectedSample = {setSelectedSample}
+      />
+
+      <MethodsModal
+        setOpen={setMethodsModalStatus}
+        open={MethodsModalStatus}
+        sampleId={selectedSample}
+        setSampleId={setSelectedSample}
       />
     </Fragment>
   );

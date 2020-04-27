@@ -54,3 +54,36 @@ export const updateSample = (sample) => {
     return true;
   };
 };
+
+export const getSampleMethods = (id) => {
+  return async () => {
+    const result = await axios.get(`/samplemethod/getbysampleid/${id}`);
+    if (!result) {
+      return false;
+    }
+    return result.data;
+  };
+};
+
+export const deleteMethods = (ids) => {
+  return async () => {
+    const results = await axios.delete(`/samplemethod`, { data: { ids: ids } });
+    if (results) {
+      return true;
+    }
+
+    return false;
+  };
+};
+
+export const createMethods = (sampleId, ids) => {
+  return async () => {
+    const result = await axios.post(`/samplemethod/${sampleId}`, {
+      methods: ids,
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};

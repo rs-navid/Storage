@@ -57,6 +57,7 @@ const SampleModal = (props) => {
     } else {
       setEditingSample(sampleObject);
     }
+    // eslint-disable-next-line
   }, [props.selectedSample]);
 
   // Load samples
@@ -79,7 +80,6 @@ const SampleModal = (props) => {
 
   // Handle input vals
   const handleInput = (e) => {
-    console.log(editingSample);
     setEditingSample({
       ...editingSample,
       [e.target.name]: e.target.value,
@@ -131,6 +131,7 @@ const SampleModal = (props) => {
       open={props.open}
       title={editingSample.id === 0 ? "نمونه جدید" : "ویرایش نمونه"}
       cancel={() => {
+        props.setSelectedSample(0);
         props.setOpen(false);
       }}
       save={handleSaveSample}
@@ -417,6 +418,7 @@ const SampleModal = (props) => {
 
 SampleModal.propTypes = {
   selectedSample: PropTypes.number.isRequired,
+  setSelectedSample: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
   requestId: PropTypes.number.isRequired,
