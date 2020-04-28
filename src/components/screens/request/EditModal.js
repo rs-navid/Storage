@@ -171,6 +171,7 @@ const EditModal = (props) => {
             placeholder="مشتری"
             onChange={handleClientChange}
             defaultValue={defaultClient}
+            className="WindowedSelect"
           />
         </div>
         <div className="field-wrapper field-50 left-50">

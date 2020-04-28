@@ -121,3 +121,9 @@ body {
     }
   }
 }
+
+.WindowedSelect {
+  div[class$="menu"]{
+    font-size: .85rem;
+  }
+}

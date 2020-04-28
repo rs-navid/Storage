@@ -6,6 +6,7 @@ import { Button, Icon } from "semantic-ui-react";
 import Modal from "../../UI/modal/Modal";
 import ListItemWithCheckboxAndEdit, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEdit";
 import AddMethodsModal from "./AddMethodsModal";
+import PriceModal from "./PriceModal";
 
 import { getSampleMethods, deleteMethods } from "../../../store/actions/sampleActions";
 import { showDialog } from "../../../store/actions/dialogActions";
@@ -15,6 +16,8 @@ const MethodsModal = (props) => {
   const [methods, setMethods] = useState([]);
   const [selectedMethods, setSelectedMethods] = useState([]);
   const [addModalStatus, setAddModalStatus] = useState(false);
+  const [priceModalStatus, setPriceModalStatus] = useState(false);
+  const [selectedMethod, setSelectedMethod] = useState({ id: 0, price: 0 });
 
   useEffect(() => {
     if (props.open) {
@@ -33,9 +36,10 @@ const MethodsModal = (props) => {
   };
 
   // Handle on edit click
-  const handleEditButtonClick = (id) => {
-    // setSelectedSample(id);
-    // setAddModalStatus(true);
+  const handlePriceButtonClick = (id, index) => {
+    console.log(methods[index]);
+    setSelectedMethod({ id, price: methods[index].sample_method.price });
+    setPriceModalStatus(true);
   };
 
   // Handle on new click
@@ -77,6 +81,11 @@ const MethodsModal = (props) => {
     }
   };
 
+  // Thousands separator
+  const thousands_separators = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
     <Fragment>
       <Modal
@@ -88,13 +97,6 @@ const MethodsModal = (props) => {
         }}
         // save={handleSaveRequest}
       >
-        <AddMethodsModal
-          open={addModalStatus}
-          setOpen={setAddModalStatus}
-          sampleId={props.sampleId}
-          loadMethods={loadMethods}
-        />
-
         {/* Start actions */}
         <div className="actions pt-4 pb-5 align-left">
           <Button icon labelPosition="right" color="blue" size="tiny" onClick={confirmDelete}>
@@ -110,13 +112,15 @@ const MethodsModal = (props) => {
 
         {/* Start list */}
         <div style={{ height: "350px", overflowY: "auto" }} className="container">
-          {methods.map((item) => {
+          {methods.map((item, index) => {
             return (
               <ListItemWithCheckboxAndEdit
                 id={item.sample_method.id}
                 key={item.sample_method.id}
-                onClick={() => handleEditButtonClick(item.sample_method.id)}
+                onClick={() => handlePriceButtonClick(item.sample_method.id, index)}
                 onChange={() => handleSelectionChange(item.sample_method.id)}
+                buttonText="هزینه"
+                buttonIcon="dollar"
               >
                 <SubItems data={["کد آزمون:", item.exam.code, "نام آزمون:", item.exam.name]} />
                 <SubItems data={["کد روش آزمون:", item.code, "نام روش آزمون:", item.name]} />
@@ -125,7 +129,7 @@ const MethodsModal = (props) => {
                     "نوع آزمون:",
                     methodTypes[item.methodTypeId - 1].name,
                     "هزینه:",
-                    item.sample_method.price + " ریال",
+                    thousands_separators(item.sample_method.price) + " ریال",
                   ]}
                 />
               </ListItemWithCheckboxAndEdit>
@@ -134,6 +138,21 @@ const MethodsModal = (props) => {
         </div>
         {/* End list */}
       </Modal>
+
+      <AddMethodsModal
+        open={addModalStatus}
+        setOpen={setAddModalStatus}
+        sampleId={props.sampleId}
+        loadMethods={loadMethods}
+      />
+
+      <PriceModal
+        open={priceModalStatus}
+        setOpen={setPriceModalStatus}
+        id={selectedMethod.id}
+        price={selectedMethod.price}
+        loadData={loadMethods}
+      />
     </Fragment>
   );
 };

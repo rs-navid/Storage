@@ -6,19 +6,20 @@ import ReactWOW from "react-wow";
 const ListItemWithCheckboxAndEdit = (props) => {
   return (
     // <ReactWOW animation="fadeInUp" key={props.id} duration="2s">
-      <div className="list-item d-flex align-items-center">
-        <div className="checkbox">
-          <Checkbox onChange={props.onChange} />
-        </div>
-        <div className="info">{props.children}</div>
-        {!props.hideAction ? (
+    <div className="list-item d-flex align-items-center">
+      <div className="checkbox">
+        <Checkbox onChange={props.onChange} />
+      </div>
+      <div className="info">{props.children}</div>
+      {!props.hideAction ? (
         <div className="action align-left mt-2 pl-3">
           <Button icon labelPosition="right" size="mini" onClick={props.onClick}>
-            ویرایش
-            <Icon name="edit" />
+            {props.buttonText ? props.buttonText : "ویرایش"}
+            <Icon name={props.buttonIcon ? props.buttonIcon : "edit"} />
           </Button>
-        </div>) : null}
-      </div>
+        </div>
+      ) : null}
+    </div>
     // </ReactWOW>
   );
 };

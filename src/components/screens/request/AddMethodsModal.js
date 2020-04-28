@@ -18,6 +18,7 @@ const AddMethodsModal = (props) => {
   const [exams, setexams] = useState([]);
   const [methods, setMethods] = useState([]);
   const [selectedMethods, setSelectedMethods] = useState([]);
+  const [defaultExam, setDefaultExam] = useState(null);
 
   useEffect(() => {
     loadExams();
@@ -45,6 +46,7 @@ const AddMethodsModal = (props) => {
   const handleExamChange = async (data) => {
     const results = await props.getMethodsByExamId(data.value);
     setSelectedMethods([]);
+    setDefaultExam(exams.find(exam=>exam.value === data.value));
 
     if (results) {
       setMethods(results);
@@ -67,10 +69,10 @@ const AddMethodsModal = (props) => {
   // Handle save
   const handleSave = async () => {
     if (selectedMethods.length > 0) {
-      console.log('hereeeeeeeeee');
       const result = await props.createMethods(props.sampleId, selectedMethods);
 
       if (result) {
+        props.showDialog({ title: "ثبت", text: "آزمون ها با موفقیت افزوده شدند." });
         props.loadMethods();
       }
     }
@@ -88,7 +90,7 @@ const AddMethodsModal = (props) => {
       <Form>
         <div className="field-wrapper field-100">
           <label>روش آزمون:</label>
-          <WindowedSelect options={exams} placeholder="روش آزمون" onChange={handleExamChange} />
+          <WindowedSelect options={exams} placeholder="روش آزمون" onChange={handleExamChange} defaultValue={defaultExam} className="WindowedSelect"/>
         </div>
 
         <div className="clearfix"></div>

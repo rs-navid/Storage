@@ -87,3 +87,15 @@ export const createMethods = (sampleId, ids) => {
     return result;
   };
 };
+
+export const updateMethodPrice = (id, price) => {
+  return async () => {
+    const result = await axios.put(`/samplemethod/${id}`, {
+      price: price,
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
