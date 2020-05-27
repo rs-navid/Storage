@@ -125,8 +125,9 @@ const SamplesModal = (props) => {
                 otherTitle="آزمون ها"
                 otherIcon="list layout"
               >
-                <SubItems data={["کد شناسایی نمونه:", periodKey + "-" + item.num, "نام نمونه:", item.name]} />
+                <SubItems data={["کد شناسایی نمونه:", "S" + periodKey + "-" + item.num, "نام نمونه:", item.name]} />
                 <SubItems data={["نام تجاری:", item.businnessName, "نام شرکت:", item.company]} />
+                <SubItems data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "", ""]} />
               </ListItemWithCheckboxAndEditAndOther>
             );
           })}
@@ -140,7 +141,7 @@ const SamplesModal = (props) => {
         selectedSample={selectedSample}
         requestId={props.requestId}
         loadSamples={loadSamples}
-        setSelectedSample = {setSelectedSample}
+        setSelectedSample={setSelectedSample}
       />
 
       <MethodsModal

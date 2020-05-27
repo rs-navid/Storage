@@ -14,6 +14,14 @@ const Filter = (props) => {
     });
   };
 
+  // Handle search status change
+  const handleSearchStatus= (e, { value }, target) => {
+    props.setFilter({
+      ...props.filter,
+      [target]: value,
+    });
+  };
+
   // Handle search click
   const handleSearchClick = () => {
     let query = qs.parse(props.location.search);
@@ -22,6 +30,7 @@ const Filter = (props) => {
       name: props.filter.name,
       num: props.filter.num,
       code: props.filter.code,
+      status: props.filter.status,
       order: props.filter.order,
       orderby: props.filter.orderby,
     };
@@ -63,16 +72,50 @@ const Filter = (props) => {
         <div className="search-wrapper">
           <div className="field-wrapper field-100 wrap">
             <label>شماره درخواست:</label>
-            <Input placeholder="شماره درخواست" type="text" name="num" value={props.filter.num} onChange={handleSearchInputs} />
+            <Input
+              placeholder="شماره درخواست"
+              type="text"
+              name="num"
+              value={props.filter.num}
+              onChange={handleSearchInputs}
+            />
           </div>
           <div className="field-wrapper field-100 wrap">
             <label>نام مشتری:</label>
-            <Input placeholder="نام مشتری" type="text" name="name" value={props.filter.name} onChange={handleSearchInputs} />
+            <Input
+              placeholder="نام مشتری"
+              type="text"
+              name="name"
+              value={props.filter.name}
+              onChange={handleSearchInputs}
+            />
           </div>
           <div className="field-wrapper field-100 wrap">
             <label>کد شناسایی نمونه:</label>
-            <Input placeholder="کد شناسایی نمونه" type="text" name="code" value={props.filter.code} onChange={handleSearchInputs} />
+            <Input
+              placeholder="کد شناسایی نمونه"
+              type="text"
+              name="code"
+              value={props.filter.code}
+              onChange={handleSearchInputs}
+            />
           </div>
+          <div className="clearfix"></div>
+          <div className="line-break"></div>
+          <div className="field-wrapper field-100 wrap">
+            <label>وضعیت:</label>
+            <Dropdown
+            selection
+            fluid
+            className="order"
+            options={props.statusValues}
+            style={{ minWidth: "120px" }}
+            value={props.filter.status}
+            onChange={(e, value) => handleSearchStatus(e, value, "status")}
+            name="order"
+          />
+          </div>
+          
           <div className="clearfix"></div>
           <div className="line-break"></div>
           <div className="search-button align-left">
@@ -118,6 +161,7 @@ const Filter = (props) => {
 Filter.propTypes = {
   orderbyValues: PropTypes.array.isRequired,
   orderValues: PropTypes.array.isRequired,
+  statusValues: PropTypes.array.isRequired,
   filter: PropTypes.object.isRequired,
   setFilter: PropTypes.func.isRequired,
   replaceHistory: PropTypes.func.isRequired,

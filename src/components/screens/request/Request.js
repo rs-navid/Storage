@@ -26,12 +26,18 @@ import { showDialog } from "../../../store/actions/dialogActions";
 const orderbyValues = [
   { key: 1, text: "پیش فرض", value: "id" },
   { key: 2, text: "شماره درخواست", value: "num" },
-  { key: 3, text: "نام مشتری", value: "name" },
+  { key: 3, text: "تاریخ درخواست", value: "date" },
 ];
 
 const orderValues = [
   { key: 1, text: "صعودی", value: "asc" },
   { key: 2, text: "نزولی", value: "desc" },
+];
+
+const statusValues = [
+  { key: 1, text: "همه", value: "all" },
+  { key: 2, text: "اتمام", value: "answered" },
+  { key: 3, text: "ناتمام", value: "unanswered" },
 ];
 
 const requestObject = {
@@ -49,6 +55,8 @@ const Request = (props) => {
   const [filter, setFilter] = useState({
     num: "",
     name: "",
+    code: "",
+    status: "all",
     orderby: orderbyValues[1].value,
     order: orderValues[1].value,
   });
@@ -67,8 +75,10 @@ const Request = (props) => {
       ...query,
       name: query.name || "",
       num: query.num || "",
+      code: query.code || "",
+      status: query.status || "all",
       order: ["asc", "desc"].includes(query.order) ? query.order : "desc",
-      orderby: ["id", "name", "num"].includes(query.orderby) ? query.orderby : "num",
+      orderby: ["id", "date", "num"].includes(query.orderby) ? query.orderby : "num",
     };
 
     setFilter(query);
@@ -89,6 +99,7 @@ const Request = (props) => {
     const results = await props.getRequests(query);
 
     if (results) {
+      console.log(results.rows);
       setRequests(results.rows);
       setPageInfo({
         ...pageInfo,
@@ -183,7 +194,7 @@ const Request = (props) => {
   const handleSampleClick = (id) => {
     setSelectedRequest(id);
     setModalSampleStatus(true);
-  }
+  };
 
   return (
     <Fragment>
@@ -204,8 +215,8 @@ const Request = (props) => {
       <SamplesModal
         open={modalSampleStatus}
         setOpen={setModalSampleStatus}
-        requestId= {selectedRequest}
-        setRequestId = {setSelectedRequest}
+        requestId={selectedRequest}
+        setRequestId={setSelectedRequest}
       />
       {/* End samples modal */}
 
@@ -227,6 +238,7 @@ const Request = (props) => {
           <Filter
             orderbyValues={orderbyValues}
             orderValues={orderValues}
+            statusValues={statusValues}
             filter={filter}
             setFilter={setFilter}
             replaceHistory={replaceHistory}
@@ -245,12 +257,13 @@ const Request = (props) => {
                 key={item.id}
                 onClick={() => handleEditButtonClick(item.id)}
                 onChange={() => handleSelectionChange(item.id)}
-                onOther = {() => handleSampleClick(item.id)}
+                onOther={() => handleSampleClick(item.id)}
                 otherTitle="نمونه ها"
                 otherIcon="list layout"
               >
                 <SubItems data={["شماره درخواست:", item.num, "تاریخ درخواست:", date]} />
                 <SubItems data={["نام مشتری:", item["client.name"], "نام درخواست کننده:", item.requester]} />
+                <SubItems data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "", ""]} />
               </ListItemWithCheckboxAndEditAndOther>
             );
           })}

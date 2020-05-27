@@ -132,6 +132,14 @@ const MethodsModal = (props) => {
                     thousands_separators(item.sample_method.price) + " ریال",
                   ]}
                 />
+                <SubItems
+                  data={[
+                    "نتیجه:",
+                    item.sample_method.result ? item.sample_method.result : "",
+                    "",
+                    "",
+                  ]}
+                />
               </ListItemWithCheckboxAndEdit>
             );
           })}
