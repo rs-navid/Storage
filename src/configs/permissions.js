@@ -7,8 +7,8 @@ import {
   faVials,
   faCopy,
   faRestroom,
+  faFlask,
 } from "@fortawesome/free-solid-svg-icons";
-
 
 const menu = [
   {
@@ -68,7 +68,45 @@ const menu = [
     type: "sep",
     container: [500, 550, 600],
   },
+  {
+    id: 700,
+    text: "نتایج میکروبی",
+    icon: faFlask,
+    path: "/microbilaresults",
+    search: "type=1&title=میکروبی",
+  },
+  {
+    id: 710,
+    text: "نتایج شیمیایی",
+    icon: faFlask,
+    path: "/chemicalresults",
+    search: "type=2&title=شیمیایی",
+  },
+  {
+    id: 720,
+    text: "نتایج سلولزی",
+    icon: faFlask,
+    path: "/celluloseresults",
+    search: "type=3&title=سلولزی",
+  },
+  {
+    id: 730,
+    text: "نتایج بسته بندی",
+    icon: faFlask,
+    path: "/packingresults",
+    search: "type=4&title=بسته بندی",
+  },
+  {
+    id: 740,
+    text: "نتایج محیط زیست",
+    icon: faFlask,
+    path: "/environmentresults",
+    search: "type=5&title=محیط زیست",
+  },
+  {
+    type: "sep",
+    container: [700, 710, 720, 730, 740],
+  },
 ];
-
 
 export default menu;

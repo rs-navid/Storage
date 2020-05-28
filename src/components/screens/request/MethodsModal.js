@@ -23,6 +23,7 @@ const MethodsModal = (props) => {
     if (props.open) {
       loadMethods();
     }
+    // eslint-disable-next-line
   }, [props.sampleId]);
 
   // Load samples

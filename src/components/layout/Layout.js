@@ -18,6 +18,11 @@ const Users = React.lazy(() => import("../screens/users/Users"));
 const Clients = React.lazy(() => import("../screens/clients/Clients"));
 const Methods = React.lazy(() => import("../screens/methods/Methods"));
 const Requests = React.lazy(() => import("../screens/request/Requests"));
+const Results = React.lazy(() => import("../screens/results/Results"));
+const Results1 = React.lazy(() => import("../screens/results/Results"));
+const Results2 = React.lazy(() => import("../screens/results/Results"));
+const Results3 = React.lazy(() => import("../screens/results/Results"));
+const Results4 = React.lazy(() => import("../screens/results/Results"));
 
 const Exams = React.lazy(() => import("../screens/exams/Exams"));
 
@@ -50,6 +55,11 @@ const Layout = (props) => {
               <Route exact path="/exams" component={Exams} />
               <Route exact path="/methods" component={Methods} />
               <Route exact path="/requests" component={Requests} />
+              <Route exact path="/microbilaresults" component={Results} />
+              <Route exact path="/chemicalresults" component={Results1} />
+              <Route exact path="/celluloseresults" component={Results2} />
+              <Route exact path="/packingresults" component={Results3} />
+              <Route exact path="/environmentresults" component={Results4} />
             </Switch>
           </Fragment>
         )}

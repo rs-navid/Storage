@@ -56,7 +56,7 @@ const Sidebar = (props) => {
             } else {
               if (props.permissions.includes(item.id)) {
                 return (
-                  <Link to={{ pathname: item.path }} key={index} onClick={handleClose}>
+                  <Link to={{ pathname: item.path, search:`?${item.search ? item.search : ""}` }} key={index} onClick={handleClose}>
                     <li className="item">
                       <FontAwesomeIcon icon={item.icon} fixedWidth className="icon" />
                       <div>{item.text}</div>

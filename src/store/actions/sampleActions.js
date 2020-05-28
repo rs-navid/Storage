@@ -10,6 +10,16 @@ export const getSamples = (requestId) => {
   };
 };
 
+export const getSamplesByType = (requestId, type) => {
+  return async () => {
+    const results = await axios.post(`/sample/getallbytype/${requestId}`, { type });
+    if (results) {
+      return results.data;
+    }
+    return false;
+  };
+};
+
 export const getSample = (id) => {
   return async () => {
     const results = await axios.get(`/sample/${id}`);
@@ -58,6 +68,16 @@ export const updateSample = (sample) => {
 export const getSampleMethods = (id) => {
   return async () => {
     const result = await axios.get(`/samplemethod/getbysampleid/${id}`);
+    if (!result) {
+      return false;
+    }
+    return result.data;
+  };
+};
+
+export const getSampleMethodsByType = (id, type) => {
+  return async () => {
+    const result = await axios.post(`/samplemethod/getbysampleidandtype/${id}`, { type });
     if (!result) {
       return false;
     }

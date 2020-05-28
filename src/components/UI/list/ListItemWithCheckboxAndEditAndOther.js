@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Icon, Checkbox } from "semantic-ui-react";
-import ReactWOW from "react-wow";
+// import ReactWOW from "react-wow";
 
 const ListItemWithCheckboxAndEdit = (props) => {
   return (

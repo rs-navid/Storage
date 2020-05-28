@@ -23,6 +23,7 @@ const SamplesModal = (props) => {
     if (props.open) {
       loadSamples();
     }
+    // eslint-disable-next-line
   }, [props.requestId]);
 
   // Load samples

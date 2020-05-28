@@ -8,8 +8,8 @@ const ListItemWithSelect = (props) => {
         <div className="info">{props.children}</div>
         <div className="action align-left mt-2 pl-3">
           <Button icon labelPosition="right" size="mini" onClick={props.onClick}>
-            انتخاب
-            <Icon name="hand pointer" />
+            {props.title ? props.title : "انتخاب"}
+            <Icon name={props.icon ? props.icon : "hand pointer"} />
           </Button>
         </div>
       </div>

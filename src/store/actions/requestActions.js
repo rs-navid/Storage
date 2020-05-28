@@ -10,6 +10,16 @@ export const getRequests = (query) => {
   };
 };
 
+export const getRequestsByType = (query, type) => {
+  return async () => {
+    const results = await axios.post(`/request/bytype${type}?${query}`, { type });
+    if (results) {
+      return results.data;
+    }
+    return false;
+  };
+};
+
 export const getRequest = (id) => {
   return async () => {
     const results = await axios.get(`/request/${id}`);
