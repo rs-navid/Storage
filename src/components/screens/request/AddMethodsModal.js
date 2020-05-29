@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Form } from "semantic-ui-react";
 import WindowedSelect from "react-windowed-select";
+import { withRouter } from "react-router-dom";
 
 import Modal from "../../UI/modal/Modal";
 import ListItemWithCheckboxAndEdit, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEdit";
@@ -46,7 +47,7 @@ const AddMethodsModal = (props) => {
   const handleExamChange = async (data) => {
     const results = await props.getMethodsByExamId(data.value);
     setSelectedMethods([]);
-    setDefaultExam(exams.find(exam=>exam.value === data.value));
+    setDefaultExam(exams.find((exam) => exam.value === data.value));
 
     if (results) {
       setMethods(results);
@@ -74,6 +75,8 @@ const AddMethodsModal = (props) => {
       if (result) {
         props.showDialog({ title: "ثبت", text: "آزمون ها با موفقیت افزوده شدند." });
         props.loadMethods();
+        props.loadRequests(props.location.search);
+        props.loadSamples();
       }
     }
   };
@@ -90,7 +93,13 @@ const AddMethodsModal = (props) => {
       <Form>
         <div className="field-wrapper field-100">
           <label>روش آزمون:</label>
-          <WindowedSelect options={exams} placeholder="روش آزمون" onChange={handleExamChange} defaultValue={defaultExam} className="WindowedSelect"/>
+          <WindowedSelect
+            options={exams}
+            placeholder="روش آزمون"
+            onChange={handleExamChange}
+            defaultValue={defaultExam}
+            className="WindowedSelect"
+          />
         </div>
 
         <div className="clearfix"></div>
@@ -131,6 +140,8 @@ AddMethodsModal.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
   loadMethods: PropTypes.func.isRequired,
+  loadSamples: PropTypes.func.isRequired,
+  loadRequests: PropTypes.func.isRequired,
 };
 
-export default connect(null, { getExams, getMethodsByExamId, showDialog, createMethods })(AddMethodsModal);
+export default withRouter(connect(null, { getExams, getMethodsByExamId, showDialog, createMethods })(AddMethodsModal));

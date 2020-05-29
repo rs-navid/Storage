@@ -78,7 +78,6 @@ const Request = (props) => {
     const results = await props.getRequestsByType(query, examType !== 0 ? examType : type);
 
     if (results) {
-      console.log(results.rows);
       setRequests(results.rows);
       setPageInfo({
         ...pageInfo,
@@ -126,6 +125,7 @@ const Request = (props) => {
         requestId={selectedRequest}
         setRequestId={setSelectedRequest}
         type={examType}
+        loadRequests={loadData}
       />
       {/* End samples modal */}
 

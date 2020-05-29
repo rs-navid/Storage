@@ -24,7 +24,6 @@ const SamplesModal = (props) => {
 
   // Load samples
   const loadSamples = async () => {
-    console.log(props.type);
     const results = await props.getSamplesByType(props.requestId, props.type);
 
     if (results) {
@@ -77,6 +76,8 @@ const SamplesModal = (props) => {
         sampleId={selectedSample}
         setSampleId={setSelectedSample}
         type={props.type}
+        loadSamples={loadSamples}
+        loadRequests={props.loadRequests}
       />
     </Fragment>
   );
@@ -87,6 +88,7 @@ SamplesModal.propTypes = {
   setRequestId: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
+  loadRequests: PropTypes.func.isRequired,
 };
 
 export default connect(null, { getSamplesByType, showDialog })(SamplesModal);

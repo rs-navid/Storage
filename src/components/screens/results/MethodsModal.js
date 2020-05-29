@@ -4,13 +4,17 @@ import PropTypes from "prop-types";
 
 import Modal from "../../UI/modal/Modal";
 import ListItemWithSelect, { SubItems } from "../../UI/list/ListItemWithSelect";
+import ResultModal from "./ResultModal";
 
 import { getSampleMethodsByType } from "../../../store/actions/sampleActions";
 import { showDialog } from "../../../store/actions/dialogActions";
-import methodTypes from "../../../configs/methodTypes";
 
 const MethodsModal = (props) => {
   const [methods, setMethods] = useState([]);
+  const [modalResultStatus, setModalResultStatus] = useState(false);
+  const [selectedMethod, setSelectedMethod] = useState({});
+  const [selectedExam, setSelectedExam] = useState({});
+  const [id, setId] = useState(0);
 
   useEffect(() => {
     if (props.open) {
@@ -21,17 +25,20 @@ const MethodsModal = (props) => {
 
   // Load samples
   const loadMethods = async () => {
-    console.log('msg', props.type);
     const results = await props.getSampleMethodsByType(props.sampleId, props.type);
 
+    console.log(results);
     if (results) {
       setMethods(results.methods);
     }
   };
 
-  // Thousands separator
-  const thousands_separators = (num) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  // Handle result button click
+  const handleResultButtonClick = (method, exam, id) => {
+    setId(id);
+    setSelectedExam(exam);
+    setSelectedMethod(method);
+    setModalResultStatus(true);
   };
 
   return (
@@ -45,7 +52,6 @@ const MethodsModal = (props) => {
         }}
         // save={handleSaveRequest}
       >
-
         {/* Start list */}
         <div style={{ height: "350px", overflowY: "auto" }} className="container">
           {methods.map((item, index) => {
@@ -53,34 +59,37 @@ const MethodsModal = (props) => {
               <ListItemWithSelect
                 id={item.sample_method.id}
                 key={item.sample_method.id}
-                // onClick={() => handlePriceButtonClick(item.sample_method.id, index)}
+                onClick={() =>
+                  handleResultButtonClick(
+                    { code: item.code, name: item.name, range: item.range },
+                    { code: item.exam.code, name: item.exam.name },
+                    item.sample_method.id
+                  )
+                }
                 title="نتیجه"
                 icon="file alternate"
               >
                 <SubItems data={["کد آزمون:", item.exam.code, "نام آزمون:", item.exam.name]} />
                 <SubItems data={["کد روش آزمون:", item.code, "نام روش آزمون:", item.name]} />
-                <SubItems
-                  data={[
-                    "نوع آزمون:",
-                    methodTypes[item.methodTypeId - 1].name,
-                    "هزینه:",
-                    thousands_separators(item.sample_method.price) + " ریال",
-                  ]}
-                />
-                <SubItems
-                  data={[
-                    "نتیجه:",
-                    item.sample_method.result ? item.sample_method.result : "",
-                    "",
-                    "",
-                  ]}
-                />
+                <SubItems data={["نتیجه:", item.sample_method.result ? item.sample_method.result : "", "", ""]} />
               </ListItemWithSelect>
             );
           })}
         </div>
         {/* End list */}
       </Modal>
+
+      <ResultModal
+        open={modalResultStatus}
+        setOpen={setModalResultStatus}
+        loadMethods={loadMethods}
+        loadSamples = {props.loadSamples}
+        loadRequests = {props.loadRequests}
+        showDialog={props.showDialog}
+        method={selectedMethod}
+        exam={selectedExam}
+        id={id}
+      />
     </Fragment>
   );
 };
@@ -90,6 +99,8 @@ MethodsModal.propTypes = {
   setSampleId: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
+  loadSamples: PropTypes.func.isRequired,
+  loadRequests: PropTypes.func.isRequired,
 };
 
 export default connect(null, { getSampleMethodsByType, showDialog })(MethodsModal);

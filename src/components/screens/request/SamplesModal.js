@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Button, Icon } from "semantic-ui-react";
+import {withRouter} from 'react-router-dom'
 
 import Modal from "../../UI/modal/Modal";
 import ListItemWithCheckboxAndEditAndOther, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEditAndOther";
@@ -80,6 +81,7 @@ const SamplesModal = (props) => {
     if (resutlt) {
       props.showDialog({ title: "حذف", text: "موارد انتخاب شده با موفقیت حذف شدند." });
       loadSamples();
+      props.loadRequests(props.location.search);
     }
   };
 
@@ -150,6 +152,8 @@ const SamplesModal = (props) => {
         open={MethodsModalStatus}
         sampleId={selectedSample}
         setSampleId={setSelectedSample}
+        loadSamples={loadSamples}
+        loadRequests={props.loadRequests}
       />
     </Fragment>
   );
@@ -160,6 +164,7 @@ SamplesModal.propTypes = {
   setRequestId: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
+  loadRequests: PropTypes.func.isRequired,
 };
 
-export default connect(null, { getSamples, deleteSamples, showDialog })(SamplesModal);
+export default withRouter(connect(null, { getSamples, deleteSamples, showDialog })(SamplesModal));

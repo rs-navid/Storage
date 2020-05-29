@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Button, Icon } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
 
 import Modal from "../../UI/modal/Modal";
 import ListItemWithCheckboxAndEdit, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEdit";
@@ -79,6 +80,8 @@ const MethodsModal = (props) => {
     if (resutlt) {
       props.showDialog({ title: "حذف", text: "موارد انتخاب شده با موفقیت حذف شدند." });
       loadMethods();
+      props.loadRequests(props.location.search);
+      props.loadSamples();
     }
   };
 
@@ -133,14 +136,7 @@ const MethodsModal = (props) => {
                     thousands_separators(item.sample_method.price) + " ریال",
                   ]}
                 />
-                <SubItems
-                  data={[
-                    "نتیجه:",
-                    item.sample_method.result ? item.sample_method.result : "",
-                    "",
-                    "",
-                  ]}
-                />
+                <SubItems data={["نتیجه:", item.sample_method.result ? item.sample_method.result : "", "", ""]} />
               </ListItemWithCheckboxAndEdit>
             );
           })}
@@ -153,6 +149,8 @@ const MethodsModal = (props) => {
         setOpen={setAddModalStatus}
         sampleId={props.sampleId}
         loadMethods={loadMethods}
+        loadSamples={props.loadSamples}
+        loadRequests={props.loadRequests}
       />
 
       <PriceModal
@@ -171,6 +169,8 @@ MethodsModal.propTypes = {
   setSampleId: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
+  loadSamples: PropTypes.func.isRequired,
+  loadRequests: PropTypes.func.isRequired,
 };
 
-export default connect(null, { getSampleMethods, deleteMethods, showDialog })(MethodsModal);
+export default withRouter(connect(null, { getSampleMethods, deleteMethods, showDialog })(MethodsModal));
