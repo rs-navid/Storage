@@ -40,6 +40,16 @@ export const getSample = (id) => {
   };
 };
 
+export const getPointsBySampleId = (id) => {
+  return async () => {
+    const results = await axios.get(`/sample/points/${id}`);
+    if (results) {
+      return results.data;
+    }
+    return false;
+  };
+};
+
 export const deleteSamples = (ids) => {
   return async () => {
     const results = await axios.delete(`/sample`, { data: { ids: ids } });
@@ -67,6 +77,19 @@ export const updateSample = (sample) => {
   return async () => {
     const result = await axios.put(`/sample/${sample.id}`, {
       ...sample,
+    });
+    if (!result) {
+      return false;
+    }
+    return true;
+  };
+};
+
+export const updatePointsBySampleId = (id, points, descriptions) => {
+  return async () => {
+    const result = await axios.put(`/sample/points/${id}`, {
+      points,
+      descriptions,
     });
     if (!result) {
       return false;

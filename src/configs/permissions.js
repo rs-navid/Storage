@@ -8,6 +8,7 @@ import {
   faCopy,
   faRestroom,
   faFlask,
+  faStickyNote,
 } from "@fortawesome/free-solid-svg-icons";
 
 const menu = [
@@ -104,8 +105,14 @@ const menu = [
     search: "type=5&title=محیط زیست",
   },
   {
+    id: 750,
+    text: "مدیریت نتایج",
+    icon: faStickyNote,
+    path: "/resultsmanagement",
+  },
+  {
     type: "sep",
-    container: [700, 710, 720, 730, 740],
+    container: [700, 710, 720, 730, 740, 750],
   },
 ];
 

@@ -23,6 +23,7 @@ const Results1 = React.lazy(() => import("../screens/results/Results"));
 const Results2 = React.lazy(() => import("../screens/results/Results"));
 const Results3 = React.lazy(() => import("../screens/results/Results"));
 const Results4 = React.lazy(() => import("../screens/results/Results"));
+const ResultManagement = React.lazy(() => import("../screens/results-management/Results"));
 
 const Exams = React.lazy(() => import("../screens/exams/Exams"));
 
@@ -60,6 +61,7 @@ const Layout = (props) => {
               <Route exact path="/celluloseresults" component={Results2} />
               <Route exact path="/packingresults" component={Results3} />
               <Route exact path="/environmentresults" component={Results4} />
+              <Route exact path="/resultsmanagement" component={ResultManagement} />
             </Switch>
           </Fragment>
         )}
