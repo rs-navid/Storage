@@ -7,6 +7,7 @@ import Modal from "../../UI/modal/Modal";
 import ListItemWithSelect, { SubItems } from "../../UI/list/ListItemWithSelect";
 import ResultModal from "./ResultModal";
 import PointsModal from "./PointsModal";
+import PrintModal from "./PrintModal";
 import methodTypes from "../../../configs/methodTypes";
 
 import { getSampleMethods } from "../../../store/actions/sampleActions";
@@ -16,6 +17,7 @@ const MethodsModal = (props) => {
   const [methods, setMethods] = useState([]);
   const [modalResultStatus, setModalResultStatus] = useState(false);
   const [modalPointsStatus, setModalPointsStatus] = useState(false);
+  const [modalPrintStatus, setModalPrintStatus] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState({});
   const [selectedExam, setSelectedExam] = useState({});
   const [id, setId] = useState(0);
@@ -45,8 +47,14 @@ const MethodsModal = (props) => {
     setModalResultStatus(true);
   };
 
+  // Handle points and descriptions button click
   const handleEditPointsButtonClick = () => {
     setModalPointsStatus(true);
+  };
+
+  // Handle print button click
+  const handlePrintButtonClick = () => {
+    setModalPrintStatus(true);
   };
 
   return (
@@ -62,14 +70,21 @@ const MethodsModal = (props) => {
       >
         {/* Start actions */}
         <div className="actions pt-4 pb-5 align-left">
-          <Button icon labelPosition="right" color="blue" size="small" onClick={handleEditPointsButtonClick}>
+          <Button
+            icon
+            labelPosition="right"
+            className="mb-2"
+            color="blue"
+            size="small"
+            onClick={handleEditPointsButtonClick}
+          >
             ثبت تفاسیر
             <Icon name="pie chart" />
           </Button>
-          {/* <Button icon labelPosition="right" size="small" color="blue" onClick={handleNewButtonClick}>
-          جدید
-          <Icon name="add" />
-        </Button> */}
+          <Button icon labelPosition="right" size="small" color="blue" onClick={handlePrintButtonClick}>
+            چاپ
+            <Icon name="print" />
+          </Button>
         </div>
         {/* End actions */}
 
@@ -124,6 +139,12 @@ const MethodsModal = (props) => {
         open={modalPointsStatus}
         setOpen={setModalPointsStatus}
         showDialog={props.showDialog}
+        id={props.sampleId}
+      />
+
+      <PrintModal
+        open={modalPrintStatus}
+        setOpen={setModalPrintStatus}
         id={props.sampleId}
       />
     </Fragment>

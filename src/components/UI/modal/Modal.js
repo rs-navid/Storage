@@ -46,8 +46,8 @@ const Modal = (props) => {
         <DialogActions className="modal-actions">
           {props.save ? (
             <Button icon labelPosition="right" color="blue" size="small" onClick={props.save}>
-              <Icon name="check" />
-              تایید
+              <Icon name={props.saveIcon ? props.saveIcon : "check"} />
+              {props.saveTitle ? props.saveTitle : "تایید"}
             </Button>
           ) : null}
           <Button icon labelPosition="right" size="small" onClick={props.cancel}>
