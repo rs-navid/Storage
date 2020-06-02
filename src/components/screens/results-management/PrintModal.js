@@ -9,6 +9,8 @@ import { utils } from "react-modern-calendar-datepicker";
 import Modal from "../../UI/modal/Modal";
 import methodTypes from "../../../configs/methodTypes";
 
+import { print } from "../../../store/actions/sampleActions";
+
 const methodTypeValues = methodTypes.map((item) => {
   return {
     key: item.id,
@@ -33,38 +35,16 @@ const PrintModal = (props) => {
 
   // Print
   const handlePrint = async () => {
-    // const date = props.editingRequest.date;
-    // const start = props.editingRequest.startDate;
-    // const end = props.editingRequest.endDate;
-    // if (!moment(`${date.year}/${date.month}/${date.day}`, "jYYYY/jM/jD")) {
-    //   props.showDialog({ title: "خطا", text: "تاریخ درخواست معتبر نمی باشد." });
-    // } else if (!moment(`${start.year}/${start.month}/${start.day}`, "jYYYY/jM/jD")) {
-    //   props.showDialog({ title: "خطا", text: "تاریخ شروع آزمون معتبر نمی باشد." });
-    // } else if (!moment(`${end.year}/${end.month}/${end.day}`, "jYYYY/jM/jD")) {
-    //   props.showDialog({ title: "خطا", text: "تاریخ پایان آزمون معتبر نمی باشد." });
-    // } else if (!props.editingRequest.clientId) {
-    //   props.showDialog({ title: "خطا", text: "مشتری معتبر نمی باشد." });
-    // } else if (props.editingRequest.requester.trim() === "") {
-    //   props.showDialog({ title: "خطا", text: "نام درخواست کننده معتبر نمی باشد." });
-    // } else {
-    //   let result = null;
-    //   if (props.editingRequest.id === 0) {
-    //     result = await props.createRequest(props.editingRequest);
-    //   } else {
-    //     result = await props.updateRequest(props.editingRequest);
-    //   }
-    //   if (result) {
-    //     if (result.data) {
-    //       props.setEditingRequest({
-    //         ...props.editingRequest,
-    //         num: result.data.num,
-    //         id: result.data.id,
-    //       });
-    //     }
-    //     props.showDialog({ title: "ثبت", text: "درخواست با موفقیت ثبت گردید." });
-    //     props.loadData(props.location.search);
-    //   }
-    // }
+    const result = await props.print(props.id, { type: type, date: date });
+    if (result) {
+      console.log(result.data);
+      if (result.data) {
+        const file = (new Blob([result.data], { type: "application/pdf" }));
+        // const file = new Blob(result.data, { type: "application/pdf" });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      }
+    }
   };
 
   return (
@@ -112,4 +92,4 @@ PrintModal.propTypes = {
   id: PropTypes.number.isRequired,
 };
 
-export default connect(null, {})(PrintModal);
+export default connect(null, { print })(PrintModal);

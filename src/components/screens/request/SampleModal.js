@@ -70,8 +70,8 @@ const SampleModal = (props) => {
 
       setEditingSample({
         ...result,
-        productionDate: { year: production.years, month: production.months + 1, day: production.date + 1 },
-        samplingDate: { year: sampling.years, month: sampling.months + 1, day: sampling.date + 1 },
+        productionDate: { year: production.years, month: production.months + 1, day: production.date },
+        samplingDate: { year: sampling.years, month: sampling.months + 1, day: sampling.date },
         amountIsValid: result.amountIsValid ? 1 : 0,
         packingIsValid: result.packingIsValid ? 1 : 0,
       });
