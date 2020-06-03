@@ -9,7 +9,7 @@ import { utils } from "react-modern-calendar-datepicker";
 import Modal from "../../UI/modal/Modal";
 import methodTypes from "../../../configs/methodTypes";
 
-import { print } from "../../../store/actions/sampleActions";
+import { print, printeEvironmentResults } from "../../../store/actions/sampleActions";
 
 const methodTypeValues = methodTypes.map((item) => {
   return {
@@ -35,12 +35,16 @@ const PrintModal = (props) => {
 
   // Print
   const handlePrint = async () => {
-    const result = await props.print(props.id, { type: type, date: date });
+    let result;
+    if(type!==5){
+      result = await props.print(props.id, { type: type, date: date });
+    } else {
+      result = await props.printeEvironmentResults(props.id, { type: type, date: date });
+    }
+
     if (result) {
-      console.log(result.data);
       if (result.data) {
         const file = (new Blob([result.data], { type: "application/pdf" }));
-        // const file = new Blob(result.data, { type: "application/pdf" });
         const fileURL = URL.createObjectURL(file);
         window.open(fileURL);
       }
@@ -92,4 +96,4 @@ PrintModal.propTypes = {
   id: PropTypes.number.isRequired,
 };
 
-export default connect(null, { print })(PrintModal);
+export default connect(null, { print, printeEvironmentResults })(PrintModal);

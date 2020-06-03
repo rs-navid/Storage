@@ -120,6 +120,16 @@ const EmployeeSetting = (props) => {
           onChange={handleChange}
         />
       </div>
+      <div className="field-wrapper field-50 left-50">
+        <label>کارشناس نمونه بردار:</label>
+        <Input
+          placeholder="کارشناس نمونه بردار"
+          type="text"
+          name="sampler"
+          value={employee.sampler}
+          onChange={handleChange}
+        />
+      </div>
       <div className="clearfix"></div>
       <div className="line-break"></div>
       <Button icon labelPosition="right" color="blue" onClick={handleSave}>

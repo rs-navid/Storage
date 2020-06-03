@@ -148,19 +148,6 @@ const PointsModal = (props) => {
         <div className="line-break"></div>
 
         <div className="field-wrapper field-100">
-          <label>تفسیر نتایج محیط زیست:</label>
-          <TextArea
-            placeholder="تفسیر نتایج محیط زیست"
-            name="environmentPoints"
-            value={points.environmentPoints}
-            onChange={handlePointInputs}
-          />
-        </div>
-
-        <div className="clearfix"></div>
-        <div className="line-break"></div>
-
-        <div className="field-wrapper field-100">
           <label>توضیحات میکروبی:</label>
           <TextArea
             placeholder="توضیحات میکروبی"
@@ -205,19 +192,6 @@ const PointsModal = (props) => {
             placeholder="توضیحات بسته بندی"
             name="packingDescriptions"
             value={descriptions.packingDescriptions}
-            onChange={handleDescriptionInputs}
-          />
-        </div>
-
-        <div className="clearfix"></div>
-        <div className="line-break"></div>
-
-        <div className="field-wrapper field-100">
-          <label>توضیحات محیط زیست:</label>
-          <TextArea
-            placeholder="توضیحات محیط زیست"
-            name="environmentDescriptions"
-            value={descriptions.environmentDescriptions}
             onChange={handleDescriptionInputs}
           />
         </div>

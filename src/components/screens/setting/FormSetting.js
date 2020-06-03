@@ -12,7 +12,12 @@ const FormSetting = (props) => {
     license: "",
     resultsFormCode: "",
     resultsHeaderSize: "",
+    resultsFooterSize: "",
     warnings: "",
+    environmentHeaderSize: "",
+    environmentFooterSize: "",
+    environmentWarningsFarayandi: "",
+    environmentWarningsEzhari: "",
   });
 
   // Component did mount
@@ -37,26 +42,28 @@ const FormSetting = (props) => {
   };
 
   const handleSave = () => {
+    console.log(forms);
     props.saveSetting({ forms: forms });
   };
 
   return (
     <Form>
       <div className="line-break"></div>
-      <div className="field-wrapper field-50 right-50 ">
-        <label>زیر عنوان اول گزارش آزمون:</label>
+      <div className="field-wrapper field-100 wrap ">
+        <label>زیر عنوان اول در گزارش آزمون:</label>
         <Input
-          placeholder="زیر عنوان اول گزارش آزمون"
+          placeholder="زیر عنوان اول در گزارش آزمون"
           type="text"
           name="firstSubtitle"
           value={forms.firstSubtitle}
           onChange={handleChange}
         />
       </div>
-      <div className="field-wrapper field-50 left-50 ">
-        <label>زیر عنوان دوم گزارش آزمون:</label>
+
+      <div className="field-wrapper field-100 wrap ">
+        <label>زیر عنوان دوم در گزارش آزمون:</label>
         <Input
-          placeholder="زیر عنوان دوم گزارش آزمون"
+          placeholder="زیر عنوان دوم در گزارش آزمون"
           type="text"
           name="secondSubtitle"
           value={forms.secondSubtitle}
@@ -64,23 +71,21 @@ const FormSetting = (props) => {
         />
       </div>
 
-      <div className="clearfix"></div>
-      <div className="line-break"></div>
-
-      <div className="field-wrapper field-50 right-50 ">
-        <label>شماره گواهینامه گزارش آزمون:</label>
+      <div className="field-wrapper field-100 wrap ">
+        <label>شماره گواهینامه در گزارش آزمون:</label>
         <Input
-          placeholder="شماره گواهینامه گزارش آزمون"
+          placeholder="شماره گواهینامه در گزارش آزمون"
           type="text"
           name="license"
           value={forms.license}
           onChange={handleChange}
         />
       </div>
-      <div className="field-wrapper field-50 left-50 ">
-        <label>کد مدرک گزارش آزمون:</label>
+
+      <div className="field-wrapper field-100 wrap ">
+        <label>کد مدرک در گزارش آزمون:</label>
         <Input
-          placeholder="کد مدرک گزارش آزمون"
+          placeholder="کد مدرک در گزارش آزمون"
           type="text"
           name="resultsFormCode"
           value={forms.resultsFormCode}
@@ -88,13 +93,10 @@ const FormSetting = (props) => {
         />
       </div>
 
-      <div className="clearfix"></div>
-      <div className="line-break"></div>
-
-      <div className="field-wrapper field-50 right-50 ">
-        <label>ارتفاع سر برگ گزارش آزمون:</label>
+      <div className="field-wrapper field-100 wrap ">
+        <label>ارتفاع سر برگ در گزارش آزمون:</label>
         <Input
-          placeholder="ارتفاع سر برگ گزارش آزمون"
+          placeholder="330"
           type="text"
           name="resultsHeaderSize"
           value={forms.resultsHeaderSize}
@@ -102,10 +104,10 @@ const FormSetting = (props) => {
         />
       </div>
 
-      <div className="field-wrapper field-50 left-50 ">
-        <label>ارتفاع پاورقی گزارش آزمون:</label>
+      <div className="field-wrapper field-100 wrap ">
+        <label>ارتفاع پاورقی در گزارش آزمون:</label>
         <Input
-          placeholder="ارتفاع پاورقی گزارش آزمون"
+          placeholder="255"
           type="text"
           name="resultsFooterSize"
           value={forms.resultsFooterSize}
@@ -113,12 +115,51 @@ const FormSetting = (props) => {
         />
       </div>
 
-      <div className="clearfix"></div>
-      <div className="line-break"></div>
+      <div className="field-wrapper field-100 wrap">
+        <label>ملاحظات در گزارش آزمون:</label>
+        <TextArea placeholder="ملاحظات در گزارش آزمون" name="warnings" value={forms.warnings} onChange={handleChange} />
+      </div>
 
-      <div className="field-wrapper field-100">
-        <label>ملاحضات گزارش آزمون:</label>
-        <TextArea placeholder="ملاحضات گزارش آژمون" name="warnings" value={forms.warnings} onChange={handleChange} />
+      <div className="field-wrapper field-100 wrap ">
+        <label>ارتفاع سر برگ در گزارش آزمون محیط زیست:</label>
+        <Input
+          placeholder="345"
+          type="text"
+          name="environmentHeaderSize"
+          value={forms.environmentHeaderSize}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="field-wrapper field-100 wrap ">
+        <label>ارتفاع پاورقی در گزارش آزمون محیط زیست:</label>
+        <Input
+          placeholder="270"
+          type="text"
+          name="environmentFooterSize"
+          value={forms.environmentFooterSize}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="field-wrapper field-100 wrap">
+        <label> ملاحظات در گزارش آزمون محیط زیست (فرایندی):</label>
+        <TextArea
+          placeholder="ملاحظات در گزارش آزمون محیط زیست"
+          name="environmentWarningsFarayandi"
+          value={forms.environmentWarningsFarayandi}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="field-wrapper field-100 wrap">
+        <label>ملاحظات در گزارش آزمون محیط زیست (خود اظهاری):</label>
+        <TextArea
+          placeholder="ملاحظات در گزارش آزمون محیط زیست"
+          name="environmentWarningsEzhari"
+          value={forms.environmentWarningsEzhari}
+          onChange={handleChange}
+        />
       </div>
 
       <div className="clearfix"></div>

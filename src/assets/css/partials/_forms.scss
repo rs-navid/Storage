@@ -128,6 +128,10 @@ input {
   font-family: iranyekan !important;
   direction: rtl;
 
+  &.ltr input {
+    direction: ltr !important;
+  }
+
   &.input.left {
     direction: ltr;
 

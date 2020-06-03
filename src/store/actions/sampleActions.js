@@ -178,3 +178,19 @@ export const print = (id, data) => {
     return result;
   };
 };
+
+export const printeEvironmentResults = (id, data) => {
+  return async () => {
+    const result = await axios.post(`/sample/printenvironment/${id}`, data, {
+      responseType: "arraybuffer",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/pdf",
+      },
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};

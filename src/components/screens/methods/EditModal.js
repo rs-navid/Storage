@@ -149,7 +149,14 @@ const EditModal = (props) => {
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>واحد:</label>
-          <Input placeholder="واحد" type="text" name="unit" value={props.editingMethod.unit} onChange={handleInput} />
+          <Input
+            placeholder="واحد"
+            type="text"
+            name="unit"
+            className="ltr"
+            value={props.editingMethod.unit}
+            onChange={handleInput}
+          />
         </div>
 
         <div className="clearfix"></div>

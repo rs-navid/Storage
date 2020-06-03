@@ -36,6 +36,7 @@ const sampleObject = {
   waste: "",
   type: "",
   about: "",
+  environmentType: "هیچکدام",
 };
 
 const sampleAmountValues = [
@@ -46,6 +47,12 @@ const sampleAmountValues = [
 const samplePackingValues = [
   { key: 1, value: 1, text: "مناسب می باشد" },
   { key: 0, value: 0, text: "مناسب نمی باشد" },
+];
+
+const sampleEnvironmentTypeValues = [
+  { key: 1, value: "هیچکدام", text: "هیچکدام" },
+  { key: 2, value: "فرآیندی", text: "فرآیندی" },
+  { key: 3, value: "خود اظهاری", text: "خود اظهاری" },
 ];
 
 const SampleModal = (props) => {
@@ -104,6 +111,8 @@ const SampleModal = (props) => {
 
   // Handle save request
   const handleSaveSample = async () => {
+    console.log(editingSample);
+
     let result = null;
     if (editingSample.id !== 0) {
       result = await props.updateSample(editingSample);
@@ -406,6 +415,21 @@ const SampleModal = (props) => {
           <Input placeholder="نوع نمونه " type="text" name="type" value={editingSample.type} onChange={handleInput} />
         </div>
         <div className="field-wrapper field-50 left-50">
+          <label>نوع نمونه محیط زیست:</label>
+          <Dropdown
+            fluid
+            selection
+            name="environmentType"
+            value={editingSample.environmentType}
+            onChange={handleDropdownInput}
+            options={sampleEnvironmentTypeValues}
+          />
+        </div>
+
+        <div className="clearfix"></div>
+        <div className="line-break"></div>
+
+        <div className="field-wrapper field-50 right-50">
           <label>شرح خدمات:</label>
           <Input placeholder="شرح خدمات" type="text" name="about" value={editingSample.about} onChange={handleInput} />
         </div>
