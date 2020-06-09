@@ -14,11 +14,10 @@
     }
 
     &.wrap {
-      & > label{
+      & > label {
         min-width: 100%;
         padding-bottom: 10px;
       }
-
     }
 
     & > label {
@@ -136,7 +135,7 @@ input {
     direction: ltr;
 
     &.disabled {
-      opacity: .85;
+      opacity: 0.85;
     }
 
     input {
@@ -144,10 +143,10 @@ input {
     }
 
     button {
-      @include bp-down(sm){
+      @include bp-down(sm) {
         padding-right: 5px;
         padding-left: 5px;
-        font-size: .9rem;
+        font-size: 0.9rem;
       }
     }
   }
@@ -200,5 +199,17 @@ input {
 }
 
 .disabled {
-  opacity: .85 !important;
+  opacity: 0.85 !important;
+}
+
+fieldset {
+  margin: 15px 8px;
+  border: 1px solid silver;
+  padding: 0px 10px;
+  border-radius: 4px;
+}
+
+legend {
+  padding: 2px;
+  font-size: 15px;
 }

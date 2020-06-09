@@ -9,6 +9,7 @@ import {
   faRestroom,
   faFlask,
   faStickyNote,
+  faFileInvoiceDollar
 } from "@fortawesome/free-solid-svg-icons";
 
 const menu = [
@@ -113,6 +114,16 @@ const menu = [
   {
     type: "sep",
     container: [700, 710, 720, 730, 740, 750],
+  },
+  {
+    id: 800,
+    text: "مدیریت صورت حساب ها",
+    icon: faFileInvoiceDollar,
+    path: "/invoicemanagement",
+  },
+  {
+    type: "sep",
+    container: [800],
   },
 ];
 

@@ -153,6 +153,30 @@ export const updateMethodPrice = (id, price) => {
   };
 };
 
+export const updateSampleDiscount = (id, discount) => {
+  return async () => {
+    const result = await axios.put(`/sample/discount/${id}`, {
+      discount: discount,
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
+export const updateRequestTax = (id, tax) => {
+  return async () => {
+    const result = await axios.put(`/request/tax/${id}`, {
+      tax: tax,
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
 export const updateMethod = (id, data) => {
   return async () => {
     const result = await axios.put(`/samplemethod/update/${id}`, data);

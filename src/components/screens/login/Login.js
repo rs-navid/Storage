@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import platform from "platform";
+import ReCAPTCHA from "react-google-recaptcha";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserAlt, faLock } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
@@ -21,6 +22,7 @@ const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
+  const [captcha, setCaptcha] = useState(null);
 
   const plat = JSON.stringify({
     name: platform.name,
@@ -53,6 +55,13 @@ const Login = (props) => {
             style={{ backgroundColor: "#eee", color: "#000", padding: "12px" }}
             onChange={setPassword}
           />
+          <ReCAPTCHA
+            sitekey="6Lf8IwEVAAAAACwgkPslW_7B0932O25OS52V8Hf8"
+            onChange={(val) => {
+              setCaptcha(val);
+            }}
+          />
+
           <Checkbox name="remember" cls="remember" onChange={setRemember}>
             مرا به خاطر بسپار
           </Checkbox>
@@ -60,7 +69,14 @@ const Login = (props) => {
             cls="primary w-100 p-4 border-rounded mt-5"
             onClick={(e) => {
               e.preventDefault();
-              if (!username || !password) {
+              if (!captcha) {
+                props.showDialog({
+                  type: "ok",
+                  title: "خطا",
+                  text: "لطفا گزینه من ربات نیستم را تیک بزنید.",
+                  yes: null,
+                });
+              } else if (!username || !password) {
                 props.showDialog({
                   type: "ok",
                   title: "خطا",

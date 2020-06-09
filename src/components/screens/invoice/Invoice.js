@@ -37,6 +37,7 @@ const Request = (props) => {
     name: "",
     code: "",
     status: "all",
+    invoice: "",
     orderby: orderbyValues[1].value,
     order: orderValues[1].value,
   });
@@ -53,6 +54,7 @@ const Request = (props) => {
       name: query.name || "",
       num: query.num || "",
       code: query.code || "",
+      invoice: query.invoice || "",
       status: query.status || "all",
       order: ["asc", "desc"].includes(query.order) ? query.order : "desc",
       orderby: ["id", "date", "num"].includes(query.orderby) ? query.orderby : "num",
@@ -73,7 +75,7 @@ const Request = (props) => {
   // Load data
   const loadData = async (query) => {
     setRequests([]);
-    const results = await props.getRequests(query, "results");
+    const results = await props.getRequests(query, "invoices");
 
     if (results) {
       setRequests(results.rows);
@@ -149,7 +151,7 @@ const Request = (props) => {
                 id={item.id}
                 key={item.id}
                 onClick={() => handleSampleClick(item.id)}
-                title="نمونه ها"
+                title="مدیریت"
                 icon="list layout"
               >
                 <SubItems data={["شماره درخواست:", item.num, "تاریخ درخواست:", date]} />

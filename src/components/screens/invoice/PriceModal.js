@@ -14,6 +14,7 @@ const PriceModal = (props) => {
   // // Component did mount
   useEffect(() => {
     setPrice(props.price);
+    console.log(props.price);
     // eslint-disable-next-line
   }, [props.price, props.open]);
 
@@ -32,6 +33,7 @@ const PriceModal = (props) => {
       if (result) {
         props.showDialog({ title: "ثبت", text: "هزینه با موفقیت ثبت گردید." });
         props.loadData();
+        props.loadSamples();
       }
     }
   };
@@ -62,6 +64,7 @@ PriceModal.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
   loadData: PropTypes.func.isRequired,
+  loadSamples: PropTypes.func.isRequired,
   price: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
 };

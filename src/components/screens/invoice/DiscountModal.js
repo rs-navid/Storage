@@ -5,15 +5,16 @@ import { connect } from "react-redux";
 
 import Modal from "../../UI/modal/Modal";
 
-import { updateMethodPrice } from "../../../store/actions/sampleActions";
+import { updateSampleDiscount } from "../../../store/actions/sampleActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
-const PriceModal = (props) => {
+const DiscountModal = (props) => {
   const [price, setPrice] = useState(0);
 
   // // Component did mount
   useEffect(() => {
     setPrice(props.price);
+    console.log(props.price);
     // eslint-disable-next-line
   }, [props.price, props.open]);
 
@@ -25,13 +26,13 @@ const PriceModal = (props) => {
   // Save
   const handleSave = async () => {
     if (+parseInt(price) < 0 || isNaN(parseInt(price))) {
-      props.showDialog({ title: "خطا", text: "هزینه معتبر نمی باشد." });
+      props.showDialog({ title: "خطا", text: "تخفیف معتبر نمی باشد." });
     } else {
-      const result = await props.updateMethodPrice(props.id, price);
+      const result = await props.updateSampleDiscount(props.id, price);
 
       if (result) {
-        props.showDialog({ title: "ثبت", text: "هزینه با موفقیت ثبت گردید." });
-        props.loadData();
+        props.showDialog({ title: "ثبت", text: "تخفیف با موفقیت ثبت گردید." });
+        props.loadSamples();
       }
     }
   };
@@ -39,7 +40,7 @@ const PriceModal = (props) => {
   return (
     <Modal
       open={props.open}
-      title="ویرایش هزینه آزمون"
+      title="ویرایش تخفیف"
       maxWidth="sm"
       cancel={() => {
         props.setOpen(false);
@@ -48,8 +49,8 @@ const PriceModal = (props) => {
     >
       <Form>
         <div className="field-wrapper field-100">
-          <label>هزینه (ریال):</label>
-          <Input placeholder="هزینه (ریال)" type="text" name="price" value={price} onChange={handleInput} />
+          <label>تخفیف (ریال):</label>
+          <Input placeholder="تخفیف (ریال)" type="text" name="price" value={price} onChange={handleInput} />
         </div>
 
         <div className="clearfix"></div>
@@ -58,12 +59,12 @@ const PriceModal = (props) => {
   );
 };
 
-PriceModal.propTypes = {
+DiscountModal.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
-  loadData: PropTypes.func.isRequired,
+  loadSamples: PropTypes.func.isRequired,
   price: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
 };
 
-export default connect(null, { updateMethodPrice, showDialog })(PriceModal);
+export default connect(null, { updateSampleDiscount, showDialog })(DiscountModal);

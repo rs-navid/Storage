@@ -6,7 +6,7 @@ const initialState = {
   title: null,
   text: null,
   yes: null,
-  no: null
+  no: null,
 };
 
 export default (state = initialState, action) => {
@@ -14,14 +14,18 @@ export default (state = initialState, action) => {
     return {
       ...state,
       show: true,
-      ...action.payload
+      ...action.payload,
     };
   }
-  
+
   if (action.type === HIDE_DIALOG) {
     return {
-      ...state,
-      show: false
+      show: false,
+      type: "ok",
+      title: null,
+      text: null,
+      yes: null,
+      no: null,
     };
   }
 

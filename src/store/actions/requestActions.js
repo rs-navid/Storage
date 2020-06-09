@@ -1,13 +1,23 @@
 import axios from "axios";
 
-export const getRequests = (query) => {
-  return async () => {
-    const results = await axios.get(`/request?${query}`);
-    if (results) {
-      return results.data;
-    }
-    return false;
-  };
+export const getRequests = (query, type) => {
+  if(!type){
+    return async () => {
+      const results = await axios.get(`/request?${query}`);
+      if (results) {
+        return results.data;
+      }
+      return false;
+    };
+  } else {
+    return async () => {
+      const results = await axios.get(`/request/${type}?${query}`);
+      if (results) {
+        return results.data;
+      }
+      return false;
+    };
+  }
 };
 
 export const getRequestsByType = (query, type) => {
@@ -62,5 +72,22 @@ export const updateRequest = (request) => {
       return false;
     }
     return true;
+  };
+};
+
+
+export const print = (id) => {
+  return async () => {
+    const result = await axios.get(`/request/print/${id}`, {
+      responseType: "arraybuffer",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/pdf",
+      },
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
   };
 };
