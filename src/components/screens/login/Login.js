@@ -56,7 +56,7 @@ const Login = (props) => {
             onChange={setPassword}
           />
           <ReCAPTCHA
-            sitekey="6Lf8IwEVAAAAACwgkPslW_7B0932O25OS52V8Hf8"
+            sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
             onChange={(val) => {
               setCaptcha(val);
             }}

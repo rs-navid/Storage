@@ -6,6 +6,7 @@ import { Input, Button, Icon } from "semantic-ui-react";
 import Modal from "../../UI/modal/Modal";
 import DiscountModal from "./DiscountModal";
 import TaxModal from "./TaxModal";
+import InvoiceModal from "./InvoiceModal";
 import ListItemWith2Selects, { SubItems } from "../../UI/list/ListItemWith2Selects";
 import MethodsModal from "./MethodsModal";
 
@@ -14,12 +15,13 @@ import { showDialog } from "../../../store/actions/dialogActions";
 
 const SamplesModal = (props) => {
   const [samples, setSamples] = useState([]);
-  const [invoice, setInvoice] = useState({ price: "", discount: "", tax: "" });
+  const [invoice, setInvoice] = useState({ price: "", discount: "", tax: 0 });
   const [selectedSample, setSelectedSample] = useState(0);
   const [selectedDiscount, setSelectedDiscount] = useState(0);
   const [MethodsModalStatus, setMethodsModalStatus] = useState(false);
   const [discountModalStatus, setDiscountModalStatus] = useState(false);
   const [taxModalStatus, setTaxModalStatus] = useState(false);
+  const [invoiceModalStatus, setInvoiceModalStatus] = useState(false);
   const [periodKey, setPeriodKey] = useState("-");
 
   useEffect(() => {
@@ -59,6 +61,11 @@ const SamplesModal = (props) => {
     setTaxModalStatus(true);
   };
 
+  // Handle print invoice click
+  const handlePrintInvoice = () => {
+    setInvoiceModalStatus(true);
+  };
+
   // Thousands separator
   const thousands_separators = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -77,10 +84,10 @@ const SamplesModal = (props) => {
       >
         {/* Start actions */}
         <div className="actions pt-4 pb-5 align-left">
-          {/* <Button icon labelPosition="right" color="blue" size="tiny" onClick={confirmDelete}>
-            حذف
-            <Icon name="trash" />
-          </Button> */}
+          <Button icon labelPosition="right" color="blue" size="tiny" onClick={handlePrintInvoice}>
+            فاکتور رسمی
+            <Icon name="print" />
+          </Button>
           <Button icon labelPosition="right" size="tiny" color="blue" onClick={handleTaxButtonClick}>
             ویرایش مالیات
             <Icon name="edit" />
@@ -215,6 +222,14 @@ const SamplesModal = (props) => {
         price={invoice.tax}
         loadSamples={loadSamples}
       />
+
+      <InvoiceModal
+        open={invoiceModalStatus}
+        setOpen={setInvoiceModalStatus}
+        id={props.requestId}
+        invoice={props.invoice}
+        loadRequests={props.loadRequests}
+      />
     </Fragment>
   );
 };
@@ -225,6 +240,7 @@ SamplesModal.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
   loadRequests: PropTypes.func.isRequired,
+  invoice: PropTypes.number,
 };
 
 export default connect(null, { getSamples, showDialog })(SamplesModal);

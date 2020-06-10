@@ -20,7 +20,7 @@ const MethodsModal = (props) => {
       loadMethods();
     }
     // eslint-disable-next-line
-  }, [props.sampleId]);
+  }, [props.sampleId, props.open]);
 
   // Load samples
   const loadMethods = async () => {
@@ -88,7 +88,7 @@ const MethodsModal = (props) => {
         id={selectedMethod.id}
         price={selectedMethod.price}
         loadData={loadMethods}
-        loadSamples = {props.loadSamples}
+        loadSamples={props.loadSamples}
       />
     </Fragment>
   );

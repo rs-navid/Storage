@@ -18,6 +18,7 @@ const orderbyValues = [
   { key: 1, text: "پیش فرض", value: "id" },
   { key: 2, text: "شماره درخواست", value: "num" },
   { key: 3, text: "تاریخ درخواست", value: "date" },
+  { key: 4, text: "شماره فاکتور رسمی", value: "invoice" },
 ];
 
 const orderValues = [
@@ -45,6 +46,7 @@ const Request = (props) => {
   const [pageInfo, setPageInfo] = useState({ totalPages: 0, page: 1 });
   const [modalSampleStatus, setModalSampleStatus] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(0);
+  const [invoice, setInvoice] = useState(0);
 
   // Component did mount
   useEffect(() => {
@@ -111,8 +113,9 @@ const Request = (props) => {
   };
 
   // Handle samples button click
-  const handleSampleClick = (id) => {
+  const handleSampleClick = (id, invoice) => {
     setSelectedRequest(id);
+    setInvoice(invoice);
     setModalSampleStatus(true);
   };
 
@@ -125,6 +128,7 @@ const Request = (props) => {
         requestId={selectedRequest}
         setRequestId={setSelectedRequest}
         loadRequests={loadData}
+        invoice={invoice}
       />
       {/* End samples modal */}
 
@@ -150,13 +154,15 @@ const Request = (props) => {
               <ListItemWithSelect
                 id={item.id}
                 key={item.id}
-                onClick={() => handleSampleClick(item.id)}
+                onClick={() => handleSampleClick(item.id, item.invoice)}
                 title="مدیریت"
                 icon="list layout"
               >
                 <SubItems data={["شماره درخواست:", item.num, "تاریخ درخواست:", date]} />
                 <SubItems data={["نام مشتری:", item["client.name"], "نام درخواست کننده:", item.requester]} />
-                <SubItems data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "", ""]} />
+                <SubItems
+                  data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "شماره فاکتور رسمی:", item.invoice]}
+                />
               </ListItemWithSelect>
             );
           })}

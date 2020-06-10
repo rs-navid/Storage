@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const getRequests = (query, type) => {
-  if(!type){
+  if (!type) {
     return async () => {
       const results = await axios.get(`/request?${query}`);
       if (results) {
@@ -75,7 +75,6 @@ export const updateRequest = (request) => {
   };
 };
 
-
 export const print = (id) => {
   return async () => {
     const result = await axios.get(`/request/print/${id}`, {
@@ -85,6 +84,28 @@ export const print = (id) => {
         Accept: "application/pdf",
       },
     });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
+export const updateRequestInvoice = (id, invoice) => {
+  return async () => {
+    const result = await axios.put(`/request/invoice/${id}`, {
+      invoice: invoice,
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
+export const deleteRequestInvoice = (id) => {
+  return async () => {
+    const result = await axios.delete(`/request/invoice/${id}`);
     if (!result) {
       return false;
     }

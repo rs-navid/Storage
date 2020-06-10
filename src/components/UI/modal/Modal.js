@@ -24,7 +24,7 @@ const theme = createMuiTheme({
 
 const Modal = (props) => {
   // const [open, setOpen] = React.useState(true);
-
+  const {Buttons} = props;
   return (
     <ThemeProvider theme={theme}>
       <Dialog
@@ -50,6 +50,7 @@ const Modal = (props) => {
               {props.saveTitle ? props.saveTitle : "تایید"}
             </Button>
           ) : null}
+          {Buttons ? <Buttons /> : null}
           <Button icon labelPosition="right" size="small" onClick={props.cancel}>
             انصراف
             <Icon name="close" />
