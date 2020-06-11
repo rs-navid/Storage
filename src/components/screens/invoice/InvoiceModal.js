@@ -7,7 +7,7 @@ import { Button, Icon } from "semantic-ui-react";
 
 import Modal from "../../UI/modal/Modal";
 
-import { updateRequestInvoice, deleteRequestInvoice } from "../../../store/actions/requestActions";
+import { updateRequestInvoice, deleteRequestInvoice, printInvoice } from "../../../store/actions/requestActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
 const Buttons = (props) => {
@@ -17,7 +17,7 @@ const Buttons = (props) => {
         حذف فاکتور
         <Icon name="trash" />
       </Button>
-      <Button icon labelPosition="right" size="small" color="blue">
+      <Button icon labelPosition="right" size="small" color="blue" onClick={props.onPrint}>
         چاپ
         <Icon name="print" />
       </Button>
@@ -67,6 +67,19 @@ const InvoiceModal = (props) => {
     }
   };
 
+  // Handle print button click
+  const handlePrintClick = async () => {
+    const result = await props.printInvoice(props.id);
+
+    if (result) {
+      if (result.data) {
+        const file = new Blob([result.data], { type: "application/pdf" });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      }
+    }
+  };
+
   return (
     <Modal
       open={props.open}
@@ -77,7 +90,7 @@ const InvoiceModal = (props) => {
       }}
       save={handleSave}
       saveTitle="ثبت فاکتور"
-      Buttons={() => <Buttons onDelete={handleDeleteClick} />}
+      Buttons={() => <Buttons onDelete={handleDeleteClick} onPrint={handlePrintClick} />}
     >
       <Form>
         <div className="field-wrapper field-100">
@@ -99,4 +112,6 @@ InvoiceModal.propTypes = {
   id: PropTypes.number.isRequired,
 };
 
-export default withRouter(connect(null, { updateRequestInvoice, deleteRequestInvoice, showDialog })(InvoiceModal));
+export default withRouter(
+  connect(null, { updateRequestInvoice, deleteRequestInvoice, showDialog, printInvoice })(InvoiceModal)
+);

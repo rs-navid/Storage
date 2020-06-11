@@ -11,6 +11,7 @@ import Button from "../../forms/Button";
 
 import { showDialog } from "../../../store/actions/dialogActions";
 import { login } from "../../../store/actions/userActions";
+import config from '../../../configs/config'
 
 import profile from "../../../assets/images/profile.png";
 
@@ -56,7 +57,7 @@ const Login = (props) => {
             onChange={setPassword}
           />
           <ReCAPTCHA
-            sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+            sitekey={config.recaptchaSiteKey}
             onChange={(val) => {
               setCaptcha(val);
             }}

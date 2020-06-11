@@ -117,7 +117,7 @@ const menu = [
   },
   {
     id: 800,
-    text: "مدیریت صورت حساب ها",
+    text: "مدیریت صورتحساب ها",
     icon: faFileInvoiceDollar,
     path: "/invoicemanagement",
   },

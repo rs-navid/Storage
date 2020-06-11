@@ -22,6 +22,7 @@ const FormSetting = (props) => {
     receiptFooterSize: "",
     receiptPoints: "",
     receiptFormCode: "",
+    invoiceDescription: ""
   });
 
   // Component did mount
@@ -174,47 +175,61 @@ const FormSetting = (props) => {
       {/* Environment settings */}
       <fieldset>
         <legend>تنظیمات گزارش آزمون محیط زیست</legend>
-      <div className="field-wrapper field-100 wrap ">
-        <label>ارتفاع سر برگ:</label>
-        <Input
-          placeholder="345"
-          type="text"
-          name="environmentHeaderSize"
-          value={forms.environmentHeaderSize}
-          onChange={handleChange}
-        />
-      </div>
+        <div className="field-wrapper field-100 wrap ">
+          <label>ارتفاع سر برگ:</label>
+          <Input
+            placeholder="345"
+            type="text"
+            name="environmentHeaderSize"
+            value={forms.environmentHeaderSize}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div className="field-wrapper field-100 wrap ">
-        <label>ارتفاع پاورقی:</label>
-        <Input
-          placeholder="270"
-          type="text"
-          name="environmentFooterSize"
-          value={forms.environmentFooterSize}
-          onChange={handleChange}
-        />
-      </div>
+        <div className="field-wrapper field-100 wrap ">
+          <label>ارتفاع پاورقی:</label>
+          <Input
+            placeholder="270"
+            type="text"
+            name="environmentFooterSize"
+            value={forms.environmentFooterSize}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div className="field-wrapper field-100 wrap">
-        <label> ملاحظات (فرایندی):</label>
-        <TextArea
-          placeholder="ملاحظات"
-          name="environmentWarningsFarayandi"
-          value={forms.environmentWarningsFarayandi}
-          onChange={handleChange}
-        />
-      </div>
+        <div className="field-wrapper field-100 wrap">
+          <label> ملاحظات (فرایندی):</label>
+          <TextArea
+            placeholder="ملاحظات"
+            name="environmentWarningsFarayandi"
+            value={forms.environmentWarningsFarayandi}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div className="field-wrapper field-100 wrap">
-        <label>ملاحظات (خود اظهاری):</label>
-        <TextArea
-          placeholder="ملاحظات"
-          name="environmentWarningsEzhari"
-          value={forms.environmentWarningsEzhari}
-          onChange={handleChange}
-        />
-      </div>
+        <div className="field-wrapper field-100 wrap">
+          <label>ملاحظات (خود اظهاری):</label>
+          <TextArea
+            placeholder="ملاحظات"
+            name="environmentWarningsEzhari"
+            value={forms.environmentWarningsEzhari}
+            onChange={handleChange}
+          />
+        </div>
+      </fieldset>
+
+      {/* Invoice settings */}
+      <fieldset>
+        <legend>تنظیمات صورتحساب</legend>
+        <div className="field-wrapper field-100 wrap">
+          <label>توضیحات:</label>
+          <TextArea
+            placeholder="توضیحات"
+            name="invoiceDescription"
+            value={forms.invoiceDescription}
+            onChange={handleChange}
+          />
+        </div>
       </fieldset>
 
       <Button icon labelPosition="right" color="blue" onClick={handleSave}>

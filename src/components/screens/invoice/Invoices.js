@@ -5,13 +5,13 @@ import Invoice from "./Invoice";
 
 const Invoices = () => {
   useEffect(() => {
-    document.title = `مدیریت صورت حساب ها`;
+    document.title = `مدیریت صورتحساب ها`;
     // eslint-disable-next-line
   }, []);
 
   return (
     <div>
-      <Tab tabs={[`مدیریت صورت حساب ها`]} panels={[Invoice]} hash={["invoices"]} />
+      <Tab tabs={[`مدیریت صورتحساب ها`]} panels={[Invoice]} hash={["invoices"]} />
     </div>
   );
 };

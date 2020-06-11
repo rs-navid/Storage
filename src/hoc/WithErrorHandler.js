@@ -6,9 +6,10 @@ import { withRouter } from "react-router-dom";
 import { showDialog } from "../store/actions/dialogActions";
 import { showSpinner, hideSpinner } from "../store/actions/spinnerActions";
 import { removeUserToken } from "../store/actions/userActions";
+import config from "../configs/config";
 
 const WithErrorHandler = (props) => {
-  const url = "http://localhost:3000";
+  const url = config.serverURL;
   axios.defaults.baseURL = url;
   axios.defaults.headers["Authorization"] = props.token;
 

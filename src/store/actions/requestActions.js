@@ -91,6 +91,22 @@ export const print = (id) => {
   };
 };
 
+export const printInvoice = (id) => {
+  return async () => {
+    const result = await axios.get(`/request/printinvoice/${id}`, {
+      responseType: "arraybuffer",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/pdf",
+      },
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
 export const updateRequestInvoice = (id, invoice) => {
   return async () => {
     const result = await axios.put(`/request/invoice/${id}`, {

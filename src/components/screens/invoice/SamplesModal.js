@@ -124,7 +124,7 @@ const SamplesModal = (props) => {
         {/* End list */}
 
         <fieldset className="p-3 mx-0">
-          <legend>صورت حساب</legend>
+          <legend>صورتحساب</legend>
           <div className="field-wrapper field-50 right-50">
             <label>جمع کل مبلغ:</label>
             <Input
@@ -189,7 +189,7 @@ const SamplesModal = (props) => {
               type="text"
               name="totalPrice"
               value={thousands_separators(
-                invoice.price - invoice.discount - ((invoice.price - invoice.discount) * invoice.tax) / 100
+                invoice.price - invoice.discount + ((invoice.price - invoice.discount) * invoice.tax) / 100
               )}
               // onChange={handleInput}
               disabled
