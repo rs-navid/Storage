@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Form, Input, TextArea } from "semantic-ui-react";
+import { Form, Input, TextArea, Dropdown } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import DatePicker from "react-modern-calendar-datepicker";
 import moment from "jalali-moment";
@@ -11,6 +11,12 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import Modal from "../../UI/modal/Modal";
 
 import { getClients } from "../../../store/actions/clientActions";
+
+
+const isPaidValues = [
+  { key: 1, text: "نشده است", value: "0" },
+  { key: 2, text: "شده است", value: "1" },
+];
 
 const EditModal = (props) => {
   const [clients, setClients] = useState([]);
@@ -98,6 +104,14 @@ const EditModal = (props) => {
     }
   };
 
+  // Handle is paid change
+  const handleIsPaidChange= (e, { value }, target) => {
+    props.setEditingRequest({
+      ...props.editingRequest,
+      [target]: value === "0" ? 0 : 1,
+    });
+  };
+
   const defaultClient =
     props.editingRequest.clientId !== 0
       ? clients[clients.findIndex((item) => item.value === props.editingRequest.clientId)]
@@ -183,6 +197,20 @@ const EditModal = (props) => {
             value={props.editingRequest.requester}
             onChange={handleInput}
           />
+        </div>
+
+        <div className="clearfix"></div>
+        <div className="line-break"></div>
+
+        <div className="field-wrapper field-50 right-50">
+        <label>تسویه حساب:</label>
+            <Dropdown
+            selection
+            fluid
+            options={isPaidValues}
+            value={props.editingRequest.isPaid === 0 ? "0" : "1"}
+            onChange={(e, value) => handleIsPaidChange(e, value, "isPaid")}
+            name="order"/>
         </div>
 
         <div className="clearfix"></div>

@@ -7,10 +7,12 @@ import Modal from "../../UI/modal/Modal";
 import DiscountModal from "./DiscountModal";
 import TaxModal from "./TaxModal";
 import InvoiceModal from "./InvoiceModal";
+import IsPaidModal from "./IsPaidModal";
 import ListItemWith2Selects, { SubItems } from "../../UI/list/ListItemWith2Selects";
 import MethodsModal from "./MethodsModal";
 
 import { getSamples } from "../../../store/actions/sampleActions";
+import { printFactor } from "../../../store/actions/requestActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
 const SamplesModal = (props) => {
@@ -22,6 +24,7 @@ const SamplesModal = (props) => {
   const [discountModalStatus, setDiscountModalStatus] = useState(false);
   const [taxModalStatus, setTaxModalStatus] = useState(false);
   const [invoiceModalStatus, setInvoiceModalStatus] = useState(false);
+  const [isPaideModalStatus, setIsPaidModalStatus] = useState(false);
   const [periodKey, setPeriodKey] = useState("-");
 
   useEffect(() => {
@@ -56,14 +59,32 @@ const SamplesModal = (props) => {
     setDiscountModalStatus(true);
   };
 
-  // Handle methods button click
+  // Handle tax button click
   const handleTaxButtonClick = () => {
     setTaxModalStatus(true);
+  };
+
+  // Handle methods button click
+  const handleIsPaidButtonClick = () => {
+    setIsPaidModalStatus(true);
   };
 
   // Handle print invoice click
   const handlePrintInvoice = () => {
     setInvoiceModalStatus(true);
+  };
+
+  // Handle print factor click
+  const handlePrintFactor = async () => {
+    const result = await props.printFactor(props.requestId);
+
+    if (result) {
+      if (result.data) {
+        const file = new Blob([result.data], { type: "application/pdf" });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      }
+    }
   };
 
   // Thousands separator
@@ -84,12 +105,27 @@ const SamplesModal = (props) => {
       >
         {/* Start actions */}
         <div className="actions pt-4 pb-5 align-left">
-          <Button icon labelPosition="right" color="blue" size="tiny" onClick={handlePrintInvoice}>
+          <Button icon labelPosition="right" className="mb-2" color="blue" size="tiny" onClick={handlePrintInvoice}>
             فاکتور رسمی
             <Icon name="print" />
           </Button>
-          <Button icon labelPosition="right" size="tiny" color="blue" onClick={handleTaxButtonClick}>
+          <Button icon labelPosition="right" className="mb-2" color="blue" size="tiny" onClick={handlePrintFactor}>
+            چاپ پیش فاکتور
+            <Icon name="print" />
+          </Button>
+          <Button icon labelPosition="right" size="tiny" className="mb-2" color="blue" onClick={handleTaxButtonClick}>
             ویرایش مالیات
+            <Icon name="edit" />
+          </Button>
+          <Button
+            icon
+            labelPosition="right"
+            size="tiny"
+            className="mb-2"
+            color="blue"
+            onClick={handleIsPaidButtonClick}
+          >
+            تسویه حساب
             <Icon name="edit" />
           </Button>
         </div>
@@ -230,6 +266,14 @@ const SamplesModal = (props) => {
         invoice={props.invoice}
         loadRequests={props.loadRequests}
       />
+
+      <IsPaidModal
+        open={isPaideModalStatus}
+        setOpen={setIsPaidModalStatus}
+        id={props.requestId}
+        isPaid={props.isPaid}
+        loadRequests={props.loadRequests}
+      />
     </Fragment>
   );
 };
@@ -241,6 +285,7 @@ SamplesModal.propTypes = {
   setOpen: PropTypes.func.isRequired,
   loadRequests: PropTypes.func.isRequired,
   invoice: PropTypes.number,
+  isPaid: PropTypes.number,
 };
 
-export default connect(null, { getSamples, showDialog })(SamplesModal);
+export default connect(null, { getSamples, showDialog, printFactor })(SamplesModal);

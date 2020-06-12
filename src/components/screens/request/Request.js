@@ -41,6 +41,12 @@ const statusValues = [
   { key: 3, text: "ناتمام", value: "unanswered" },
 ];
 
+const isPaidValues = [
+  { key: 1, text: "همه", value: "all" },
+  { key: 2, text: "تسویه نشده", value: "no" },
+  { key: 3, text: "تسویه شده", value: "yes" },
+];
+
 const requestObject = {
   num: 0,
   date: utils("fa").getToday(),
@@ -58,6 +64,7 @@ const Request = (props) => {
     name: "",
     code: "",
     status: "all",
+    paid: "all",
     orderby: orderbyValues[1].value,
     order: orderValues[1].value,
   });
@@ -78,6 +85,7 @@ const Request = (props) => {
       num: query.num || "",
       code: query.code || "",
       status: query.status || "all",
+      paid: query.paid || "all",
       order: ["asc", "desc"].includes(query.order) ? query.order : "desc",
       orderby: ["id", "date", "num"].includes(query.orderby) ? query.orderby : "num",
     };
@@ -262,6 +270,7 @@ const Request = (props) => {
             orderbyValues={orderbyValues}
             orderValues={orderValues}
             statusValues={statusValues}
+            isPaidValues={isPaidValues}
             filter={filter}
             setFilter={setFilter}
             replaceHistory={replaceHistory}
@@ -273,7 +282,7 @@ const Request = (props) => {
           {/* Start list */}
           {requests.map((item) => {
             const date = moment.from(item.date, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD");
-
+            console.log(item)
             return (
               <ListItemWithCheckboxAndEditAndOther
                 id={item.id}
@@ -286,7 +295,7 @@ const Request = (props) => {
               >
                 <SubItems data={["شماره درخواست:", item.num, "تاریخ درخواست:", date]} />
                 <SubItems data={["نام مشتری:", item["client.name"], "نام درخواست کننده:", item.requester]} />
-                <SubItems data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "", ""]} />
+                <SubItems data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "تسویه حساب:", item.isPaid === 0 ? "نشده است" : "شده است"]} />
               </ListItemWithCheckboxAndEditAndOther>
             );
           })}

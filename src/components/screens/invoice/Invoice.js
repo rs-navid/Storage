@@ -32,12 +32,19 @@ const statusValues = [
   { key: 3, text: "ناتمام", value: "unanswered" },
 ];
 
+const isPaidValues = [
+  { key: 1, text: "همه", value: "all" },
+  { key: 2, text: "تسویه نشده", value: "no" },
+  { key: 3, text: "تسویه شده", value: "yes" },
+];
+
 const Request = (props) => {
   const [filter, setFilter] = useState({
     num: "",
     name: "",
     code: "",
     status: "all",
+    paid:"all",
     invoice: "",
     orderby: orderbyValues[1].value,
     order: orderValues[1].value,
@@ -47,6 +54,7 @@ const Request = (props) => {
   const [modalSampleStatus, setModalSampleStatus] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(0);
   const [invoice, setInvoice] = useState(0);
+  const [isPaid, setIspaid] = useState(0);
 
   // Component did mount
   useEffect(() => {
@@ -58,6 +66,7 @@ const Request = (props) => {
       code: query.code || "",
       invoice: query.invoice || "",
       status: query.status || "all",
+      paid: query.paid || "all",
       order: ["asc", "desc"].includes(query.order) ? query.order : "desc",
       orderby: ["id", "date", "num"].includes(query.orderby) ? query.orderby : "num",
     };
@@ -113,9 +122,10 @@ const Request = (props) => {
   };
 
   // Handle samples button click
-  const handleSampleClick = (id, invoice) => {
+  const handleSampleClick = (id, invoice, isPaid) => {
     setSelectedRequest(id);
     setInvoice(invoice);
+    setIspaid(isPaid);
     setModalSampleStatus(true);
   };
 
@@ -129,6 +139,7 @@ const Request = (props) => {
         setRequestId={setSelectedRequest}
         loadRequests={loadData}
         invoice={invoice}
+        isPaid={isPaid}
       />
       {/* End samples modal */}
 
@@ -138,6 +149,7 @@ const Request = (props) => {
             orderbyValues={orderbyValues}
             orderValues={orderValues}
             statusValues={statusValues}
+            isPaidValues={isPaidValues}
             filter={filter}
             setFilter={setFilter}
             replaceHistory={replaceHistory}
@@ -154,7 +166,7 @@ const Request = (props) => {
               <ListItemWithSelect
                 id={item.id}
                 key={item.id}
-                onClick={() => handleSampleClick(item.id, item.invoice)}
+                onClick={() => handleSampleClick(item.id, item.invoice, item.isPaid)}
                 title="مدیریت"
                 icon="list layout"
               >
@@ -163,6 +175,7 @@ const Request = (props) => {
                 <SubItems
                   data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "شماره فاکتور رسمی:", item.invoice]}
                 />
+                <SubItems data={["تسویه حساب:", item.isPaid === 0 ? "نشده است" : "شده است", "", ""]} />
               </ListItemWithSelect>
             );
           })}

@@ -107,10 +107,38 @@ export const printInvoice = (id) => {
   };
 };
 
+export const printFactor = (id) => {
+  return async () => {
+    const result = await axios.get(`/request/printfactor/${id}`, {
+      responseType: "arraybuffer",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/pdf",
+      },
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
 export const updateRequestInvoice = (id, invoice) => {
   return async () => {
     const result = await axios.put(`/request/invoice/${id}`, {
       invoice: invoice,
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
+export const updateRequestIsPaid = (id, isPaid) => {
+  return async () => {
+    const result = await axios.put(`/request/paid/${id}`, {
+      isPaid: isPaid,
     });
     if (!result) {
       return false;

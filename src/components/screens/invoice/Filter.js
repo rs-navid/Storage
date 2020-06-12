@@ -31,6 +31,7 @@ const Filter = (props) => {
       num: props.filter.num,
       code: props.filter.code,
       status: props.filter.status,
+      paid: props.filter.paid,
       invoice: props.filter.invoice,
       order: props.filter.order,
       orderby: props.filter.orderby,
@@ -126,6 +127,21 @@ const Filter = (props) => {
             name="order"
           />
           </div>
+
+          <div className="clearfix"></div>
+          <div className="line-break"></div>
+          <div className="field-wrapper field-100 wrap">
+            <label>تسویه حساب:</label>
+            <Dropdown
+            selection
+            fluid
+            className="order"
+            options={props.isPaidValues}
+            style={{ minWidth: "120px" }}
+            value={props.filter.paid}
+            onChange={(e, value) => handleSearchStatus(e, value, "paid")}
+          />
+          </div>
           
           <div className="clearfix"></div>
           <div className="line-break"></div>
@@ -173,6 +189,7 @@ Filter.propTypes = {
   orderbyValues: PropTypes.array.isRequired,
   orderValues: PropTypes.array.isRequired,
   statusValues: PropTypes.array.isRequired,
+  isPaidValues: PropTypes.array.isRequired,
   filter: PropTypes.object.isRequired,
   setFilter: PropTypes.func.isRequired,
   replaceHistory: PropTypes.func.isRequired,

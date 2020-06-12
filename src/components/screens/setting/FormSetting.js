@@ -22,7 +22,9 @@ const FormSetting = (props) => {
     receiptFooterSize: "",
     receiptPoints: "",
     receiptFormCode: "",
-    invoiceDescription: ""
+    invoiceDescription: "",
+    factorDescription: "",
+    factorFormCode: ""
   });
 
   // Component did mount
@@ -213,6 +215,31 @@ const FormSetting = (props) => {
             placeholder="ملاحظات"
             name="environmentWarningsEzhari"
             value={forms.environmentWarningsEzhari}
+            onChange={handleChange}
+          />
+        </div>
+      </fieldset>
+
+      {/* Factor settings */}
+      <fieldset>
+        <legend>تنظیمات پیش فاکتور</legend>
+        <div className="field-wrapper field-100 wrap ">
+          <label>کد مدرک:</label>
+          <Input
+            placeholder="کد مدرک"
+            type="text"
+            name="factorFormCode"
+            value={forms.factorFormCode}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="field-wrapper field-100 wrap">
+          <label>توضیحات:</label>
+          <TextArea
+            placeholder="توضیحات"
+            name="factorDescription"
+            value={forms.factorDescription}
             onChange={handleChange}
           />
         </div>
