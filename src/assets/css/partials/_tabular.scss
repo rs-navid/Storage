@@ -8,12 +8,12 @@
 }
 
 .tabular-swipeable {
-  overflow: visible !important;
+  // overflow: visible !important;
   background-color: rgba(239, 239, 239, 0.4);
 
   & > div > div {
     direction: rtl;
-    overflow: visible !important;
+    // overflow: visible !important;
   }
 
   .tabular-content {

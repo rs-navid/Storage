@@ -89,7 +89,7 @@ const SamplesModal = (props) => {
 
   // Thousands separator
   const thousands_separators = (num) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num === null ? 0 : num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   return (

@@ -1,9 +1,17 @@
 import axios from "axios";
 
-export const getRequests = (query, type) => {
+export const getRequests = (query, type, data = {}) => {
   if (!type) {
     return async () => {
       const results = await axios.get(`/request?${query}`);
+      if (results) {
+        return results.data;
+      }
+      return false;
+    };
+  } else if (type === "report") {
+    return async () => {
+      const results = await axios.post(`/request/${type}?${query}`, data);
       if (results) {
         return results.data;
       }
@@ -110,6 +118,23 @@ export const printInvoice = (id) => {
 export const printFactor = (id) => {
   return async () => {
     const result = await axios.get(`/request/printfactor/${id}`, {
+      responseType: "arraybuffer",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/pdf",
+      },
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
+export const printRequestsReport = (data) => {
+  console.log('msg', data);
+  return async () => {
+    const result = await axios.post(`/request/printrequestsreport`, data, {
       responseType: "arraybuffer",
       headers: {
         "Content-Type": "application/json",

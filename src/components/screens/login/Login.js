@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import platform from "platform";
-import ReCAPTCHA from "react-google-recaptcha";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserAlt, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faUserAlt, faLock, faKey, faSync } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 
 import Input from "../../forms/Input";
@@ -11,17 +10,34 @@ import Button from "../../forms/Button";
 
 import { showDialog } from "../../../store/actions/dialogActions";
 import { login } from "../../../store/actions/userActions";
-import config from '../../../configs/config'
+import { getCaptcha } from "../../../store/actions/captchaActions";
 
 import profile from "../../../assets/images/profile.png";
 
 const Login = (props) => {
   useEffect(() => {
     document.title = "ورود";
+    loadCaptcha();
+    // eslint-disable-next-line
   }, []);
+
+  const loadCaptcha = async () => {
+    const results = await props.getCaptcha();
+
+    if (results) {
+      let image = btoa(
+        new Uint8Array(results.data.buffer.data).reduce((data, byte) => data + String.fromCharCode(byte), "")
+      );
+      setCaptcha(`data:image/png;base64,${image}`);
+      setCaptchaText(results.data.text);
+      console.log(results);
+    }
+  };
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [captchaValue, setCaptchaValue] = useState("");
+  const [captchaText, setCaptchaText] = useState("");
   const [remember, setRemember] = useState(false);
   const [captcha, setCaptcha] = useState(null);
 
@@ -30,6 +46,11 @@ const Login = (props) => {
     os: platform.os.family + " " + platform.os.version,
     product: platform.product,
   });
+
+  // Handle reload button click 
+  const handleReloadButtonClick = () => {
+    loadCaptcha();
+  }
 
   return (
     <div className="login-screen">
@@ -56,12 +77,20 @@ const Login = (props) => {
             style={{ backgroundColor: "#eee", color: "#000", padding: "12px" }}
             onChange={setPassword}
           />
-          <ReCAPTCHA
-            sitekey={config.recaptchaSiteKey}
-            onChange={(val) => {
-              setCaptcha(val);
-            }}
+
+          <Input
+            type="text"
+            name="captcha"
+            placeholder="کد امنیتی"
+            icon={<FontAwesomeIcon fixedWidth icon={faKey} />}
+            iconstyle={{ color: "#777", backgroundColor: "#ccc" }}
+            style={{ backgroundColor: "#eee", color: "#000", padding: "12px" }}
+            onChange={setCaptchaValue}
+            button={<FontAwesomeIcon fixedWidth icon={faSync} color="#39ace7"/> }
+            onButtonClick = {handleReloadButtonClick}
           />
+
+          <img src={captcha} alt="captcha" />
 
           <Checkbox name="remember" cls="remember" onChange={setRemember}>
             مرا به خاطر بسپار
@@ -70,11 +99,11 @@ const Login = (props) => {
             cls="primary w-100 p-4 border-rounded mt-5"
             onClick={(e) => {
               e.preventDefault();
-              if (!captcha) {
+              if (captchaText.toLowerCase() !== captchaValue.toLowerCase()) {
                 props.showDialog({
                   type: "ok",
                   title: "خطا",
-                  text: "لطفا گزینه من ربات نیستم را تیک بزنید.",
+                  text: "کد امنیتی صحیح نمی باشد.",
                   yes: null,
                 });
               } else if (!username || !password) {
@@ -97,4 +126,4 @@ const Login = (props) => {
   );
 };
 
-export default connect(null, { showDialog, login })(Login);
+export default connect(null, { showDialog, login, getCaptcha })(Login);

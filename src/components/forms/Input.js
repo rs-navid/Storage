@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Input = props => {
+const Input = (props) => {
   const cls = ["field-wrapper"];
   if (props.icon) cls.push("with-icon");
 
@@ -12,14 +12,25 @@ const Input = props => {
   ) : null;
 
   return (
-    <div className={cls.join(" ")}>
+    <div className={cls.join(" ")} style={{ position: "relative" }}>
       {icon}
       <input
-        {...props}
-        onChange={e => {
+        name = {props.name}
+        type = {props.type}
+        placeholder = {props.placeholder}
+        style = {props.style}
+        onChange={(e) => {
           props.onChange(e.target.value);
         }}
       />
+      {props.button ? (
+        <span
+          style={{ position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)", cursor: "pointer" }}
+          onClick={props.onButtonClick}
+        >
+          {props.button}
+        </span>
+      ) : null}
     </div>
   );
 };
@@ -27,7 +38,7 @@ const Input = props => {
 Input.propTypes = {
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 
 export default Input;

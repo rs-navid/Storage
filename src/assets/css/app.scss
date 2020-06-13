@@ -112,6 +112,28 @@ body {
     .modal-content {
       overflow: visible;
     }
+
+    .actions {
+      button {
+        margin-bottom: 0.5rem !important;
+        @include bp-down(sm) {
+          width: 100%;
+          margin-left: 0 !important;
+        }
+      }
+    }
+
+    .modal-actions {
+      flex-wrap: wrap;
+
+      button {
+        margin-bottom: 0.5rem !important;
+        @include bp-down(sm) {
+          width: 100%;
+          margin-left: 0 !important;
+        }
+      }
+    }
   }
 
   @include bp-down(sm) {
@@ -123,7 +145,7 @@ body {
 }
 
 .WindowedSelect {
-  div[class$="menu"]{
-    font-size: .85rem;
+  div[class$="menu"] {
+    font-size: 0.85rem;
   }
 }

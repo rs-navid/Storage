@@ -122,6 +122,12 @@ const menu = [
     path: "/invoicemanagement",
   },
   {
+    id: 850,
+    text: "گزارش درخواست ها",
+    icon: faFileInvoiceDollar,
+    path: "/requestsreport",
+  },
+  {
     type: "sep",
     container: [800],
   },

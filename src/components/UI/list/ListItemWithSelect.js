@@ -7,10 +7,10 @@ const ListItemWithSelect = (props) => {
       <div className="list-item d-flex align-items-center with-select">
         <div className="info">{props.children}</div>
         <div className="action align-left mt-2 pl-3">
-          <Button icon labelPosition="right" size="mini" onClick={props.onClick}>
+          {props.title ? (<Button icon labelPosition="right" size="mini" onClick={props.onClick}>
             {props.title ? props.title : "انتخاب"}
             <Icon name={props.icon ? props.icon : "hand pointer"} />
-          </Button>
+          </Button>) : null }
         </div>
       </div>
   );
@@ -18,7 +18,7 @@ const ListItemWithSelect = (props) => {
 
 ListItemWithSelect.propTypes = {
   id: PropTypes.any.isRequired,
-  onClick: PropTypes.func.isRequired,
+  // onClick: PropTypes.func.isRequired,
 };
 
 export const SubItems = (props) => {

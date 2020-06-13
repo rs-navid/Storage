@@ -24,7 +24,7 @@ const FormSetting = (props) => {
     receiptFormCode: "",
     invoiceDescription: "",
     factorDescription: "",
-    factorFormCode: ""
+    factorFormCode: "",
   });
 
   // Component did mount
@@ -55,6 +55,44 @@ const FormSetting = (props) => {
 
   return (
     <Form>
+      {/* General settings */}
+      <fieldset>
+        <legend>تنظیمات عمومی</legend>
+        <div className="line-break"></div>
+        <div className="field-wrapper field-100 wrap ">
+          <label>زیر عنوان اول:</label>
+          <Input
+            placeholder="زیر عنوان اول"
+            type="text"
+            name="firstSubtitle"
+            value={forms.firstSubtitle}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="field-wrapper field-100 wrap ">
+          <label>زیر عنوان دوم:</label>
+          <Input
+            placeholder="زیر عنوان دوم"
+            type="text"
+            name="secondSubtitle"
+            value={forms.secondSubtitle}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="field-wrapper field-100 wrap ">
+          <label>شماره گواهینامه:</label>
+          <Input
+            placeholder="شماره گواهینامه"
+            type="text"
+            name="license"
+            value={forms.license}
+            onChange={handleChange}
+          />
+        </div>
+      </fieldset>
+
       {/* Receipt settings */}
       <fieldset>
         <legend>تنظیمات رسید پذیرش نمونه</legend>
@@ -102,39 +140,6 @@ const FormSetting = (props) => {
       <fieldset>
         <legend>تنظیمات گزارش آزمون</legend>
         <div className="line-break"></div>
-        <div className="field-wrapper field-100 wrap ">
-          <label>زیر عنوان اول:</label>
-          <Input
-            placeholder="زیر عنوان اول"
-            type="text"
-            name="firstSubtitle"
-            value={forms.firstSubtitle}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="field-wrapper field-100 wrap ">
-          <label>زیر عنوان دوم:</label>
-          <Input
-            placeholder="زیر عنوان دوم"
-            type="text"
-            name="secondSubtitle"
-            value={forms.secondSubtitle}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="field-wrapper field-100 wrap ">
-          <label>شماره گواهینامه:</label>
-          <Input
-            placeholder="شماره گواهینامه"
-            type="text"
-            name="license"
-            value={forms.license}
-            onChange={handleChange}
-          />
-        </div>
-
         <div className="field-wrapper field-100 wrap ">
           <label>کد مدرک:</label>
           <Input
