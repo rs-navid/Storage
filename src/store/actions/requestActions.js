@@ -28,6 +28,16 @@ export const getRequests = (query, type, data = {}) => {
   }
 };
 
+export const getAllSamples = (query, data) => {
+  return async () => {
+    const results = await axios.post(`/request/samples?${query}`, data);
+    if (results) {
+      return results.data;
+    }
+    return false;
+  };
+};
+
 export const getRequestsByType = (query, type) => {
   return async () => {
     const results = await axios.post(`/request/bytype${type}?${query}`, { type });
@@ -135,6 +145,23 @@ export const printRequestsReport = (data) => {
   console.log('msg', data);
   return async () => {
     const result = await axios.post(`/request/printrequestsreport`, data, {
+      responseType: "arraybuffer",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/pdf",
+      },
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
+export const printSamplesReport = (data) => {
+  console.log('msg', data);
+  return async () => {
+    const result = await axios.post(`/request/printsamplesreport`, data, {
       responseType: "arraybuffer",
       headers: {
         "Content-Type": "application/json",

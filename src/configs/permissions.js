@@ -9,7 +9,8 @@ import {
   faRestroom,
   faFlask,
   faStickyNote,
-  faFileInvoiceDollar
+  faFileInvoiceDollar,
+  faPrint
 } from "@fortawesome/free-solid-svg-icons";
 
 const menu = [
@@ -124,12 +125,18 @@ const menu = [
   {
     id: 850,
     text: "گزارش درخواست ها",
-    icon: faFileInvoiceDollar,
+    icon: faPrint,
     path: "/requestsreport",
   },
   {
+    id: 860,
+    text: "گزارش نمونه ها",
+    icon: faPrint,
+    path: "/samplesreport",
+  },
+  {
     type: "sep",
-    container: [800],
+    container: [800, 850, 860],
   },
 ];
 
