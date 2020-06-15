@@ -91,9 +91,11 @@ const SampleReport = (props) => {
 
     if (results) {
       setRequests(results.rows);
-      setPageInfo({
-        ...pageInfo,
-        totalPages: results.totalPages,
+      setPageInfo((oldState) => {
+        return {
+          ...oldState,
+          totalPages: results.totalPages,
+        };
       });
     }
   };
@@ -161,7 +163,7 @@ const SampleReport = (props) => {
               <ListItemWithSelect id={item["sample.id"]} key={item["sample.id"]}>
                 <SubItems data={["شماره درخواست:", item.num, "تاریخ درخواست:", date]} />
                 <SubItems data={["نام مشتری:", item["client.name"], "نام درخواست کننده:", item.requester]} />
-                <SubItems data={["نام نمونه:", item["sample.name"] , "" , ""]} />
+                <SubItems data={["نام نمونه:", item["sample.name"], "", ""]} />
               </ListItemWithSelect>
             );
           })}

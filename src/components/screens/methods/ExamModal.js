@@ -33,16 +33,19 @@ const ExamModal = (props) => {
     order: orderValues[0].value,
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     loadData();
     // eslint-disable-next-line
-  }, [pageInfo.page])
+  }, [pageInfo.page, props.open]);
 
   const loadData = async () => {
     const results = await props.getExams(qs.stringify({ ...filter, page: pageInfo.page - 1 }));
     if (results) {
+      console.log(results);
       setData(results.rows);
-      setPageInfo(results.totalPages);
+      setPageInfo((oldState) => {
+        return { ...oldState, totalPages: results.totalPages };
+      });
     }
   };
 
@@ -66,13 +69,7 @@ const ExamModal = (props) => {
     >
       <div className="page-wrapper">
         <Sidemenu>
-          <Filter
-            orderValues={orderValues}
-            orderbyValues={orderbyValues}
-            filter={filter}
-            setFilter={setFilter}
-            loadData={loadData}
-          />
+          <Filter orderValues={orderValues} orderbyValues={orderbyValues} filter={filter} setFilter={setFilter} loadData={loadData} />
         </Sidemenu>
         <div className="page-content">
           <div className="px-2" style={{ maxHeight: "400px", overflowY: "auto" }}>
@@ -84,6 +81,7 @@ const ExamModal = (props) => {
                   onClick={() => {
                     selectExam(index);
                   }}
+                  title = "انتخاب"
                 >
                   <SubItems key={item.id} data={["کد آزمون", item.code, "نام آزمون", item.name]} />
                 </ListItemWithSelect>

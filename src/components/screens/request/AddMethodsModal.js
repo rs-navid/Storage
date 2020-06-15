@@ -32,6 +32,7 @@ const AddMethodsModal = (props) => {
     const result = await props.getExams("?page_size=9999999");
 
     if (result) {
+      console.log(result);
       setexams(
         result.rows.map((item) => {
           return {

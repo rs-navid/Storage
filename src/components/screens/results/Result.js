@@ -79,9 +79,11 @@ const Request = (props) => {
 
     if (results) {
       setRequests(results.rows);
-      setPageInfo({
-        ...pageInfo,
-        totalPages: results.totalPages,
+      setPageInfo((oldState) => {
+        return {
+          ...oldState,
+          totalPages: results.totalPages,
+        };
       });
     }
   };
@@ -148,13 +150,7 @@ const Request = (props) => {
             const date = moment.from(item.date, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD");
 
             return (
-              <ListItemWithSelect
-                id={item.id}
-                key={item.id}
-                onClick={() => handleSampleClick(item.id)}
-                title="نمونه ها"
-                icon="list layout"
-              >
+              <ListItemWithSelect id={item.id} key={item.id} onClick={() => handleSampleClick(item.id)} title="نمونه ها" icon="list layout">
                 <SubItems data={["شماره درخواست:", item.num, "تاریخ درخواست:", date]} />
                 <SubItems data={["نام مشتری:", item["client.name"], "نام درخواست کننده:", item.requester]} />
                 <SubItems data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "", ""]} />

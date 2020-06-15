@@ -72,9 +72,11 @@ const Exam = (props) => {
 
     if (results) {
       setExams(results.rows);
-      setPageInfo({
-        ...pageInfo,
-        totalPages: results.totalPages,
+      setPageInfo((oldState) => {
+        return {
+          ...oldState,
+          totalPages: results.totalPages,
+        };
       });
     }
   };
@@ -139,6 +141,7 @@ const Exam = (props) => {
   // Handle page change
   const handlePageChange = (event, value) => {
     let query = qs.parse(props.location.search);
+    console.log(value);
     query = {
       ...query,
       order: filter.order,

@@ -65,7 +65,7 @@ const SampleModal = (props) => {
       setEditingSample(sampleObject);
     }
     // eslint-disable-next-line
-  }, [props.selectedSample]);
+  }, [props.selectedSample, props.open]);
 
   // Load samples
   const loadSample = async () => {

@@ -44,7 +44,7 @@ const Request = (props) => {
     name: "",
     code: "",
     status: "all",
-    paid:"all",
+    paid: "all",
     invoice: "",
     orderby: orderbyValues[1].value,
     order: orderValues[1].value,
@@ -90,9 +90,11 @@ const Request = (props) => {
 
     if (results) {
       setRequests(results.rows);
-      setPageInfo({
-        ...pageInfo,
-        totalPages: results.totalPages,
+      setPageInfo((oldstate) => {
+        return {
+          ...oldstate,
+          totalPages: results.totalPages,
+        };
       });
     }
   };
@@ -172,9 +174,7 @@ const Request = (props) => {
               >
                 <SubItems data={["شماره درخواست:", item.num, "تاریخ درخواست:", date]} />
                 <SubItems data={["نام مشتری:", item["client.name"], "نام درخواست کننده:", item.requester]} />
-                <SubItems
-                  data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "شماره فاکتور رسمی:", item.invoice]}
-                />
+                <SubItems data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "شماره فاکتور رسمی:", item.invoice]} />
                 <SubItems data={["تسویه حساب:", item.isPaid === 0 ? "نشده است" : "شده است", "", ""]} />
               </ListItemWithSelect>
             );

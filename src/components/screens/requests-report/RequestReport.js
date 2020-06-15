@@ -91,9 +91,11 @@ const RequestReport = (props) => {
 
     if (results) {
       setRequests(results.rows);
-      setPageInfo({
-        ...pageInfo,
-        totalPages: results.totalPages,
+      setPageInfo((oldState) => {
+        return {
+          ...oldState,
+          totalPages: results.totalPages,
+        };
       });
     }
   };
@@ -161,9 +163,7 @@ const RequestReport = (props) => {
               <ListItemWithSelect id={item.id} key={item.id}>
                 <SubItems data={["شماره درخواست:", item.num, "تاریخ درخواست:", date]} />
                 <SubItems data={["نام مشتری:", item["client.name"], "نام درخواست کننده:", item.requester]} />
-                <SubItems
-                  data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "شماره فاکتور رسمی:", item.invoice]}
-                />
+                <SubItems data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "شماره فاکتور رسمی:", item.invoice]} />
                 <SubItems data={["تسویه حساب:", item.isPaid === 0 ? "نشده است" : "شده است", "", ""]} />
               </ListItemWithSelect>
             );

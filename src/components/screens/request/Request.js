@@ -14,14 +14,7 @@ import EditModal from "./EditModal";
 import SamplesModal from "./SamplesModal";
 import Filter from "./Filter";
 
-import {
-  getRequest,
-  getRequests,
-  createRequest,
-  updateRequest,
-  deleteRequests,
-  print,
-} from "../../../store/actions/requestActions";
+import { getRequest, getRequests, createRequest, updateRequest, deleteRequests, print } from "../../../store/actions/requestActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
 const orderbyValues = [
@@ -110,9 +103,11 @@ const Request = (props) => {
     if (results) {
       console.log(results.rows);
       setRequests(results.rows);
-      setPageInfo({
-        ...pageInfo,
-        totalPages: results.totalPages,
+      setPageInfo((oldState) => {
+        return {
+          ...oldState,
+          totalPages: results.totalPages,
+        };
       });
     }
   };
@@ -282,7 +277,7 @@ const Request = (props) => {
           {/* Start list */}
           {requests.map((item) => {
             const date = moment.from(item.date, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD");
-            console.log(item)
+            console.log(item);
             return (
               <ListItemWithCheckboxAndEditAndOther
                 id={item.id}
@@ -321,6 +316,4 @@ const Request = (props) => {
   );
 };
 
-export default withRouter(
-  connect(null, { showDialog, getRequest, getRequests, createRequest, updateRequest, deleteRequests, print })(Request)
-);
+export default withRouter(connect(null, { showDialog, getRequest, getRequests, createRequest, updateRequest, deleteRequests, print })(Request));

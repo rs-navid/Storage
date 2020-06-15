@@ -73,10 +73,10 @@ const Client = (props) => {
 
     if (results) {
       setClients(results.rows);
-      setPageInfo({
-        ...pageInfo,
+      setPageInfo(oldState=>{return{
+        ...oldState,
         totalPages: results.totalPages,
-      });
+      }});
     }
   };
 

@@ -8,6 +8,11 @@ import { Link } from "react-router-dom";
 import { removeUserToken } from "../../../store/actions/userActions";
 
 const Header = (props) => {
+
+  const logout = () => {
+    props.removeUserToken();
+  }
+
   return (
     <div className="header">
       <div className="info">
@@ -21,11 +26,11 @@ const Header = (props) => {
             <FontAwesomeIcon icon={faUserCog} fixedWidth />
           </span>
         </Link>
-        <Link to={{ pathname: "/" }}>
-          <span className="logout" title="خروج" onClick={props.removeUserToken}>
+        <span>
+          <span className="logout" title="خروج" onClick={logout}>
             <FontAwesomeIcon icon={faPowerOff} fixedWidth />
           </span>
-        </Link>
+        </span>
       </div>
     </div>
   );
