@@ -33,7 +33,6 @@ const MethodsModal = (props) => {
 
   // Handle on edit click
   const handlePriceButtonClick = (id, index) => {
-    console.log(methods[index].sample_method.price);
     setSelectedMethod({ id, price: methods[index].sample_method.price });
     setPriceModalStatus(true);
   };

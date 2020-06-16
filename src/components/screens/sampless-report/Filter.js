@@ -123,7 +123,6 @@ const Filter = (props) => {
                 handleCheckboxInputs("isStartDate", e.target.value);
               }}
             />
-            {console.log(props.filter.startDate)}
             <DatePicker
               value={props.filter.startDate}
               onChange={(val) => {

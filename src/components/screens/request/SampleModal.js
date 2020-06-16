@@ -111,8 +111,6 @@ const SampleModal = (props) => {
 
   // Handle save request
   const handleSaveSample = async () => {
-    console.log(editingSample);
-
     let result = null;
     if (editingSample.id !== 0) {
       result = await props.updateSample(editingSample);

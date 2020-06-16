@@ -42,7 +42,6 @@ const PointsModal = (props) => {
     if (props.id !== 0) {
       const results = await props.getPointsBySampleId(props.id);
       if (results) {
-        console.log(results);
         if (results.descriptions) {
           setDescriptions(results.descriptions);
         }

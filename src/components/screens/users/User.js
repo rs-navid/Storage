@@ -49,7 +49,6 @@ const User = (props) => {
 
     if (query.page) {
       setPage(+query.page + 1);
-      console.log(+query.page + 1);
     }
 
     if (query.order) {

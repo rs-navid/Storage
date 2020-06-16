@@ -49,7 +49,6 @@ const FormSetting = (props) => {
   };
 
   const handleSave = () => {
-    console.log(forms);
     props.saveSetting({ forms: forms });
   };
 

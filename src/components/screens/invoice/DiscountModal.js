@@ -14,7 +14,6 @@ const DiscountModal = (props) => {
   // // Component did mount
   useEffect(() => {
     setPrice(props.price);
-    console.log(props.price);
     // eslint-disable-next-line
   }, [props.price, props.open]);
 

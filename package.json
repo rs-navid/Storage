@@ -2,6 +2,7 @@
   "name": "lab",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://lab.navidrs.ir/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",

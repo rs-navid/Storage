@@ -30,7 +30,6 @@ const Login = (props) => {
       );
       setCaptcha(`data:image/png;base64,${image}`);
       setCaptchaText(results.data.text);
-      console.log(results);
     }
   };
 

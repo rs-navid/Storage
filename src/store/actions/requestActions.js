@@ -142,7 +142,6 @@ export const printFactor = (id) => {
 };
 
 export const printRequestsReport = (data) => {
-  console.log('msg', data);
   return async () => {
     const result = await axios.post(`/request/printrequestsreport`, data, {
       responseType: "arraybuffer",
@@ -159,7 +158,6 @@ export const printRequestsReport = (data) => {
 };
 
 export const printSamplesReport = (data) => {
-  console.log('msg', data);
   return async () => {
     const result = await axios.post(`/request/printsamplesreport`, data, {
       responseType: "arraybuffer",

@@ -169,8 +169,6 @@ const SampleReport = (props) => {
           })}
           {/* End list */}
 
-          {console.log(filter)}
-
           <PrintModal open={printModalStatus} setOpen={setPrintModalStatus} data={filter} />
 
           <div>

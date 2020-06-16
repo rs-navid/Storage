@@ -101,7 +101,6 @@ const Request = (props) => {
     const results = await props.getRequests(query);
 
     if (results) {
-      console.log(results.rows);
       setRequests(results.rows);
       setPageInfo((oldState) => {
         return {
@@ -277,7 +276,6 @@ const Request = (props) => {
           {/* Start list */}
           {requests.map((item) => {
             const date = moment.from(item.date, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD");
-            console.log(item);
             return (
               <ListItemWithCheckboxAndEditAndOther
                 id={item.id}

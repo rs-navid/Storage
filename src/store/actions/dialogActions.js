@@ -13,8 +13,6 @@ export const showDialog = (action) => {
   if (action.no) payload["no"] = action.no;
   if (action.type) payload["type"] = action.type;
 
-console.log('msg', payload);
-
   return {
     type: SHOW_DIALOG,
     payload: payload,

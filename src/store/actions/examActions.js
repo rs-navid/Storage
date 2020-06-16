@@ -1,9 +1,8 @@
 import axios from "axios";
 
 export const getExams = (query) => {
-  console.log(query);
   return async () => {
-    const results = await axios.get(`/exam${query}`);
+    const results = await axios.get(`/exam?${query}`);
     if (results) {
       return results.data;
     }

@@ -41,7 +41,6 @@ const ExamModal = (props) => {
   const loadData = async () => {
     const results = await props.getExams(qs.stringify({ ...filter, page: pageInfo.page - 1 }));
     if (results) {
-      console.log(results);
       setData(results.rows);
       setPageInfo((oldState) => {
         return { ...oldState, totalPages: results.totalPages };

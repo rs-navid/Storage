@@ -47,7 +47,6 @@ const InvoiceModal = (props) => {
       const result = await props.updateRequestInvoice(props.id, invoice);
 
       if (result) {
-        console.log(result);
         setInvoice(result.data.invoice);
         props.showDialog({ title: "ثبت", text: "شماره فاکتور با موفقیت ثبت گردید." });
         props.loadRequests(props.location.search);
@@ -60,7 +59,6 @@ const InvoiceModal = (props) => {
     const result = await props.deleteRequestInvoice(props.id);
 
     if (result) {
-      console.log(result);
       setInvoice(result.data.invoice);
       props.showDialog({ title: "حذف", text: "فاکتور با موفقیت حذف گردید." });
       props.loadRequests(props.location.search);

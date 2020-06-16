@@ -30,7 +30,6 @@ const EditModal = (props) => {
     if (props.id !== 0) {
       const result = await props.getMethodById(props.id);
 
-      console.log(result);
       if (result) {
         setSampleMethod({
           result: result.result ? result.result : "",

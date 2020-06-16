@@ -42,7 +42,6 @@ const SamplesModal = (props) => {
       setSamples(results.rows);
       setPeriodKey(results.key);
       setInvoice(results.invoice[0]);
-      console.log(results.invoice[0]);
     }
   };
 

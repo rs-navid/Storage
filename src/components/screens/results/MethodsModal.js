@@ -27,7 +27,6 @@ const MethodsModal = (props) => {
   const loadMethods = async () => {
     const results = await props.getSampleMethodsByType(props.sampleId, props.type);
 
-    console.log(results);
     if (results) {
       setMethods(results.methods);
     }
