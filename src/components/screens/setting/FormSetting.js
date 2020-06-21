@@ -25,6 +25,14 @@ const FormSetting = (props) => {
     invoiceDescription: "",
     factorDescription: "",
     factorFormCode: "",
+    factorHeaderSize: "",
+    factorFooterSize: "",
+    invoiceHeaderSize: "",
+    invoiceFooterSize: "",
+    requestsReportHeaderSize: "",
+    requestsReportFooterSize: "",
+    samplesReportHeaderSize: "",
+    samplesReportFooterSize: "",
   });
 
   // Component did mount
@@ -60,35 +68,17 @@ const FormSetting = (props) => {
         <div className="line-break"></div>
         <div className="field-wrapper field-100 wrap ">
           <label>زیر عنوان اول:</label>
-          <Input
-            placeholder="زیر عنوان اول"
-            type="text"
-            name="firstSubtitle"
-            value={forms.firstSubtitle}
-            onChange={handleChange}
-          />
+          <Input placeholder="زیر عنوان اول" type="text" name="firstSubtitle" value={forms.firstSubtitle} onChange={handleChange} />
         </div>
 
         <div className="field-wrapper field-100 wrap ">
           <label>زیر عنوان دوم:</label>
-          <Input
-            placeholder="زیر عنوان دوم"
-            type="text"
-            name="secondSubtitle"
-            value={forms.secondSubtitle}
-            onChange={handleChange}
-          />
+          <Input placeholder="زیر عنوان دوم" type="text" name="secondSubtitle" value={forms.secondSubtitle} onChange={handleChange} />
         </div>
 
         <div className="field-wrapper field-100 wrap ">
           <label>شماره گواهینامه:</label>
-          <Input
-            placeholder="شماره گواهینامه"
-            type="text"
-            name="license"
-            value={forms.license}
-            onChange={handleChange}
-          />
+          <Input placeholder="شماره گواهینامه" type="text" name="license" value={forms.license} onChange={handleChange} />
         </div>
       </fieldset>
 
@@ -98,35 +88,17 @@ const FormSetting = (props) => {
 
         <div className="field-wrapper field-100 wrap ">
           <label>ارتفاع سر برگ:</label>
-          <Input
-            placeholder="130"
-            type="text"
-            name="receiptHeaderSize"
-            value={forms.receiptHeaderSize}
-            onChange={handleChange}
-          />
+          <Input placeholder="130" type="text" name="receiptHeaderSize" value={forms.receiptHeaderSize} onChange={handleChange} />
         </div>
 
         <div className="field-wrapper field-100 wrap ">
           <label>ارتفاع پاورقی:</label>
-          <Input
-            placeholder="90"
-            type="text"
-            name="receiptFooterSize"
-            value={forms.receiptFooterSize}
-            onChange={handleChange}
-          />
+          <Input placeholder="90" type="text" name="receiptFooterSize" value={forms.receiptFooterSize} onChange={handleChange} />
         </div>
 
         <div className="field-wrapper field-100 wrap ">
           <label>کد مدرک:</label>
-          <Input
-            placeholder="کد مدرک"
-            type="text"
-            name="receiptFormCode"
-            value={forms.receiptFormCode}
-            onChange={handleChange}
-          />
+          <Input placeholder="کد مدرک" type="text" name="receiptFormCode" value={forms.receiptFormCode} onChange={handleChange} />
         </div>
 
         <div className="field-wrapper field-100 wrap">
@@ -141,35 +113,17 @@ const FormSetting = (props) => {
         <div className="line-break"></div>
         <div className="field-wrapper field-100 wrap ">
           <label>کد مدرک:</label>
-          <Input
-            placeholder="کد مدرک"
-            type="text"
-            name="resultsFormCode"
-            value={forms.resultsFormCode}
-            onChange={handleChange}
-          />
+          <Input placeholder="کد مدرک" type="text" name="resultsFormCode" value={forms.resultsFormCode} onChange={handleChange} />
         </div>
 
         <div className="field-wrapper field-100 wrap ">
           <label>ارتفاع سر برگ:</label>
-          <Input
-            placeholder="330"
-            type="text"
-            name="resultsHeaderSize"
-            value={forms.resultsHeaderSize}
-            onChange={handleChange}
-          />
+          <Input placeholder="330" type="text" name="resultsHeaderSize" value={forms.resultsHeaderSize} onChange={handleChange} />
         </div>
 
         <div className="field-wrapper field-100 wrap ">
           <label>ارتفاع پاورقی:</label>
-          <Input
-            placeholder="255"
-            type="text"
-            name="resultsFooterSize"
-            value={forms.resultsFooterSize}
-            onChange={handleChange}
-          />
+          <Input placeholder="255" type="text" name="resultsFooterSize" value={forms.resultsFooterSize} onChange={handleChange} />
         </div>
 
         <div className="field-wrapper field-100 wrap">
@@ -183,44 +137,22 @@ const FormSetting = (props) => {
         <legend>تنظیمات گزارش آزمون محیط زیست</legend>
         <div className="field-wrapper field-100 wrap ">
           <label>ارتفاع سر برگ:</label>
-          <Input
-            placeholder="345"
-            type="text"
-            name="environmentHeaderSize"
-            value={forms.environmentHeaderSize}
-            onChange={handleChange}
-          />
+          <Input placeholder="345" type="text" name="environmentHeaderSize" value={forms.environmentHeaderSize} onChange={handleChange} />
         </div>
 
         <div className="field-wrapper field-100 wrap ">
           <label>ارتفاع پاورقی:</label>
-          <Input
-            placeholder="270"
-            type="text"
-            name="environmentFooterSize"
-            value={forms.environmentFooterSize}
-            onChange={handleChange}
-          />
+          <Input placeholder="270" type="text" name="environmentFooterSize" value={forms.environmentFooterSize} onChange={handleChange} />
         </div>
 
         <div className="field-wrapper field-100 wrap">
           <label> ملاحظات (فرایندی):</label>
-          <TextArea
-            placeholder="ملاحظات"
-            name="environmentWarningsFarayandi"
-            value={forms.environmentWarningsFarayandi}
-            onChange={handleChange}
-          />
+          <TextArea placeholder="ملاحظات" name="environmentWarningsFarayandi" value={forms.environmentWarningsFarayandi} onChange={handleChange} />
         </div>
 
         <div className="field-wrapper field-100 wrap">
           <label>ملاحظات (خود اظهاری):</label>
-          <TextArea
-            placeholder="ملاحظات"
-            name="environmentWarningsEzhari"
-            value={forms.environmentWarningsEzhari}
-            onChange={handleChange}
-          />
+          <TextArea placeholder="ملاحظات" name="environmentWarningsEzhari" value={forms.environmentWarningsEzhari} onChange={handleChange} />
         </div>
       </fieldset>
 
@@ -229,37 +161,69 @@ const FormSetting = (props) => {
         <legend>تنظیمات پیش فاکتور</legend>
         <div className="field-wrapper field-100 wrap ">
           <label>کد مدرک:</label>
-          <Input
-            placeholder="کد مدرک"
-            type="text"
-            name="factorFormCode"
-            value={forms.factorFormCode}
-            onChange={handleChange}
-          />
+          <Input placeholder="کد مدرک" type="text" name="factorFormCode" value={forms.factorFormCode} onChange={handleChange} />
+        </div>
+
+        <div className="field-wrapper field-100 wrap ">
+          <label>ارتفاع سر برگ:</label>
+          <Input placeholder="160" type="text" name="factorHeaderSize" value={forms.factorHeaderSize} onChange={handleChange} />
+        </div>
+
+        <div className="field-wrapper field-100 wrap ">
+          <label>ارتفاع پاورقی:</label>
+          <Input placeholder="0" type="text" name="factorFooterSize" value={forms.factorFooterSize} onChange={handleChange} />
         </div>
 
         <div className="field-wrapper field-100 wrap">
           <label>توضیحات:</label>
-          <TextArea
-            placeholder="توضیحات"
-            name="factorDescription"
-            value={forms.factorDescription}
-            onChange={handleChange}
-          />
+          <TextArea placeholder="توضیحات" name="factorDescription" value={forms.factorDescription} onChange={handleChange} />
         </div>
       </fieldset>
 
       {/* Invoice settings */}
       <fieldset>
         <legend>تنظیمات صورتحساب</legend>
+        <div className="field-wrapper field-100 wrap ">
+          <label>ارتفاع سر برگ:</label>
+          <Input placeholder="130" type="text" name="invoiceHeaderSize" value={forms.invoiceHeaderSize} onChange={handleChange} />
+        </div>
+
+        <div className="field-wrapper field-100 wrap ">
+          <label>ارتفاع پاورقی:</label>
+          <Input placeholder="130" type="text" name="invoiceFooterSize" value={forms.invoiceFooterSize} onChange={handleChange} />
+        </div>
+
         <div className="field-wrapper field-100 wrap">
           <label>توضیحات:</label>
-          <TextArea
-            placeholder="توضیحات"
-            name="invoiceDescription"
-            value={forms.invoiceDescription}
-            onChange={handleChange}
-          />
+          <TextArea placeholder="توضیحات" name="invoiceDescription" value={forms.invoiceDescription} onChange={handleChange} />
+        </div>
+      </fieldset>
+
+      {/* requests report settings */}
+      <fieldset>
+        <legend>تنظیمات گزارش درخواست ها</legend>
+        <div className="field-wrapper field-100 wrap ">
+          <label>ارتفاع سر برگ:</label>
+          <Input placeholder="160" type="text" name="requestsReportHeaderSize" value={forms.requestsReportHeaderSize} onChange={handleChange} />
+        </div>
+
+        <div className="field-wrapper field-100 wrap ">
+          <label>ارتفاع پاورقی:</label>
+          <Input placeholder="90" type="text" name="requestsReportFooterSize" value={forms.requestsReportFooterSize} onChange={handleChange} />
+        </div>
+      </fieldset>
+
+      {/* samples report settings */}
+      <fieldset>
+        <legend>تنظیمات گزارش نمونه ها</legend>
+        <div className="field-wrapper field-100 wrap ">
+          <label>ارتفاع سر برگ:</label>
+          <Input placeholder="160" type="text" name="samplesReportHeaderSize" value={forms.samplesReportHeaderSize} onChange={handleChange} />
+        </div>
+
+        <div className="field-wrapper field-100 wrap ">
+          <label>ارتفاع پاورقی:</label>
+          <Input placeholder="90" type="text" name="samplesReportFooterSize" value={forms.samplesReportFooterSize} onChange={handleChange} />
         </div>
       </fieldset>
 
