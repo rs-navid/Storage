@@ -47,7 +47,7 @@ const PrintModal = (props) => {
         props.setOpen(false);
       }}
       save={handlePrint}
-      saveTitle="چاپ نتایج"
+      saveTitle="چاپ"
       saveIcon="print"
       maxWidth="xs"
     >
