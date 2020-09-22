@@ -28,7 +28,7 @@ const AddMethodsModal = (props) => {
 
   // Load samples
   const loadExams = async () => {
-    const result = await props.getExams("?page_size=9999999");
+    const result = await props.getExams("page_size=9999999");
 
     if (result) {
       setexams(
