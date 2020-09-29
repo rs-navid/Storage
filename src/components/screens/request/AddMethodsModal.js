@@ -114,7 +114,7 @@ const AddMethodsModal = (props) => {
                 hideAction
                 onChange={() => handleSelectionChange(item.id)}
               >
-                <SubItems data={["کد روش آزمون:", item.code, "نام روش آزمون:", item.name]} />
+                {/* <SubItems data={["کد روش آزمون:", item.code, "نام روش آزمون:", item.name]} />
                 <SubItems
                   data={[
                     "نوع آزمون:",
@@ -123,7 +123,8 @@ const AddMethodsModal = (props) => {
                     item.contractor ? "دارد" : "ندارد",
                   ]}
                 />
-                <SubItems data={["هزینه:", item.price + " ریال"]} />
+                <SubItems data={["هزینه:", item.price + " ریال"]} /> */}
+                <SubItems data={["نام روش آزمون:", item.name, "نوع آزمون:", methodTypes[item.methodTypeId - 1].name]} />
               </ListItemWithCheckboxAndEdit>
             );
           })}
