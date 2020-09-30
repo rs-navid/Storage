@@ -116,14 +116,7 @@ const SamplesModal = (props) => {
             ویرایش مالیات
             <Icon name="edit" />
           </Button>
-          <Button
-            icon
-            labelPosition="right"
-            size="tiny"
-            className="mb-2"
-            color="blue"
-            onClick={handleIsPaidButtonClick}
-          >
+          <Button icon labelPosition="right" size="tiny" className="mb-2" color="blue" onClick={handleIsPaidButtonClick}>
             تسویه حساب
             <Icon name="edit" />
           </Button>
@@ -148,9 +141,7 @@ const SamplesModal = (props) => {
               >
                 <SubItems data={["کد شناسایی نمونه:", "S" + periodKey + "-" + item.num, "نام نمونه:", item.name]} />
                 <SubItems data={["نام تجاری:", item.businnessName, "نام شرکت:", item.company]} />
-                <SubItems
-                  data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "مبلغ", thousands_separators(item.price)]}
-                />
+                <SubItems data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "مبلغ", thousands_separators(item.price)]} />
                 <SubItems data={["تخفیف:", thousands_separators(item.discount), "", ""]} />
               </ListItemWith2Selects>
             );
@@ -213,7 +204,7 @@ const SamplesModal = (props) => {
             <Input
               type="text"
               name="totalTax"
-              value={thousands_separators(((invoice.price - invoice.discount) * invoice.tax) / 100)}
+              value={thousands_separators(Math.round(((invoice.price - invoice.discount) * invoice.tax) / 100))}
               disabled
               // onChange={handleInput}
             />
@@ -223,9 +214,7 @@ const SamplesModal = (props) => {
             <Input
               type="text"
               name="totalPrice"
-              value={thousands_separators(
-                invoice.price - invoice.discount + ((invoice.price - invoice.discount) * invoice.tax) / 100
-              )}
+              value={thousands_separators(Math.round(invoice.price - invoice.discount + ((invoice.price - invoice.discount) * invoice.tax) / 100))}
               // onChange={handleInput}
               disabled
             />
@@ -250,13 +239,7 @@ const SamplesModal = (props) => {
         loadSamples={loadSamples}
       />
 
-      <TaxModal
-        open={taxModalStatus}
-        setOpen={setTaxModalStatus}
-        id={props.requestId}
-        price={invoice.tax}
-        loadSamples={loadSamples}
-      />
+      <TaxModal open={taxModalStatus} setOpen={setTaxModalStatus} id={props.requestId} price={invoice.tax} loadSamples={loadSamples} />
 
       <InvoiceModal
         open={invoiceModalStatus}
