@@ -1,5 +1,15 @@
 import axios from "axios";
 
+export const getNewSampleNum = () => {
+  return async () => {
+    const results = await axios.get('/sample');
+    if (results) {
+      return results.data;
+    }
+    return false;
+  }
+}
+
 export const getSamples = (requestId) => {
   return async () => {
     const results = await axios.get(`/sample/getall/${requestId}`);

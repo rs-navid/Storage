@@ -85,9 +85,9 @@ const MethodsModal = (props) => {
   };
 
   // Thousands separator
-  const thousands_separators = (num) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
+  // const thousands_separators = (num) => {
+  //   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  // };
 
   return (
     <Fragment>
@@ -125,17 +125,10 @@ const MethodsModal = (props) => {
                 buttonText="هزینه"
                 buttonIcon="dollar"
               >
-                <SubItems data={["کد آزمون:", item.exam.code, "نام آزمون:", item.exam.name]} />
-                <SubItems data={["کد روش آزمون:", item.code, "نام روش آزمون:", item.name]} />
-                <SubItems
-                  data={[
-                    "نوع آزمون:",
-                    methodTypes[item.methodTypeId - 1].name,
-                    "هزینه:",
-                    thousands_separators(item.sample_method.price) + " ریال",
-                  ]}
-                />
-                <SubItems data={["نتیجه:", item.sample_method.result ? item.sample_method.result : "", "", ""]} />
+                <SubItems data={["نام آزمون:", item.exam.name, "کد روش آزمون:", item.code]} />
+                <SubItems data={["نام روش آزمون:", item.name,  "نوع آزمون:",
+                    methodTypes[item.methodTypeId - 1].name]} />
+                <SubItems data={["مقدار استاندارد:", item.range, "نتیجه:", item.sample_method.result ? item.sample_method.result : ""]} />
               </ListItemWithCheckboxAndEdit>
             );
           })}

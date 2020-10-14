@@ -7,7 +7,7 @@ import { Form, Input, Dropdown } from "semantic-ui-react";
 
 import Modal from "../../UI/modal/Modal";
 
-import { getSample, createSample, updateSample } from "../../../store/actions/sampleActions";
+import { getSample, createSample, updateSample, getNewSampleNum } from "../../../store/actions/sampleActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
 const sampleObject = {
@@ -62,10 +62,24 @@ const SampleModal = (props) => {
     if (props.selectedSample) {
       loadSample();
     } else {
-      setEditingSample(sampleObject);
+      loadNewSample(props.open);
     }
     // eslint-disable-next-line
   }, [props.selectedSample, props.open]);
+
+  // Load new sample number
+  const loadNewSample = async (open) => {
+    if (open) {
+      const result = await props.getNewSampleNum();
+      if (result) {
+        setEditingSample({ ...sampleObject, num: result.num });
+      } else {
+        setEditingSample(sampleObject);
+      }
+    } else {
+      setEditingSample(sampleObject);
+    }
+  };
 
   // Load samples
   const loadSample = async () => {
@@ -146,13 +160,7 @@ const SampleModal = (props) => {
       <Form>
         <div className="field-wrapper field-50 right-50">
           <label>کد شناسایی نمونه:</label>
-          <Input
-            placeholder="کد شناسایی نمونه"
-            type="text"
-            name="num"
-            value={editingSample.num}
-            onChange={handleInput}
-          />
+          <Input placeholder="کد شناسایی نمونه" type="text" name="num" value={editingSample.num} onChange={handleInput} />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>نام نمونه:</label>
@@ -164,23 +172,11 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>نام تجاری:</label>
-          <Input
-            placeholder="نام تجاری"
-            type="text"
-            name="businnessName"
-            value={editingSample.businnessName}
-            onChange={handleInput}
-          />
+          <Input placeholder="نام تجاری" type="text" name="businnessName" value={editingSample.businnessName} onChange={handleInput} />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>نام شرکت:</label>
-          <Input
-            placeholder="نام شرکت"
-            type="text"
-            name="company"
-            value={editingSample.company}
-            onChange={handleInput}
-          />
+          <Input placeholder="نام شرکت" type="text" name="company" value={editingSample.company} onChange={handleInput} />
         </div>
 
         <div className="clearfix"></div>
@@ -188,23 +184,11 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>تعداد/مقدار :</label>
-          <Input
-            placeholder="تعداد/مقدار "
-            type="text"
-            name="amount"
-            value={editingSample.amount}
-            onChange={handleInput}
-          />
+          <Input placeholder="تعداد/مقدار " type="text" name="amount" value={editingSample.amount} onChange={handleInput} />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>حجم/وزن:</label>
-          <Input
-            placeholder="حجم/وزن"
-            type="text"
-            name="dimension"
-            value={editingSample.dimension}
-            onChange={handleInput}
-          />
+          <Input placeholder="حجم/وزن" type="text" name="dimension" value={editingSample.dimension} onChange={handleInput} />
         </div>
 
         <div className="clearfix"></div>
@@ -212,13 +196,7 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>شماره ساخت :</label>
-          <Input
-            placeholder="شماره ساخت "
-            type="text"
-            name="serial"
-            value={editingSample.serial}
-            onChange={handleInput}
-          />
+          <Input placeholder="شماره ساخت " type="text" name="serial" value={editingSample.serial} onChange={handleInput} />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>تاریخ تولید:</label>
@@ -248,13 +226,7 @@ const SampleModal = (props) => {
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>تاریخ انقضاء:</label>
-          <Input
-            placeholder="تاریخ انقضاء "
-            type="text"
-            name="expireDate"
-            value={editingSample.expireDate}
-            onChange={handleInput}
-          />
+          <Input placeholder="تاریخ انقضاء " type="text" name="expireDate" value={editingSample.expireDate} onChange={handleInput} />
         </div>
 
         <div className="clearfix"></div>
@@ -262,13 +234,7 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>محل نمونه برداری :</label>
-          <Input
-            placeholder="محل نمونه برداری "
-            type="text"
-            name="place"
-            value={editingSample.place}
-            onChange={handleInput}
-          />
+          <Input placeholder="محل نمونه برداری " type="text" name="place" value={editingSample.place} onChange={handleInput} />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>مقدار نمونه:</label>
@@ -287,13 +253,7 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>بسته بندی :</label>
-          <Input
-            placeholder="بسته بندی "
-            type="text"
-            name="packing"
-            value={editingSample.packing}
-            onChange={handleInput}
-          />
+          <Input placeholder="بسته بندی " type="text" name="packing" value={editingSample.packing} onChange={handleInput} />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>نوع بسته بندی:</label>
@@ -312,23 +272,11 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>شماره نامه :</label>
-          <Input
-            placeholder="شماره نامه "
-            type="text"
-            name="letter"
-            value={editingSample.letter}
-            onChange={handleInput}
-          />
+          <Input placeholder="شماره نامه " type="text" name="letter" value={editingSample.letter} onChange={handleInput} />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>شماره اندیکاتور وارده:</label>
-          <Input
-            placeholder="شماره اندیکاتور وارده"
-            type="text"
-            name="indicator"
-            value={editingSample.indicator}
-            onChange={handleInput}
-          />
+          <Input placeholder="شماره اندیکاتور وارده" type="text" name="indicator" value={editingSample.indicator} onChange={handleInput} />
         </div>
 
         <div className="clearfix"></div>
@@ -336,23 +284,11 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>شماره پلمپ :</label>
-          <Input
-            placeholder="شماره پلمپ "
-            type="text"
-            name="closed"
-            value={editingSample.closed}
-            onChange={handleInput}
-          />
+          <Input placeholder="شماره پلمپ " type="text" name="closed" value={editingSample.closed} onChange={handleInput} />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>شماره استاندارد:</label>
-          <Input
-            placeholder="شماره استاندارد"
-            type="text"
-            name="standard"
-            value={editingSample.standard}
-            onChange={handleInput}
-          />
+          <Input placeholder="شماره استاندارد" type="text" name="standard" value={editingSample.standard} onChange={handleInput} />
         </div>
 
         <div className="clearfix"></div>
@@ -360,13 +296,7 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>شماره استاندارد مرجع :</label>
-          <Input
-            placeholder="شماره استاندارد مرجع "
-            type="text"
-            name="standardRef"
-            value={editingSample.standardRef}
-            onChange={handleInput}
-          />
+          <Input placeholder="شماره استاندارد مرجع " type="text" name="standardRef" value={editingSample.standardRef} onChange={handleInput} />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>طول جغرافیایی:</label>
@@ -396,13 +326,7 @@ const SampleModal = (props) => {
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>محل تخلیه پساب:</label>
-          <Input
-            placeholder="محل تخلیه پساب"
-            type="text"
-            name="waste"
-            value={editingSample.waste}
-            onChange={handleInput}
-          />
+          <Input placeholder="محل تخلیه پساب" type="text" name="waste" value={editingSample.waste} onChange={handleInput} />
         </div>
 
         <div className="clearfix"></div>
@@ -447,4 +371,4 @@ SampleModal.propTypes = {
   loadSamples: PropTypes.func.isRequired,
 };
 
-export default connect(null, { getSample, createSample, updateSample, showDialog })(SampleModal);
+export default connect(null, { getSample, createSample, updateSample, showDialog, getNewSampleNum })(SampleModal);
