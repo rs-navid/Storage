@@ -70,7 +70,7 @@ const MethodsModal = (props) => {
               >
                 <SubItems data={["کد آزمون:", item.exam.code, "نام آزمون:", item.exam.name]} />
                 <SubItems data={["کد روش آزمون:", item.code, "نام روش آزمون:", item.name]} />
-                <SubItems data={["نتیجه:", item.sample_method.result ? item.sample_method.result : "", "", ""]} />
+                <SubItems data={["مقدار استاندارد:", item.range, "نتیجه:", item.sample_method.result ? item.sample_method.result : ""]} />
               </ListItemWithSelect>
             );
           })}

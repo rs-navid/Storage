@@ -25,10 +25,10 @@ const Login = (props) => {
     const results = await props.getCaptcha();
 
     if (results) {
-      let image = btoa(
-        new Uint8Array(results.data.buffer.data).reduce((data, byte) => data + String.fromCharCode(byte), "")
-      );
-      setCaptcha(`data:image/png;base64,${image}`);
+      // let image = btoa(
+      //   new Uint8Array(results.data.buffer.data).reduce((data, byte) => data + String.fromCharCode(byte), "")
+      // );
+      setCaptcha(results.data.data);
       setCaptchaText(results.data.text);
     }
   };
