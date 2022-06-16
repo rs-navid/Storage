@@ -14,7 +14,14 @@ import EditModal from "./EditModal";
 import SamplesModal from "./SamplesModal";
 import Filter from "./Filter";
 
-import { getRequest, getRequests, createRequest, updateRequest, deleteRequests, print } from "../../../store/actions/requestActions";
+import {
+  getRequest,
+  getRequests,
+  createRequest,
+  updateRequest,
+  deleteRequests,
+  print,
+} from "../../../store/actions/requestActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
 const orderbyValues = [
@@ -45,6 +52,10 @@ const requestObject = {
   date: utils("fa").getToday(),
   startDate: utils("fa").getToday(),
   endDate: utils("fa").getToday(),
+  receiveDate: utils("fa").getToday(),
+  receiveTime: "",
+  reason: "",
+  bayanieh: "",
   requester: "",
   description: "",
   id: 0,
@@ -162,16 +173,19 @@ const Request = (props) => {
   // Click on edit button
   const handleEditButtonClick = async (id) => {
     const result = await props.getRequest(id);
+    console.log(result);
     if (result) {
       const date = moment.from(result.date, "en", "YYYY-MM-DD").locale("fa").toObject();
       const startDate = moment.from(result.startDate, "en", "YYYY-MM-DD").locale("fa").toObject();
       const endDate = moment.from(result.endDate, "en", "YYYY-MM-DD").locale("fa").toObject();
+      const receiveDate = moment.from(result.receiveDate, "en", "YYYY-MM-DD").locale("fa").toObject();
 
       setEditingRequest({
         ...result,
         date: { year: date.years, month: date.months + 1, day: date.date },
         startDate: { year: startDate.years, month: startDate.months + 1, day: startDate.date },
         endDate: { year: endDate.years, month: endDate.months + 1, day: endDate.date },
+        receiveDate: { year: receiveDate.years, month: receiveDate.months + 1, day: receiveDate.date },
       });
       setOpen(true);
     }
@@ -288,7 +302,14 @@ const Request = (props) => {
               >
                 <SubItems data={["شماره درخواست:", item.num, "تاریخ درخواست:", date]} />
                 <SubItems data={["نام مشتری:", item["client.name"], "نام درخواست کننده:", item.requester]} />
-                <SubItems data={["وضعیت:", item.unanswered > 0 ? "ناتمام" : "اتمام", "تسویه حساب:", item.isPaid === 0 ? "نشده است" : "شده است"]} />
+                <SubItems
+                  data={[
+                    "وضعیت:",
+                    item.unanswered > 0 ? "ناتمام" : "اتمام",
+                    "تسویه حساب:",
+                    item.isPaid === 0 ? "نشده است" : "شده است",
+                  ]}
+                />
               </ListItemWithCheckboxAndEditAndOther>
             );
           })}
@@ -314,4 +335,6 @@ const Request = (props) => {
   );
 };
 
-export default withRouter(connect(null, { showDialog, getRequest, getRequests, createRequest, updateRequest, deleteRequests, print })(Request));
+export default withRouter(
+  connect(null, { showDialog, getRequest, getRequests, createRequest, updateRequest, deleteRequests, print })(Request)
+);

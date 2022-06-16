@@ -17,7 +17,11 @@ const EditModal = (props) => {
     endTime: "",
     startDate: "",
     endDate: "",
-    examiner: ""
+    examiner: "",
+    entebagh: "",
+    tasmimgiri: "",
+    sharayet: "",
+    ghateiat: "",
   });
 
   // Component did mount
@@ -39,6 +43,10 @@ const EditModal = (props) => {
           startDate: result.startDate ? result.startDate : "",
           endDate: result.endDate ? result.endDate : "",
           examiner: result.examiner ? result.examiner : "",
+          entebagh: result.entebagh ? result.entebagh : "",
+          tasmimgiri: result.tasmimgiri ? result.tasmimgiri : "",
+          sharayet: result.sharayet ? result.sharayet : "",
+          ghateiat: result.ghateiat ? result.ghateiat : "",
         });
       }
     }
@@ -142,6 +150,30 @@ const EditModal = (props) => {
         <div className="field-wrapper field-50 left-50">
           <label>زمان پایان:</label>
           <Input type="text" value={sampleMethod.endTime} name="endTime" onChange={handleInput} />
+        </div>
+
+        <div className="clearfix"></div>
+        <div className="line-break"></div>
+
+        <div className="field-wrapper field-50 right-50">
+          <label>بیانیه انطباق:</label>
+          <Input type="text" value={sampleMethod.entebagh} name="entebagh" onChange={handleInput} />
+        </div>
+        <div className="field-wrapper field-50 left-50">
+          <label>قائده تصمیم گیری:</label>
+          <Input type="text" value={sampleMethod.tasmimgiri} name="tasmimgiri" onChange={handleInput} />
+        </div>
+
+        <div className="clearfix"></div>
+        <div className="line-break"></div>
+
+        <div className="field-wrapper field-50 right-50">
+          <label>شرایط محیطی:</label>
+          <Input type="text" value={sampleMethod.sharayet} name="sharayet" onChange={handleInput} />
+        </div>
+        <div className="field-wrapper field-50 left-50">
+          <label>عدم قطعیت:</label>
+          <Input type="text" value={sampleMethod.ghateiat} name="ghateiat" onChange={handleInput} />
         </div>
 
         <div className="clearfix"></div>

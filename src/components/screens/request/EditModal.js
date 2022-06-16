@@ -6,17 +6,19 @@ import DatePicker from "react-modern-calendar-datepicker";
 import moment from "jalali-moment";
 import { connect } from "react-redux";
 import WindowedSelect from "react-windowed-select";
+import Select from "../../UI/select/Select";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 
 import Modal from "../../UI/modal/Modal";
 
 import { getClients } from "../../../store/actions/clientActions";
 
-
 const isPaidValues = [
   { key: 1, text: "نشده است", value: "0" },
   { key: 2, text: "شده است", value: "1" },
 ];
+
+const reasons = ["واردات", "صادرات", "قرارداد", "تحقیقات", "کنترل کیفی تولید", "شکایات", "آزمون مجدد"];
 
 const EditModal = (props) => {
   const [clients, setClients] = useState([]);
@@ -105,7 +107,7 @@ const EditModal = (props) => {
   };
 
   // Handle is paid change
-  const handleIsPaidChange= (e, { value }, target) => {
+  const handleIsPaidChange = (e, { value }, target) => {
     props.setEditingRequest({
       ...props.editingRequest,
       [target]: value === "0" ? 0 : 1,
@@ -153,25 +155,24 @@ const EditModal = (props) => {
         <div className="line-break"></div>
 
         <div className="field-wrapper field-50 right-50">
-          <label>شروع آزمون:</label>
+          <label>تاریخ تحویل نمونه:</label>
           <DatePicker
-            value={props.editingRequest.startDate}
+            value={props.editingRequest.receiveDate}
             onChange={(val) => {
-              handleDateChanges(val, "startDate");
+              handleDateChanges(val, "receiveDate");
             }}
             shouldHighlightWeekends
             locale="fa"
           />
         </div>
         <div className="field-wrapper field-50 left-50">
-          <label>پایان آزمون:</label>
-          <DatePicker
-            value={props.editingRequest.endDate}
-            onChange={(val) => {
-              handleDateChanges(val, "endDate");
-            }}
-            shouldHighlightWeekends
-            locale="fa"
+          <label>ساعت تحویل نمونه:</label>
+          <Input
+            placeholder="ساعت تحویل نمونه"
+            type="text"
+            name="receiveTime"
+            value={props.editingRequest.receiveTime}
+            onChange={handleInput}
           />
         </div>
 
@@ -203,14 +204,32 @@ const EditModal = (props) => {
         <div className="line-break"></div>
 
         <div className="field-wrapper field-50 right-50">
-        <label>تسویه حساب:</label>
-            <Dropdown
+          <label>تسویه حساب:</label>
+          <Dropdown
             selection
             fluid
             options={isPaidValues}
             value={props.editingRequest.isPaid === 0 ? "0" : "1"}
             onChange={(e, value) => handleIsPaidChange(e, value, "isPaid")}
-            name="order"/>
+            name="order"
+          />
+        </div>
+        <div className="field-wrapper field-50 left-50" style={{ margin: 0 }}>
+          <label>علت درخواست:</label>
+          <Select
+            placeholder="علت درخواست"
+            type="text"
+            name="reason"
+            value={props.editingRequest.reason}
+            onChange={(val) => {
+              props.setEditingRequest({
+                ...props.editingRequest,
+                reason: val,
+              });
+            }}
+            title="علت درخواست"
+            items={reasons}
+          />
         </div>
 
         <div className="clearfix"></div>
@@ -222,6 +241,19 @@ const EditModal = (props) => {
             placeholder="توضیحات"
             name="description"
             value={props.editingRequest.description}
+            onChange={handleInput}
+          />
+        </div>
+
+        {/* <div className="clearfix"></div> */}
+        {/* <div className="line-break"></div> */}
+
+        <div className="field-wrapper field-100">
+          <label>بیانیه سلب مسئولیت:</label>
+          <TextArea
+            placeholder="بیانیه سلب مسئولیت آزمایشگاه"
+            name="bayanieh"
+            value={props.editingRequest.bayanieh}
             onChange={handleInput}
           />
         </div>

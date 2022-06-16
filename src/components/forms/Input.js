@@ -12,13 +12,13 @@ const Input = (props) => {
   ) : null;
 
   return (
-    <div className={cls.join(" ")} style={{ position: "relative" }}>
+    <div className={cls.join(" ")} style={{ position: "relative", margin: 0 }}>
       {icon}
       <input
-        name = {props.name}
-        type = {props.type}
-        placeholder = {props.placeholder}
-        style = {props.style}
+        name={props.name}
+        type={props.type}
+        placeholder={props.placeholder}
+        style={props.style}
         onChange={(e) => {
           props.onChange(e.target.value);
         }}
