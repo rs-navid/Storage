@@ -34,7 +34,7 @@ const Select = (props) => {
         cancel={() => {
           setIsOpen(false);
         }}
-        maxWidth={"md"}
+        maxWidth={"xs"}
       >
         {props.items.map((item, index) => {
           return (
@@ -44,7 +44,7 @@ const Select = (props) => {
                 cursor: "pointer",
                 borderBottom: "1px solid #eee",
                 padding: "10px",
-                "border-radius": "5px",
+                borderRadius: "5px",
                 margin: "5px 0",
               }}
               onClick={() => {

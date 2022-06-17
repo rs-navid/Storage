@@ -173,7 +173,7 @@ const Request = (props) => {
   // Click on edit button
   const handleEditButtonClick = async (id) => {
     const result = await props.getRequest(id);
-    console.log(result);
+
     if (result) {
       const date = moment.from(result.date, "en", "YYYY-MM-DD").locale("fa").toObject();
       const startDate = moment.from(result.startDate, "en", "YYYY-MM-DD").locale("fa").toObject();

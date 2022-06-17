@@ -3,7 +3,8 @@ import DatePicker, { utils } from "react-modern-calendar-datepicker";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import moment from "jalali-moment";
-import { Form, Input, Dropdown } from "semantic-ui-react";
+import { Form, Input, Dropdown, TextArea } from "semantic-ui-react";
+import Select from "../../UI/select/Select";
 
 import Modal from "../../UI/modal/Modal";
 
@@ -37,6 +38,27 @@ const sampleObject = {
   type: "",
   about: "",
   environmentType: "هیچکدام",
+  vazeiat: true,
+  entebaghDesc: "",
+  resultDate: "",
+  extra: "",
+  hold: "",
+  samplingType: true,
+  tasmim: "",
+  code: "",
+  temperature: "",
+  moisture: "",
+  startMicrobi: null,
+  startShimiaie: null,
+  startSelolozi: null,
+  startPacking: null,
+  startEnvironment: null,
+  endMicrobi: null,
+  endShimiaie: null,
+  endSelolozi: null,
+  endPacking: null,
+  endEnvironment: null,
+  mozakerat: "",
 };
 
 const sampleAmountValues = [
@@ -53,6 +75,39 @@ const sampleEnvironmentTypeValues = [
   { key: 1, value: "هیچکدام", text: "هیچکدام" },
   { key: 2, value: "فرآیندی", text: "فرآیندی" },
   { key: 3, value: "خود اظهاری", text: "خود اظهاری" },
+];
+
+const statusValues = [
+  {
+    key: 1,
+    value: true,
+    text: "منطبق",
+  },
+  {
+    key: 0,
+    value: false,
+    text: "نامنطبق",
+  },
+];
+
+const samplingTypeValues = [
+  {
+    key: 1,
+    value: true,
+    text: "توسط کارشناس آزمایشگاه",
+  },
+  {
+    key: 0,
+    value: false,
+    text: "توسط مشتری",
+  },
+];
+
+const extras = ["عودت به مشتری", "امحاء مطابق دستورالعمل آزمایشگاه"];
+const holds = [
+  "نمونه فوق فاقد شاهد می باشد.",
+  "نمونه ارسالی تا تاریخ انقضا درج شده بر روی محصول در آزمایشگاه نگهداری خواهد شد.",
+  "نمونه ارسالی حداکثر تا یک ماه پس از تاریخ صدور نتایج در آزمایشگاه نگهداری خواهد شد.",
 ];
 
 const SampleModal = (props) => {
@@ -95,6 +150,16 @@ const SampleModal = (props) => {
         samplingDate: { year: sampling.years, month: sampling.months + 1, day: sampling.date },
         amountIsValid: result.amountIsValid ? 1 : 0,
         packingIsValid: result.packingIsValid ? 1 : 0,
+        startMicrobi: null,
+        startShimiaie: null,
+        startSelolozi: null,
+        startPacking: null,
+        startEnvironment: null,
+        endMicrobi: null,
+        endShimiaie: null,
+        endSelolozi: null,
+        endPacking: null,
+        endEnvironment: null,
       });
     }
   };
@@ -160,7 +225,13 @@ const SampleModal = (props) => {
       <Form>
         <div className="field-wrapper field-50 right-50">
           <label>کد شناسایی نمونه:</label>
-          <Input placeholder="کد شناسایی نمونه" type="text" name="num" value={editingSample.num} onChange={handleInput} />
+          <Input
+            placeholder="کد شناسایی نمونه"
+            type="text"
+            name="num"
+            value={editingSample.num}
+            onChange={handleInput}
+          />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>نام نمونه:</label>
@@ -172,11 +243,23 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>نام تجاری:</label>
-          <Input placeholder="نام تجاری" type="text" name="businnessName" value={editingSample.businnessName} onChange={handleInput} />
+          <Input
+            placeholder="نام تجاری"
+            type="text"
+            name="businnessName"
+            value={editingSample.businnessName}
+            onChange={handleInput}
+          />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>نام شرکت:</label>
-          <Input placeholder="نام شرکت" type="text" name="company" value={editingSample.company} onChange={handleInput} />
+          <Input
+            placeholder="نام شرکت"
+            type="text"
+            name="company"
+            value={editingSample.company}
+            onChange={handleInput}
+          />
         </div>
 
         <div className="clearfix"></div>
@@ -184,11 +267,23 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>تعداد/مقدار :</label>
-          <Input placeholder="تعداد/مقدار " type="text" name="amount" value={editingSample.amount} onChange={handleInput} />
+          <Input
+            placeholder="تعداد/مقدار "
+            type="text"
+            name="amount"
+            value={editingSample.amount}
+            onChange={handleInput}
+          />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>حجم/وزن:</label>
-          <Input placeholder="حجم/وزن" type="text" name="dimension" value={editingSample.dimension} onChange={handleInput} />
+          <Input
+            placeholder="حجم/وزن"
+            type="text"
+            name="dimension"
+            value={editingSample.dimension}
+            onChange={handleInput}
+          />
         </div>
 
         <div className="clearfix"></div>
@@ -196,7 +291,13 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>شماره ساخت :</label>
-          <Input placeholder="شماره ساخت " type="text" name="serial" value={editingSample.serial} onChange={handleInput} />
+          <Input
+            placeholder="شماره ساخت "
+            type="text"
+            name="serial"
+            value={editingSample.serial}
+            onChange={handleInput}
+          />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>تاریخ تولید:</label>
@@ -226,7 +327,13 @@ const SampleModal = (props) => {
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>تاریخ انقضاء:</label>
-          <Input placeholder="تاریخ انقضاء " type="text" name="expireDate" value={editingSample.expireDate} onChange={handleInput} />
+          <Input
+            placeholder="تاریخ انقضاء "
+            type="text"
+            name="expireDate"
+            value={editingSample.expireDate}
+            onChange={handleInput}
+          />
         </div>
 
         <div className="clearfix"></div>
@@ -234,7 +341,13 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>محل نمونه برداری :</label>
-          <Input placeholder="محل نمونه برداری " type="text" name="place" value={editingSample.place} onChange={handleInput} />
+          <Input
+            placeholder="محل نمونه برداری "
+            type="text"
+            name="place"
+            value={editingSample.place}
+            onChange={handleInput}
+          />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>مقدار نمونه:</label>
@@ -253,7 +366,13 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>بسته بندی :</label>
-          <Input placeholder="بسته بندی " type="text" name="packing" value={editingSample.packing} onChange={handleInput} />
+          <Input
+            placeholder="بسته بندی "
+            type="text"
+            name="packing"
+            value={editingSample.packing}
+            onChange={handleInput}
+          />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>نوع بسته بندی:</label>
@@ -272,11 +391,23 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>شماره نامه :</label>
-          <Input placeholder="شماره نامه " type="text" name="letter" value={editingSample.letter} onChange={handleInput} />
+          <Input
+            placeholder="شماره نامه "
+            type="text"
+            name="letter"
+            value={editingSample.letter}
+            onChange={handleInput}
+          />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>شماره اندیکاتور وارده:</label>
-          <Input placeholder="شماره اندیکاتور وارده" type="text" name="indicator" value={editingSample.indicator} onChange={handleInput} />
+          <Input
+            placeholder="شماره اندیکاتور وارده"
+            type="text"
+            name="indicator"
+            value={editingSample.indicator}
+            onChange={handleInput}
+          />
         </div>
 
         <div className="clearfix"></div>
@@ -284,11 +415,23 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>شماره پلمپ :</label>
-          <Input placeholder="شماره پلمپ " type="text" name="closed" value={editingSample.closed} onChange={handleInput} />
+          <Input
+            placeholder="شماره پلمپ "
+            type="text"
+            name="closed"
+            value={editingSample.closed}
+            onChange={handleInput}
+          />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>شماره استاندارد:</label>
-          <Input placeholder="شماره استاندارد" type="text" name="standard" value={editingSample.standard} onChange={handleInput} />
+          <Input
+            placeholder="شماره استاندارد"
+            type="text"
+            name="standard"
+            value={editingSample.standard}
+            onChange={handleInput}
+          />
         </div>
 
         <div className="clearfix"></div>
@@ -296,7 +439,13 @@ const SampleModal = (props) => {
 
         <div className="field-wrapper field-50 right-50">
           <label>شماره استاندارد مرجع :</label>
-          <Input placeholder="شماره استاندارد مرجع " type="text" name="standardRef" value={editingSample.standardRef} onChange={handleInput} />
+          <Input
+            placeholder="شماره استاندارد مرجع "
+            type="text"
+            name="standardRef"
+            value={editingSample.standardRef}
+            onChange={handleInput}
+          />
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>طول جغرافیایی:</label>
@@ -326,7 +475,13 @@ const SampleModal = (props) => {
         </div>
         <div className="field-wrapper field-50 left-50">
           <label>محل تخلیه پساب:</label>
-          <Input placeholder="محل تخلیه پساب" type="text" name="waste" value={editingSample.waste} onChange={handleInput} />
+          <Input
+            placeholder="محل تخلیه پساب"
+            type="text"
+            name="waste"
+            value={editingSample.waste}
+            onChange={handleInput}
+          />
         </div>
 
         <div className="clearfix"></div>
@@ -354,6 +509,151 @@ const SampleModal = (props) => {
         <div className="field-wrapper field-50 right-50">
           <label>شرح خدمات:</label>
           <Input placeholder="شرح خدمات" type="text" name="about" value={editingSample.about} onChange={handleInput} />
+        </div>
+
+        <div className="field-wrapper field-50 left-50">
+          <label>کد نمونه مشتری:</label>
+          <Input
+            placeholder="کد نمونه مشتری"
+            type="text"
+            name="code"
+            value={editingSample.code}
+            onChange={handleInput}
+          />
+        </div>
+
+        <div className="clearfix"></div>
+        <div className="line-break"></div>
+
+        <div className="field-wrapper field-50 right-50">
+          <label>دما نگهداری نمونه:</label>
+          <Input
+            placeholder="دما نگهداری نمونه"
+            type="text"
+            name="temperature"
+            value={editingSample.temperature}
+            onChange={handleInput}
+          />
+        </div>
+
+        <div className="field-wrapper field-50 left-50">
+          <label>رطوبت نگهداری نمونه:</label>
+          <Input
+            placeholder="رطوبت نگهداری نمونه"
+            type="text"
+            name="moisture"
+            value={editingSample.moisture}
+            onChange={handleInput}
+          />
+        </div>
+
+        <div className="clearfix"></div>
+        <div className="line-break"></div>
+
+        <div className="field-wrapper field-50 right-50">
+          <label>وضعیت نمونه دریافتی:</label>
+          <Dropdown
+            fluid
+            selection
+            name="vazeiat"
+            value={editingSample.vazeiat}
+            onChange={handleDropdownInput}
+            options={statusValues}
+          />
+        </div>
+
+        <div className="field-wrapper field-50 left-50">
+          <label>شرح عدم انطباق:</label>
+          <Input
+            placeholder="شرح عدم انطباق"
+            type="text"
+            name="entebaghDesc"
+            value={editingSample.entebaghDesc}
+            onChange={handleInput}
+          />
+        </div>
+
+        <div className="clearfix"></div>
+        <div className="line-break"></div>
+
+        <div className="field-wrapper field-50 right-50">
+          <label>تاریخ گزارش دهی:</label>
+          <Input
+            placeholder="تاریخ گزارش دهی"
+            type="text"
+            name="resultDate"
+            value={editingSample.resultDate}
+            onChange={handleInput}
+          />
+        </div>
+
+        <div className="field-wrapper field-50 left-50" style={{ margin: 0 }}>
+          <label>تکلیف مازاد نمونه:</label>
+          <Select
+            placeholder="تعیین تکلیف مازاد نمونه پس از انجام آزمون"
+            type="text"
+            name="extra"
+            value={editingSample.extra}
+            onChange={(val) => {
+              setEditingSample({
+                ...editingSample,
+                extra: val,
+              });
+            }}
+            title="تعیین تکلیف مازاد نمونه پس از انجام آزمون"
+            items={extras}
+          />
+        </div>
+
+        <div className="clearfix"></div>
+        <div className="line-break"></div>
+
+        <div className="field-wrapper field-50 right-50" style={{ margin: 0 }}>
+          <label>مدت زمان نگهداری:</label>
+          <Select
+            placeholder="مدت زمان نگهداری نمونه شاهد"
+            type="text"
+            name="hold"
+            value={editingSample.hold}
+            onChange={(val) => {
+              setEditingSample({
+                ...editingSample,
+                hold: val,
+              });
+            }}
+            title="مدت زمان نگهداری نمونه شاهد"
+            items={holds}
+          />
+        </div>
+
+        <div className="field-wrapper field-50 left-50">
+          <label>روش نمونه برداری:</label>
+          <Dropdown
+            fluid
+            selection
+            name="samplingType"
+            value={editingSample.samplingType}
+            onChange={handleDropdownInput}
+            options={samplingTypeValues}
+          />
+        </div>
+
+        <div className="clearfix"></div>
+        <div className="line-break"></div>
+
+        <div className="field-wrapper field-100">
+          <label>قائده تصمیم گیری:</label>
+          <TextArea placeholder="قائده تصمیم گیری" name="tasmim" value={editingSample.tasmim} onChange={handleInput} />
+        </div>
+
+        <div className="field-wrapper field-100">
+          <label>مذاکرات انجام شده:</label>
+          <TextArea
+            placeholder="مذاکرات انجام شده"
+            name="mozakerat"
+            value={editingSample.mozakerat}
+            onChange={handleInput}
+          />
         </div>
 
         <div className="clearfix"></div>
