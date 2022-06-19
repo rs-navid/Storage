@@ -21,6 +21,7 @@ import {
   updateRequest,
   deleteRequests,
   print,
+  printReceipt,
 } from "../../../store/actions/requestActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
@@ -230,6 +231,23 @@ const Request = (props) => {
     }
   };
 
+  // Handle new print receipt
+  const handleNewPrintButtonClick = async () => {
+    if (selectedRequests.length !== 1) {
+      props.showDialog({ title: "چاپ درخواست آزمون", text: "لطفا یک درخواست را انتخاب نمایید." });
+    } else {
+      const result = await props.printReceipt(selectedRequests[0]);
+
+      if (result) {
+        if (result.data) {
+          const file = new Blob([result.data], { type: "application/pdf" });
+          const fileURL = URL.createObjectURL(file);
+          window.open(fileURL);
+        }
+      }
+    }
+  };
+
   return (
     <Fragment>
       {/* Start modal */}
@@ -257,6 +275,17 @@ const Request = (props) => {
 
       {/* Start actions */}
       <div className="actions pt-4 pb-5 align-left">
+        <Button
+          icon
+          className="mb-2"
+          labelPosition="right"
+          size="small"
+          color="blue"
+          onClick={handleNewPrintButtonClick}
+        >
+          چاپ درخواست آزمون
+          <Icon name="print" />
+        </Button>
         <Button icon className="mb-2" labelPosition="right" size="small" color="blue" onClick={handlePrintButtonClick}>
           چاپ رسید پذیرش نمونه
           <Icon name="print" />
@@ -336,5 +365,14 @@ const Request = (props) => {
 };
 
 export default withRouter(
-  connect(null, { showDialog, getRequest, getRequests, createRequest, updateRequest, deleteRequests, print })(Request)
+  connect(null, {
+    showDialog,
+    getRequest,
+    getRequests,
+    createRequest,
+    updateRequest,
+    deleteRequests,
+    print,
+    printReceipt,
+  })(Request)
 );
