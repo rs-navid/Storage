@@ -33,6 +33,7 @@ const FormSetting = (props) => {
     requestsReportFooterSize: "",
     samplesReportHeaderSize: "",
     samplesReportFooterSize: "",
+    agreementDescription: ""
   });
 
   // Component did mount
@@ -104,6 +105,16 @@ const FormSetting = (props) => {
         <div className="field-wrapper field-100 wrap">
           <label>ملاحظات:</label>
           <TextArea placeholder="ملاحظات" name="receiptPoints" value={forms.receiptPoints} onChange={handleChange} />
+        </div>
+      </fieldset>
+
+      {/* agreement settings */}
+      <fieldset>
+        <legend>تنظیمات فرم توافق  نامه آزمون</legend>
+
+        <div className="field-wrapper field-100 wrap">
+          <label>توضیحات:</label>
+          <TextArea placeholder="توضیحات" name="agreementDescription" value={forms.agreementDescription} onChange={handleChange} />
         </div>
       </fieldset>
 

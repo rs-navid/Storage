@@ -125,6 +125,22 @@ export const printReceipt = (id) => {
   };
 };
 
+export const printAgreement = (id) => {
+  return async () => {
+    const result = await axios.get(`/request/printagreement/${id}`, {
+      responseType: "arraybuffer",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/pdf",
+      },
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
 export const printInvoice = (id) => {
   return async () => {
     const result = await axios.get(`/request/printinvoice/${id}`, {

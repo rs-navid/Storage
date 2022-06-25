@@ -286,10 +286,10 @@ const Request = (props) => {
           چاپ درخواست آزمون
           <Icon name="print" />
         </Button>
-        <Button icon className="mb-2" labelPosition="right" size="small" color="blue" onClick={handlePrintButtonClick}>
+        {/* <Button icon className="mb-2" labelPosition="right" size="small" color="blue" onClick={handlePrintButtonClick}>
           چاپ رسید پذیرش نمونه
           <Icon name="print" />
-        </Button>
+        </Button> */}
         <Button icon className="mb-2" labelPosition="right" color="blue" size="small" onClick={confirmDelete}>
           حذف
           <Icon name="trash" />

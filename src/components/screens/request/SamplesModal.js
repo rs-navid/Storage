@@ -2,7 +2,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Button, Icon } from "semantic-ui-react";
-import {withRouter} from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 
 import Modal from "../../UI/modal/Modal";
 import ListItemWithCheckboxAndEditAndOther, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEditAndOther";
@@ -11,6 +11,8 @@ import MethodsModal from "./MethodsModal";
 
 import { getSamples, deleteSamples } from "../../../store/actions/sampleActions";
 import { showDialog } from "../../../store/actions/dialogActions";
+
+import { printAgreement } from "../../../store/actions/requestActions";
 
 const SamplesModal = (props) => {
   const [samples, setSamples] = useState([]);
@@ -91,6 +93,19 @@ const SamplesModal = (props) => {
     setMethodsModalStatus(true);
   };
 
+  // Handle new print receipt
+  const handlePrintButtonClick = async (id) => {
+    const result = await props.printAgreement(id);
+
+    if (result) {
+      if (result.data) {
+        const file = new Blob([result.data], { type: "application/pdf" });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      }
+    }
+  };
+
   return (
     <Fragment>
       <Modal
@@ -127,6 +142,10 @@ const SamplesModal = (props) => {
                 onOther={() => handleMethodClick(item.id)}
                 otherTitle="آزمون ها"
                 otherIcon="list layout"
+                onPrint={() => {
+                  handlePrintButtonClick(item.id);
+                }}
+                printTitle="توافقنامه"
               >
                 <SubItems data={["کد شناسایی نمونه:", "S" + periodKey + "-" + item.num, "نام نمونه:", item.name]} />
                 <SubItems data={["نام تجاری:", item.businnessName, "نام شرکت:", item.company]} />
@@ -167,4 +186,4 @@ SamplesModal.propTypes = {
   loadRequests: PropTypes.func.isRequired,
 };
 
-export default withRouter(connect(null, { getSamples, deleteSamples, showDialog })(SamplesModal));
+export default withRouter(connect(null, { getSamples, deleteSamples, showDialog, printAgreement })(SamplesModal));

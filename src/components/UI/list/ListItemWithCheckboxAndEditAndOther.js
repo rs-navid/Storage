@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Button, Icon, Checkbox } from "semantic-ui-react";
 // import ReactWOW from "react-wow";
@@ -6,23 +6,32 @@ import { Button, Icon, Checkbox } from "semantic-ui-react";
 const ListItemWithCheckboxAndEdit = (props) => {
   return (
     // <ReactWOW animation="fadeInUp" key={props.id} duration="2s">
-      <div className="list-item d-flex align-items-center">
-        <div className="checkbox">
-          <Checkbox onChange={props.onChange} />
-        </div>
-        <div className="info">{props.children}</div>
-        <div className="action align-left mt-2 pl-3">
-          <Button icon labelPosition="right" size="mini" onClick={props.onClick}>
-            {" ویرایش "}
-            <Icon name="edit" />
-          </Button>
-          <div className="break"></div>
-          <Button icon labelPosition="right" size="mini" onClick={props.onOther}>
-            {props.otherTitle}
-            <Icon name={props.otherIcon} />
-          </Button>
-        </div>
+    <div className="list-item d-flex align-items-center">
+      <div className="checkbox">
+        <Checkbox onChange={props.onChange} />
       </div>
+      <div className="info">{props.children}</div>
+      <div className="action align-left mt-2 pl-3">
+        <Button icon labelPosition="right" size="mini" onClick={props.onClick}>
+          {" ویرایش "}
+          <Icon name="edit" />
+        </Button>
+        <div className="break"></div>
+        <Button icon labelPosition="right" size="mini" onClick={props.onOther}>
+          {props.otherTitle}
+          <Icon name={props.otherIcon} />
+        </Button>
+        {props.onPrint && (
+          <Fragment>
+            <div className="break"></div>
+            <Button icon labelPosition="right" size="mini" onClick={props.onPrint}>
+              {props.printTitle}
+              <Icon name="print" />
+            </Button>
+          </Fragment>
+        )}
+      </div>
+    </div>
     // {/* </ReactWOW> */}
   );
 };
