@@ -12,7 +12,7 @@ const Input = (props) => {
   ) : null;
 
   return (
-    <div className={cls.join(" ")} style={{ position: "relative", margin: 0 }}>
+    <div className={cls.join(" ")} style={{ position: "relative", margin: "10px 0px" }}>
       {icon}
       <input
         name={props.name}

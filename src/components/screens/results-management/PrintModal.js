@@ -10,7 +10,7 @@ import moment from "jalali-moment";
 import Modal from "../../UI/modal/Modal";
 import methodTypes from "../../../configs/methodTypes";
 
-import { print, printeEvironmentResults, getSample } from "../../../store/actions/sampleActions";
+import { print,newPrint, printeEvironmentResults, getSample } from "../../../store/actions/sampleActions";
 
 const methodTypeValues = methodTypes.map((item) => {
   return {
@@ -19,6 +19,11 @@ const methodTypeValues = methodTypes.map((item) => {
     value: item.id,
   };
 });
+
+const methodIsoValues = [
+  {key:1, text: "می باشد", value: true},
+  {key:0, text: "نمی باشد", value: false},
+]
 
 const PrintModal = (props) => {
   const [dates, setDates] = useState({
@@ -35,6 +40,7 @@ const PrintModal = (props) => {
     endEnvironment: utils("fa").getToday(),
   });
   const [type, setType] = useState(1);
+  const [is17025, setIs17025] = useState(1);
 
   useEffect(() => {
     if (props.id) {
@@ -62,6 +68,8 @@ const PrintModal = (props) => {
 
       const startEnvironment = moment.from(result.startEnvironment, "en", "YYYY-MM-DD").locale("fa").toObject();
       const endEnvironment = moment.from(result.endEnvironment, "en", "YYYY-MM-DD").locale("fa").toObject();
+
+      setIs17025(result.is17025);
 
       setDates({
         date: utils("fa").getToday(),
@@ -96,14 +104,32 @@ const PrintModal = (props) => {
     setType(data.value);
   };
 
+    // Handle Iso change
+    const handleIsoChange = (e, data) => {
+      setIs17025(data.value);
+    };
+
   // Print
   const handlePrint = async () => {
     let result;
     if (type !== 5) {
-      result = await props.print(props.id, { type: type, ...dates });
+      result = await props.print(props.id, { type: type, ...dates, is17025 });
     } else {
       result = await props.printeEvironmentResults(props.id, { type: type, ...dates });
     }
+
+    if (result) {
+      if (result.data) {
+        const file = new Blob([result.data], { type: "application/pdf" });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      }
+    }
+  };
+
+  // New Print
+  const handleNewPrint = async () => {
+    const result = await props.newPrint(props.id, { type: type, ...dates, is17025 });
 
     if (result) {
       if (result.data) {
@@ -124,6 +150,9 @@ const PrintModal = (props) => {
       save={handlePrint}
       saveTitle="چاپ نتایج"
       saveIcon="print"
+      otherSave={handleNewPrint}
+      otherSaveTitle="چاپ نتایج جدید"
+      otherSaveIcon="print"
     >
       <Form>
         <div className="field-wrapper field-100">
@@ -281,6 +310,11 @@ const PrintModal = (props) => {
           <Dropdown fluid selection name="type" value={type} onChange={handleTypeChange} options={methodTypeValues} />
         </div>
 
+        <div className="field-wrapper field-100">
+          <label>در حوزه 17025:</label>
+          <Dropdown fluid selection name="is17025" value={is17025} onChange={handleIsoChange} options={methodIsoValues} />
+        </div>
+
         <div className="clearfix"></div>
       </Form>
     </Modal>
@@ -293,4 +327,4 @@ PrintModal.propTypes = {
   id: PropTypes.number.isRequired,
 };
 
-export default connect(null, { print, printeEvironmentResults, getSample })(PrintModal);
+export default connect(null, { print,newPrint, printeEvironmentResults, getSample })(PrintModal);

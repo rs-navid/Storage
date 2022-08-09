@@ -50,6 +50,12 @@ const Modal = (props) => {
               {props.saveTitle ? props.saveTitle : "تایید"}
             </Button>
           ) : null}
+          {props.otherSave ? (
+            <Button icon labelPosition="right" color="blue" size="small" onClick={props.otherSave}>
+              <Icon name={props.otherSaveIcon ? props.otherSaveIcon : "check"} />
+              {props.otherSaveTitle ? props.otherSaveTitle : "تایید"}
+            </Button>
+          ) : null}
           {Buttons ? <Buttons /> : null}
           <Button icon labelPosition="right" size="small" onClick={props.cancel}>
             انصراف

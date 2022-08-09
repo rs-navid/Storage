@@ -109,6 +109,7 @@ const holds = [
   "نمونه ارسالی تا تاریخ انقضا درج شده بر روی محصول در آزمایشگاه نگهداری خواهد شد.",
   "نمونه ارسالی حداکثر تا یک ماه پس از تاریخ صدور نتایج در آزمایشگاه نگهداری خواهد شد.",
 ];
+const packings = ["قوطی فلزی", "پت", "تتراپک", "سلفون", "فیلم پلاستیکی", "فله", "کارتن"];
 
 const SampleModal = (props) => {
   const [editingSample, setEditingSample] = useState(sampleObject);
@@ -364,7 +365,7 @@ const SampleModal = (props) => {
         <div className="clearfix"></div>
         <div className="line-break"></div>
 
-        <div className="field-wrapper field-50 right-50">
+        {/* <div className="field-wrapper field-50 right-50">
           <label>بسته بندی :</label>
           <Input
             placeholder="بسته بندی "
@@ -373,7 +374,26 @@ const SampleModal = (props) => {
             value={editingSample.packing}
             onChange={handleInput}
           />
+        </div> */}
+
+        <div className="field-wrapper field-50 right-50" style={{ margin: 0 }}>
+          <label>بسته بندی:</label>
+          <Select
+            placeholder="بسته بندی"
+            type="text"
+            name="packing"
+            value={editingSample.packing}
+            onChange={(val) => {
+              setEditingSample({
+                ...editingSample,
+                packing: val,
+              });
+            }}
+            title="بسته بندی"
+            items={packings}
+          />
         </div>
+
         <div className="field-wrapper field-50 left-50">
           <label>نوع بسته بندی:</label>
           <Dropdown
