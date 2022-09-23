@@ -109,6 +109,22 @@ export const print = (id) => {
   };
 };
 
+export const printReceiptOld = (id) => {
+  return async () => {
+    const result = await axios.get(`/request/printreceiptold/${id}`, {
+      responseType: "arraybuffer",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/pdf",
+      },
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
 export const printReceipt = (id) => {
   return async () => {
     const result = await axios.get(`/request/printreceipt/${id}`, {

@@ -22,6 +22,7 @@ import {
   deleteRequests,
   print,
   printReceipt,
+  printReceiptOld
 } from "../../../store/actions/requestActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
@@ -219,7 +220,7 @@ const Request = (props) => {
     if (selectedRequests.length !== 1) {
       props.showDialog({ title: "چاپ رسید پذیرش نمونه", text: "لطفا یک درخواست را انتخاب نمایید." });
     } else {
-      const result = await props.print(selectedRequests[0]);
+      const result = await props.printReceiptOld(selectedRequests[0]);
 
       if (result) {
         if (result.data) {
@@ -286,10 +287,10 @@ const Request = (props) => {
           چاپ درخواست آزمون
           <Icon name="print" />
         </Button>
-        {/* <Button icon className="mb-2" labelPosition="right" size="small" color="blue" onClick={handlePrintButtonClick}>
+        <Button icon className="mb-2" labelPosition="right" size="small" color="blue" onClick={handlePrintButtonClick}>
           چاپ رسید پذیرش نمونه
           <Icon name="print" />
-        </Button> */}
+        </Button>
         <Button icon className="mb-2" labelPosition="right" color="blue" size="small" onClick={confirmDelete}>
           حذف
           <Icon name="trash" />
@@ -374,5 +375,6 @@ export default withRouter(
     deleteRequests,
     print,
     printReceipt,
+    printReceiptOld
   })(Request)
 );
