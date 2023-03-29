@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 import moment from "jalali-moment";
 import { utils } from "react-modern-calendar-datepicker";
+import openBase64NewTab from "../../../helpers/openBase64NewTab";
 
 import ListItemWithCheckboxAndEditAndOther, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEditAndOther";
 import Sidemenu from "../../UI/sidemenu/Sidemenu";
@@ -224,9 +225,7 @@ const Request = (props) => {
 
       if (result) {
         if (result.data) {
-          const file = new Blob([result.data], { type: "application/pdf" });
-          const fileURL = URL.createObjectURL(file);
-          window.open(fileURL);
+          openBase64NewTab(result.data);
         }
       }
     }
@@ -241,9 +240,7 @@ const Request = (props) => {
 
       if (result) {
         if (result.data) {
-          const file = new Blob([result.data], { type: "application/pdf" });
-          const fileURL = URL.createObjectURL(file);
-          window.open(fileURL);
+          openBase64NewTab(result.data);
         }
       }
     }

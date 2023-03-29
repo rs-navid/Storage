@@ -96,10 +96,10 @@ export const updateRequest = (request) => {
 export const print = (id) => {
   return async () => {
     const result = await axios.get(`/request/print/${id}`, {
-      responseType: "arraybuffer",
+      
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/pdf",
+        Accept: "text/html",
       },
     });
     if (!result) {
@@ -112,10 +112,10 @@ export const print = (id) => {
 export const printReceiptOld = (id) => {
   return async () => {
     const result = await axios.get(`/request/printreceiptold/${id}`, {
-      responseType: "arraybuffer",
+      
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/pdf",
+        Accept: "text/html",
       },
     });
     if (!result) {
@@ -128,10 +128,10 @@ export const printReceiptOld = (id) => {
 export const printReceipt = (id) => {
   return async () => {
     const result = await axios.get(`/request/printreceipt/${id}`, {
-      responseType: "arraybuffer",
+      
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/pdf",
+        Accept: "text/html",
       },
     });
     if (!result) {
@@ -144,10 +144,10 @@ export const printReceipt = (id) => {
 export const printAgreement = (id) => {
   return async () => {
     const result = await axios.get(`/request/printagreement/${id}`, {
-      responseType: "arraybuffer",
+      
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/pdf",
+        Accept: "text/html",
       },
     });
     if (!result) {
@@ -160,10 +160,10 @@ export const printAgreement = (id) => {
 export const printInvoice = (id) => {
   return async () => {
     const result = await axios.get(`/request/printinvoice/${id}`, {
-      responseType: "arraybuffer",
+      
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/pdf",
+        Accept: "text/html",
       },
     });
     if (!result) {
@@ -176,10 +176,10 @@ export const printInvoice = (id) => {
 export const printFactor = (id) => {
   return async () => {
     const result = await axios.get(`/request/printfactor/${id}`, {
-      responseType: "arraybuffer",
+      
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/pdf",
+        Accept: "text/html",
       },
     });
     if (!result) {
@@ -192,10 +192,10 @@ export const printFactor = (id) => {
 export const printRequestsReport = (data) => {
   return async () => {
     const result = await axios.post(`/request/printrequestsreport`, data, {
-      responseType: "arraybuffer",
+      
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/pdf",
+        Accept: "text/html",
       },
     });
     if (!result) {
@@ -208,10 +208,10 @@ export const printRequestsReport = (data) => {
 export const printSamplesReport = (data) => {
   return async () => {
     const result = await axios.post(`/request/printsamplesreport`, data, {
-      responseType: "arraybuffer",
+      
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/pdf",
+        Accept: "text/html",
       },
     });
     if (!result) {

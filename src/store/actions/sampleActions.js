@@ -200,10 +200,10 @@ export const updateMethod = (id, data) => {
 export const print = (id, data) => {
   return async () => {
     const result = await axios.post(`/sample/print/${id}`, data, {
-      responseType: "arraybuffer",
+      
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/pdf",
+        Accept: "text/html",
       },
     });
     if (!result) {
@@ -216,10 +216,10 @@ export const print = (id, data) => {
 export const newPrint = (id, data) => {
   return async () => {
     const result = await axios.post(`/sample/newprint/${id}`, data, {
-      responseType: "arraybuffer",
+      // 
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/pdf",
+        Accept: "text/html",
       },
     });
     if (!result) {
@@ -232,10 +232,10 @@ export const newPrint = (id, data) => {
 export const printeEvironmentResults = (id, data) => {
   return async () => {
     const result = await axios.post(`/sample/printenvironment/${id}`, data, {
-      responseType: "arraybuffer",
+      
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/pdf",
+        Accept: "text/html",
       },
     });
     if (!result) {

@@ -7,6 +7,7 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { utils } from "react-modern-calendar-datepicker";
 
 import Modal from "../../UI/modal/Modal";
+import openBase64NewTab from "../../../helpers/openBase64NewTab";
 
 import { printSamplesReport } from "../../../store/actions/requestActions";
 
@@ -32,9 +33,7 @@ const PrintModal = (props) => {
 
     if (result) {
       if (result.data) {
-        const file = (new Blob([result.data], { type: "application/pdf" }));
-        const fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
+        openBase64NewTab(result.data);
       }
     }
   };

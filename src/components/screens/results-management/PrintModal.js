@@ -9,6 +9,7 @@ import moment from "jalali-moment";
 
 import Modal from "../../UI/modal/Modal";
 import methodTypes from "../../../configs/methodTypes";
+import openBase64NewTab from "../../../helpers/openBase64NewTab";
 
 import { print,newPrint, printeEvironmentResults, getSample } from "../../../store/actions/sampleActions";
 
@@ -120,9 +121,11 @@ const PrintModal = (props) => {
 
     if (result) {
       if (result.data) {
-        const file = new Blob([result.data], { type: "application/pdf" });
-        const fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
+        // const file = new Blob([result.data], { type: "application/pdf" });
+        // const fileURL = URL.createObjectURL(file);
+        // window.open(fileURL);
+        console.log(result.data);
+        openBase64NewTab(result.data);
       }
     }
   };
@@ -133,9 +136,11 @@ const PrintModal = (props) => {
 
     if (result) {
       if (result.data) {
-        const file = new Blob([result.data], { type: "application/pdf" });
-        const fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
+        // const file = new Blob([result.data], { type: "application/pdf" });
+        // const fileURL = URL.createObjectURL(file);
+        // window.open(fileURL);
+        console.log(result.data);
+        openBase64NewTab(result.data);
       }
     }
   };

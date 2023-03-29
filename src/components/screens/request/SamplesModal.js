@@ -8,6 +8,7 @@ import Modal from "../../UI/modal/Modal";
 import ListItemWithCheckboxAndEditAndOther, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEditAndOther";
 import SampleModal from "./SampleModal";
 import MethodsModal from "./MethodsModal";
+import openBase64NewTab from "../../../helpers/openBase64NewTab";
 
 import { getSamples, deleteSamples } from "../../../store/actions/sampleActions";
 import { showDialog } from "../../../store/actions/dialogActions";
@@ -99,9 +100,7 @@ const SamplesModal = (props) => {
 
     if (result) {
       if (result.data) {
-        const file = new Blob([result.data], { type: "application/pdf" });
-        const fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
+        openBase64NewTab(result.data);
       }
     }
   };

@@ -10,6 +10,8 @@ import InvoiceModal from "./InvoiceModal";
 import IsPaidModal from "./IsPaidModal";
 import ListItemWith2Selects, { SubItems } from "../../UI/list/ListItemWith2Selects";
 import MethodsModal from "./MethodsModal";
+import openBase64NewTab from "../../../helpers/openBase64NewTab";
+
 
 import { getSamples } from "../../../store/actions/sampleActions";
 import { printFactor } from "../../../store/actions/requestActions";
@@ -79,9 +81,7 @@ const SamplesModal = (props) => {
 
     if (result) {
       if (result.data) {
-        const file = new Blob([result.data], { type: "application/pdf" });
-        const fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
+        openBase64NewTab(result.data);
       }
     }
   };

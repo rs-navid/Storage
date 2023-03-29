@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom";
 import { Button, Icon } from "semantic-ui-react";
 
 import Modal from "../../UI/modal/Modal";
+import openBase64NewTab from "../../../helpers/openBase64NewTab";
+
 
 import { updateRequestInvoice, deleteRequestInvoice, printInvoice } from "../../../store/actions/requestActions";
 import { showDialog } from "../../../store/actions/dialogActions";
@@ -71,9 +73,7 @@ const InvoiceModal = (props) => {
 
     if (result) {
       if (result.data) {
-        const file = new Blob([result.data], { type: "application/pdf" });
-        const fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
+        openBase64NewTab(result.data);
       }
     }
   };
