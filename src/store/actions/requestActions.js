@@ -173,6 +173,21 @@ export const printInvoice = (id) => {
   };
 };
 
+export const printOfficialInvoice = (id, date) => {
+  return async () => {
+    const result = await axios.post(`/request/printofficialinvoice`, {id, date}, {  
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "text/html",
+      },
+    });
+    if (!result) {
+      return false;
+    }
+    return result;
+  };
+};
+
 export const printFactor = (id) => {
   return async () => {
     const result = await axios.get(`/request/printfactor/${id}`, {

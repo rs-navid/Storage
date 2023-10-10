@@ -7,6 +7,7 @@ import Modal from "../../UI/modal/Modal";
 import DiscountModal from "./DiscountModal";
 import TaxModal from "./TaxModal";
 import InvoiceModal from "./InvoiceModal";
+import OfficialInvoiceModal from "./OfficialInvoiceModal";
 import IsPaidModal from "./IsPaidModal";
 import ListItemWith2Selects, { SubItems } from "../../UI/list/ListItemWith2Selects";
 import MethodsModal from "./MethodsModal";
@@ -26,6 +27,7 @@ const SamplesModal = (props) => {
   const [discountModalStatus, setDiscountModalStatus] = useState(false);
   const [taxModalStatus, setTaxModalStatus] = useState(false);
   const [invoiceModalStatus, setInvoiceModalStatus] = useState(false);
+  const [officialInvoiceModalStatus, setOfficialInvoiceModalStatus] = useState(false);
   const [isPaideModalStatus, setIsPaidModalStatus] = useState(false);
   const [periodKey, setPeriodKey] = useState("-");
 
@@ -75,6 +77,11 @@ const SamplesModal = (props) => {
     setInvoiceModalStatus(true);
   };
 
+  // Handle print official invoice click
+  const handlePrintOfficialInvoice = () => {
+    setOfficialInvoiceModalStatus(true);
+  };
+
   // Handle print factor click
   const handlePrintFactor = async () => {
     const result = await props.printFactor(props.requestId);
@@ -104,8 +111,12 @@ const SamplesModal = (props) => {
       >
         {/* Start actions */}
         <div className="actions pt-4 pb-5 align-left">
-          <Button icon labelPosition="right" className="mb-2" color="blue" size="tiny" onClick={handlePrintInvoice}>
+          <Button icon labelPosition="right" className="mb-2" color="blue" size="tiny" onClick={handlePrintOfficialInvoice}>
             فاکتور رسمی
+            <Icon name="print" />
+          </Button>
+          <Button icon labelPosition="right" className="mb-2" color="blue" size="tiny" onClick={handlePrintInvoice}>
+            پیش فاکتور 1
             <Icon name="print" />
           </Button>
           <Button icon labelPosition="right" className="mb-2" color="blue" size="tiny" onClick={handlePrintFactor}>
@@ -244,6 +255,14 @@ const SamplesModal = (props) => {
       <InvoiceModal
         open={invoiceModalStatus}
         setOpen={setInvoiceModalStatus}
+        id={props.requestId}
+        invoice={props.invoice}
+        loadRequests={props.loadRequests}
+      />
+
+      <OfficialInvoiceModal
+        open={officialInvoiceModalStatus}
+        setOpen={setOfficialInvoiceModalStatus}
         id={props.requestId}
         invoice={props.invoice}
         loadRequests={props.loadRequests}
