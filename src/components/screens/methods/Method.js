@@ -9,7 +9,7 @@ import EditModal from "./EditModal";
 import ExamModal from "./ExamModal";
 
 import { showDialog } from "../../../store/actions/dialogActions";
-import { getFirstExam } from "../../../store/actions/examActions";
+import { getFirstExam } from "../../../store/actions/packActions";
 import {
   getMethod,
   getMethodsByExamId,

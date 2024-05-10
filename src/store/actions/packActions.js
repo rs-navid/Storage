@@ -1,9 +1,8 @@
 import axios from "axios";
 
-export const getExams = (query) => {
-  console.log(query);
+export const getPacks = (query) => {
   return async () => {
-    const results = await axios.get(`/exam?${query}`);
+    const results = await axios.post(`/packing/getall`, {...query, ordertype: query.order === "asc" ? false : true});
     if (results) {
       return results.data;
     }
@@ -21,9 +20,9 @@ export const getFirstExam = () => {
   };
 };
 
-export const getExam = (id) => {
+export const getPack = (id) => {
   return async () => {
-    const results = await axios.get(`/exam/${id}`);
+    const results = await axios.post(`/packing/getbyid`, {id});
     if (results) {
       return results.data;
     }
@@ -31,9 +30,9 @@ export const getExam = (id) => {
   };
 };
 
-export const deleteExams = (ids) => {
+export const deletePacks = (ids) => {
   return async () => {
-    const results = await axios.delete(`/exam`, { data: { ids: ids } });
+    const results = await axios.post(`/packing/deletebyid`, { ids });
     if (results) {
       return true;
     }
@@ -42,10 +41,10 @@ export const deleteExams = (ids) => {
   };
 };
 
-export const createExam = (exam) => {
+export const createPack = (pack) => {
   return async () => {
-    const result = await axios.post("/exam", {
-      ...exam,
+    const result = await axios.post("/packing/create", {
+      ...pack,
     });
     if (!result) {
       return false;
@@ -54,10 +53,10 @@ export const createExam = (exam) => {
   };
 };
 
-export const updateExam = (exam) => {
+export const updatePack = (pack) => {
   return async () => {
-    const result = await axios.put(`/exam/${exam.id}`, {
-      ...exam,
+    const result = await axios.post(`/packing/update`, {
+      ...pack,
     });
     if (!result) {
       return false;

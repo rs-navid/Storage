@@ -35,7 +35,8 @@ const EditModal = (props) => {
         }
 
         props.showDialog({ title: "ثبت", text: "مشتری با موفقیت ثبت گردید." });
-        props.loadData(props.location.search);
+        console.log(props.filter, props.page);
+        props.loadData({...props.filter});
       }
     }
   };
@@ -59,8 +60,8 @@ const EditModal = (props) => {
           <Input
             placeholder="کد اقتصادی"
             type="text"
-            name="eghtesadi"
-            value={props.editingClient.eghtesadi}
+            name="codeEghtesadi"
+            value={props.editingClient.codeEghtesadi}
             onChange={handleInput}
           />
         </div>
@@ -73,8 +74,8 @@ const EditModal = (props) => {
           <Input
             placeholder="شماره ثبت"
             type="text"
-            name="sabt"
-            value={props.editingClient.sabt}
+            name="shomareSabt"
+            value={props.editingClient.shomareSabt}
             onChange={handleInput}
           />
         </div>
@@ -83,8 +84,8 @@ const EditModal = (props) => {
           <Input
             placeholder="شناسه ملی"
             type="text"
-            name="meli"
-            value={props.editingClient.meli}
+            name="shenaseMeli"
+            value={props.editingClient.shenaseMeli}
             onChange={handleInput}
           />
         </div>
@@ -133,8 +134,8 @@ const EditModal = (props) => {
           <Input
             placeholder="شماره تماس"
             type="text"
-            name="phone"
-            value={props.editingClient.phone}
+            name="phoneNumber"
+            value={props.editingClient.phoneNumber}
             onChange={handleInput}
           />
         </div>

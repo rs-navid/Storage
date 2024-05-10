@@ -42,7 +42,7 @@ const EditModal = (props) => {
         <Input
           placeholder="کلمه عبور"
           type="password"
-          name="password"
+          name="password1"
           value={props.editingUser.password}
           onChange={props.handleInput}
         />

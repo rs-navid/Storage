@@ -5,19 +5,26 @@ import qs from "query-string";
 import { withRouter } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 
-import ListItemWithCheckboxAndEdit, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEdit";
+import ListItemWithCheckboxAndEdit, {
+  SubItems,
+} from "../../UI/list/ListItemWithCheckboxAndEdit";
 import Sidemenu from "../../UI/sidemenu/Sidemenu";
 
 import EditModal from "./EditModal";
 import Filter from "./Filter";
 
-import { getExam, getExams, deleteExams, createExam, updateExam } from "../../../store/actions/examActions";
+import {
+  getPack,
+  getPacks,
+  deletePacks,
+  createPack,
+  updatePack,
+} from "../../../store/actions/packActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
 const orderbyValues = [
   { key: 1, text: "پیش فرض", value: "id" },
-  { key: 2, text: "کد", value: "code" },
-  { key: 3, text: "نام", value: "name" },
+  { key: 2, text: "نام", value: "name" },
 ];
 
 const orderValues = [
@@ -25,53 +32,59 @@ const orderValues = [
   { key: 2, text: "نزولی", value: "desc" },
 ];
 
-const examObject = {
-  code: "",
+const packObject = {
   name: "",
   id: 0,
 };
 
-const Exam = (props) => {
+const Pack = (props) => {
   const [filter, setFilter] = useState({
     name: "",
-    code: "",
     orderby: orderbyValues[0].value,
     order: orderValues[0].value,
+    page: null,
   });
-  const [exams, setExams] = useState([]);
-  const [selectedExams, setSelectedExams] = useState([]);
+  const [packs, setPacks] = useState([]);
+  const [selectedPacks, setSelectedPacks] = useState([]);
   const [open, setOpen] = useState(false);
-  const [pageInfo, setPageInfo] = useState({ totalPages: 0, page: 1 });
-  const [editingExam, setEditingExam] = useState(examObject);
+  const [pageInfo, setPageInfo] = useState({ totalPages: 0, page: 0 });
+  const [editingPack, setEditingPack] = useState(packObject);
 
   // Component did mount
   useEffect(() => {
-    loadData(props.location.search);
+    // loadData(props.location.search);
     const query = qs.parse(props.location.search);
 
     setFilter({
       ...filter,
       name: query.name || "",
-      code: query.code || "",
       order: ["asc", "desc"].includes(query.order) ? query.order : "asc",
       orderby: ["id", "name"].includes(query.orderby) ? query.orderby : "id",
+      page: query.page ? +query.page : 0,
     });
 
     setPageInfo({
       ...pageInfo,
-      page: query.page ? +query.page + 1 : 1,
+      page: query.page ? +query.page : 0,
     });
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    console.log(filter);
+    if (filter.page !== null) {
+      loadData({ ...filter });
+    }
+  }, [filter.page]);
+
   // Load data
   const loadData = async (query) => {
-    setSelectedExams([]);
-    setExams([]);
-    const results = await props.getExams(query);
+    setSelectedPacks([]);
+    setPacks([]);
+    const results = await props.getPacks(query);
 
     if (results) {
-      setExams(results.rows);
+      setPacks(results.rows);
       setPageInfo((oldState) => {
         return {
           ...oldState,
@@ -91,49 +104,55 @@ const Exam = (props) => {
 
   // Handle selection change
   const handleSelectionChange = (id) => {
-    if (selectedExams.indexOf(id) === -1) {
-      setSelectedExams([...selectedExams, id]);
+    if (selectedPacks.indexOf(id) === -1) {
+      setSelectedPacks([...selectedPacks, id]);
     } else {
-      const newSelected = [...selectedExams];
-      newSelected.splice(selectedExams.indexOf(id), 1);
-      setSelectedExams(newSelected);
+      const newSelected = [...selectedPacks];
+      newSelected.splice(selectedPacks.indexOf(id), 1);
+      setSelectedPacks(newSelected);
     }
   };
 
   // Confirm delete
   const confirmDelete = () => {
-    if (selectedExams.length === 0) {
-      props.showDialog({ title: "خطا", text: "لطفا حداقل یک مورد را برای حذف انتخاب نمایید." });
+    if (selectedPacks.length === 0) {
+      props.showDialog({
+        title: "خطا",
+        text: "لطفا حداقل یک مورد را برای حذف انتخاب نمایید.",
+      });
     } else {
       props.showDialog({
         title: "حذف",
-        text: `آیا مایل به حذف ${selectedExams.length} مورد هستید؟`,
+        text: `آیا مایل به حذف ${selectedPacks.length} مورد هستید؟`,
         type: "confirm",
-        yes: deleteExams,
+        yes: deletePacks,
       });
     }
   };
 
   // Delete
-  const deleteExams = async () => {
-    const resutlt = await props.deleteExams(selectedExams);
+  const deletePacks = async () => {
+    const resutlt = await props.deletePacks(selectedPacks);
     if (resutlt) {
-      props.showDialog({ title: "حذف", text: "موارد انتخاب شده با موفقیت حذف شدند." });
-      loadData(props.location.search);
+      props.showDialog({
+        title: "حذف",
+        text: "موارد انتخاب شده با موفقیت حذف شدند.",
+      });
+      loadData(filter);
     }
   };
 
   // Click on new button
   const handleNewButtonClick = () => {
-    setEditingExam(examObject);
+    setEditingPack(packObject);
     setOpen(true);
   };
 
   // Click on edit button
   const handleEditButtonClick = async (id) => {
-    const result = await props.getExam(id);
+    const result = await props.getPack(id);
     if (result) {
-      setEditingExam(result);
+      setEditingPack(result);
       setOpen(true);
     }
   };
@@ -148,10 +167,11 @@ const Exam = (props) => {
       page: value - 1,
     };
 
+    setFilter({ ...filter, page: value - 1 });
     setPageInfo({ ...pageInfo, page: value });
     replaceHistory(query);
 
-    loadData(qs.stringify(query));
+    // loadData(qs.stringify(query));
   };
 
   return (
@@ -159,23 +179,36 @@ const Exam = (props) => {
       {/* Start modal */}
       <EditModal
         open={open}
-        editingExam={editingExam}
+        editingPack={editingPack}
         setOpen={setOpen}
-        setEditingExam={setEditingExam}
-        createExam={props.createExam}
-        updateExam={props.updateExam}
+        setEditingPack={setEditingPack}
+        createPack={props.createPack}
+        updatePack={props.updatePack}
         loadData={loadData}
+        filter={filter}
         showDialog={props.showDialog}
       />
       {/* End modal */}
 
       {/* Start actions */}
       <div className="actions pt-4 pb-5 align-left">
-        <Button icon labelPosition="right" color="blue" size="small" onClick={confirmDelete}>
+        <Button
+          icon
+          labelPosition="right"
+          color="blue"
+          size="small"
+          onClick={confirmDelete}
+        >
           حذف
           <Icon name="trash" />
         </Button>
-        <Button icon labelPosition="right" size="small" color="blue" onClick={handleNewButtonClick}>
+        <Button
+          icon
+          labelPosition="right"
+          size="small"
+          color="blue"
+          onClick={handleNewButtonClick}
+        >
           جدید
           <Icon name="add" />
         </Button>
@@ -196,7 +229,7 @@ const Exam = (props) => {
 
         <div className="page-content">
           {/* Start list */}
-          {exams.map((item) => {
+          {packs.map((item) => {
             return (
               <ListItemWithCheckboxAndEdit
                 id={item.id}
@@ -204,7 +237,7 @@ const Exam = (props) => {
                 onClick={() => handleEditButtonClick(item.id)}
                 onChange={() => handleSelectionChange(item.id)}
               >
-                <SubItems data={["کد آزمون:", item.code, "نام آزمون:", item.name]} />
+                <SubItems data={["نام بسته بندی:", item.name]} />
               </ListItemWithCheckboxAndEdit>
             );
           })}
@@ -220,7 +253,7 @@ const Exam = (props) => {
               showFirstButton
               showLastButton
               siblingCount={0}
-              page={pageInfo.page}
+              page={filter.page + 1}
               onChange={handlePageChange}
             />
           </div>
@@ -230,4 +263,13 @@ const Exam = (props) => {
   );
 };
 
-export default withRouter(connect(null, { showDialog, getExams, getExam, createExam, updateExam, deleteExams })(Exam));
+export default withRouter(
+  connect(null, {
+    showDialog,
+    getPack,
+    getPacks,
+    deletePacks,
+    createPack,
+    updatePack,
+  })(Pack)
+);

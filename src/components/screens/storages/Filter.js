@@ -20,13 +20,16 @@ const Filter = (props) => {
     query = {
       ...query,
       name: props.filter.name,
+      subName: props.filter.subName,
       code: props.filter.code,
+      subCode: props.filter.subCode,
       order: props.filter.order,
       orderby: props.filter.orderby,
+      page: props.filter.page
     };
 
     props.replaceHistory(query);
-    props.loadData(qs.stringify(query));
+    props.loadData(query);
   };
 
   // Handle sort inputs change
@@ -52,7 +55,7 @@ const Filter = (props) => {
     }
 
     props.replaceHistory(query);
-    props.loadData(qs.stringify(query));
+    props.loadData(query);
   };
 
   return (
@@ -61,12 +64,20 @@ const Filter = (props) => {
       <Menu title="جستجو">
         <div className="search-wrapper">
           <div className="field-wrapper field-100 wrap">
-            <label>کد آزمون:</label>
-            <Input placeholder="کد آزمون" type="text" name="code" value={props.filter.code} onChange={handleSearchInputs} />
+            <label>نام انبار:</label>
+            <Input placeholder="نام انبار" type="text" name="name" value={props.filter.name} onChange={handleSearchInputs} />
           </div>
           <div className="field-wrapper field-100 wrap">
-            <label>نام آزمون:</label>
-            <Input placeholder="نام آزمون" type="text" name="name" value={props.filter.name} onChange={handleSearchInputs} />
+            <label>کد انبار:</label>
+            <Input placeholder="کد انبار" type="text" name="code" value={props.filter.code} onChange={handleSearchInputs} />
+          </div>
+          <div className="field-wrapper field-100 wrap">
+            <label>نام بخش:</label>
+            <Input placeholder="نام بخش" type="text" name="subName" value={props.filter.subName} onChange={handleSearchInputs} />
+          </div>
+          <div className="field-wrapper field-100 wrap">
+            <label>کد بخش:</label>
+            <Input placeholder="کد بخش" type="text" name="subCode" value={props.filter.subCode} onChange={handleSearchInputs} />
           </div>
           <div className="clearfix"></div>
           <div className="line-break"></div>

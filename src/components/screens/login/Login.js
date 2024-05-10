@@ -17,26 +17,40 @@ import profile from "../../../assets/images/profile.png";
 const Login = (props) => {
   useEffect(() => {
     document.title = "ورود";
-    loadCaptcha();
+    generateCaptcha();
     // eslint-disable-next-line
   }, []);
 
-  const loadCaptcha = async () => {
-    const results = await props.getCaptcha();
-
-    if (results) {
-      // let image = btoa(
-      //   new Uint8Array(results.data.buffer.data).reduce((data, byte) => data + String.fromCharCode(byte), "")
-      // );
-      setCaptcha(results.data.data);
-      setCaptchaText(results.data.text);
+  const generateCaptcha = () => {
+    const canvas = document.getElementById("captcha");
+    const ctx = canvas.getContext("2d");
+    let captchaText = generateCaptchaText();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "#000";
+    ctx.fillText(captchaText, 200, 40);
+    ctx.beginPath();
+    for (let i = 0; i < 8; i++) {
+      ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+      ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
     }
+    ctx.strokeStyle = "#111";
+    ctx.stroke();
+    setCaptcha(captchaText.replaceAll(" ", ""));
+  };
+  
+  const generateCaptchaText = () => {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ023456789";
+    let captchaText = "";
+    for (let i = 0; i < 5; i++) {
+      captchaText += "  " +chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return captchaText;
   };
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [captchaValue, setCaptchaValue] = useState("");
-  const [captchaText, setCaptchaText] = useState("");
   const [remember, setRemember] = useState(false);
   const [captcha, setCaptcha] = useState(null);
 
@@ -48,7 +62,7 @@ const Login = (props) => {
 
   // Handle reload button click 
   const handleReloadButtonClick = () => {
-    loadCaptcha();
+    generateCaptcha();
   }
 
   return (
@@ -89,16 +103,19 @@ const Login = (props) => {
             onButtonClick = {handleReloadButtonClick}
           />
 
-          <img src={captcha} alt="captcha" />
+          {/* <img src={captcha} alt="captcha" /> */}
+          <div style={{marginTop: 28}}>
+            <canvas id="captcha" width="200" height="50"></canvas>
+          </div>
 
-          <Checkbox name="remember" cls="remember" onChange={setRemember}>
+          {/* <Checkbox name="remember" cls="remember" onChange={setRemember}>
             مرا به خاطر بسپار
-          </Checkbox>
+          </Checkbox> */}
           <Button
             cls="primary w-100 p-4 border-rounded mt-5"
             onClick={(e) => {
               e.preventDefault();
-              if (captchaText.toLowerCase() !== captchaValue.toLowerCase()) {
+              if (captcha.toLowerCase() !== captchaValue.toLowerCase()) {
                 props.showDialog({
                   type: "ok",
                   title: "خطا",

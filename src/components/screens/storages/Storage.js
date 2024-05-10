@@ -5,26 +5,33 @@ import qs from "query-string";
 import { withRouter } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 
-import ListItemWithCheckboxAndEdit, {
+import ListItemWithCheckboxAndEditAndOther, {
   SubItems,
-} from "../../UI/list/ListItemWithCheckboxAndEdit";
+} from "../../UI/list/ListItemWithCheckboxAndEditAndOther";
 import Sidemenu from "../../UI/sidemenu/Sidemenu";
 
 import EditModal from "./EditModal";
+import SubsModal from "./SubsModal";
 import Filter from "./Filter";
 
 import {
-  getClients,
-  deleteClients,
-  createClient,
-  updateClient,
-  getClient,
-} from "../../../store/actions/clientActions";
+  getMainStorage,
+  getMainStorages,
+  getSubStorage,
+  getSubStorages,
+  createMainStorage,
+  createSubStorage,
+  deleteMainStorages,
+  deleteSubStorages,
+  updateMainStorage,
+  updateSubStorage,
+} from "../../../store/actions/storageActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
 const orderbyValues = [
   { key: 1, text: "پیش فرض", value: "id" },
   { key: 2, text: "نام", value: "name" },
+  { key: 3, text: "کد", value: "code" },
 ];
 
 const orderValues = [
@@ -32,37 +39,30 @@ const orderValues = [
   { key: 2, text: "نزولی", value: "desc" },
 ];
 
-const clientObject = {
+const storageObject = {
   name: "",
-  codeEghtesadi: "",
-  shomareSabt: "",
-  shenaseMeli: "",
-  phoneNumber: "",
-  state: "",
-  city: "",
-  address: "",
-  zipCode: "",
-  description: "",
+  code: "",
   id: 0,
 };
 
-const Client = (props) => {
+const MainStorage = (props) => {
   const [filter, setFilter] = useState({
     name: "",
-    codeeghtesadi: "",
-    shomaresabt: "",
-    shenasemeli: "",
-    state: "",
-    city: "",
+    subName: "",
+    code: "",
+    subCode: "",
     orderby: orderbyValues[0].value,
     order: orderValues[0].value,
     page: null,
   });
-  const [clients, setClients] = useState([]);
-  const [selectedClients, setSelectedClients] = useState([]);
+  const [storages, setStorages] = useState([]);
+  const [selectedStorages, setSelectedStorages] = useState([]);
   const [open, setOpen] = useState(false);
+  const [subsOpen, setSubsOpen] = useState(false);
   const [pageInfo, setPageInfo] = useState({ totalPages: 0, page: 0 });
-  const [editingClient, setEditingClient] = useState(clientObject);
+  const [editingStorage, setEditingStorage] = useState(storageObject);
+  const [mainId, setMainId] = useState(0);
+  const [mainName, setMainName] = useState("");
 
   // Component did mount
   useEffect(() => {
@@ -72,13 +72,13 @@ const Client = (props) => {
     setFilter({
       ...filter,
       name: query.name || "",
-      codeEghtesadi: query.codeEghtesadi || "",
-      shomareSabt: query.shomareSabt || "",
-      shenaseMeli: query.shenaseMeli || "",
-      state: query.state || "",
-      city: query.city || "",
+      subName: query.subName || "",
+      code: query.code || "",
+      subCode: query.subCode || "",
       order: ["asc", "desc"].includes(query.order) ? query.order : "asc",
-      orderby: ["id", "name"].includes(query.orderby) ? query.orderby : "id",
+      orderby: ["id", "name", "code"].includes(query.orderby)
+        ? query.orderby
+        : "id",
       page: query.page ? +query.page : 0,
     });
 
@@ -86,12 +86,10 @@ const Client = (props) => {
       ...pageInfo,
       page: query.page ? +query.page : 0,
     });
-
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    console.log(filter);
     if (filter.page !== null) {
       loadData({ ...filter });
     }
@@ -99,12 +97,12 @@ const Client = (props) => {
 
   // Load data
   const loadData = async (query) => {
-    setSelectedClients([]);
-    setClients([]);
-    const results = await props.getClients(query);
+    setSelectedStorages([]);
+    setStorages([]);
+    const results = await props.getMainStorages(query);
 
     if (results) {
-      setClients(results.rows);
+      setStorages(results.rows);
       setPageInfo((oldState) => {
         return {
           ...oldState,
@@ -124,18 +122,18 @@ const Client = (props) => {
 
   // Handle selection change
   const handleSelectionChange = (id) => {
-    if (selectedClients.indexOf(id) === -1) {
-      setSelectedClients([...selectedClients, id]);
+    if (selectedStorages.indexOf(id) === -1) {
+      setSelectedStorages([...selectedStorages, id]);
     } else {
-      const newSelected = [...selectedClients];
-      newSelected.splice(selectedClients.indexOf(id), 1);
-      setSelectedClients(newSelected);
+      const newSelected = [...selectedStorages];
+      newSelected.splice(selectedStorages.indexOf(id), 1);
+      setSelectedStorages(newSelected);
     }
   };
 
   // Confirm delete
   const confirmDelete = () => {
-    if (selectedClients.length === 0) {
+    if (selectedStorages.length === 0) {
       props.showDialog({
         title: "خطا",
         text: "لطفا حداقل یک مورد را برای حذف انتخاب نمایید.",
@@ -143,36 +141,36 @@ const Client = (props) => {
     } else {
       props.showDialog({
         title: "حذف",
-        text: `آیا مایل به حذف ${selectedClients.length} مورد هستید؟`,
+        text: `آیا مایل به حذف ${selectedStorages.length} مورد هستید؟`,
         type: "confirm",
-        yes: deleteClients,
+        yes: deleteStorages,
       });
     }
   };
 
   // Delete
-  const deleteClients = async () => {
-    const resutlt = await props.deleteClients(selectedClients);
+  const deleteStorages = async () => {
+    const resutlt = await props.deleteMainStorages(selectedStorages);
     if (resutlt) {
       props.showDialog({
         title: "حذف",
         text: "موارد انتخاب شده با موفقیت حذف شدند.",
       });
-      loadData({ ...filter });
+      loadData(filter);
     }
   };
 
   // Click on new button
   const handleNewButtonClick = () => {
-    setEditingClient(clientObject);
+    setEditingStorage(storageObject);
     setOpen(true);
   };
 
   // Click on edit button
   const handleEditButtonClick = async (id) => {
-    const result = await props.getClient(id);
+    const result = await props.getMainStorage(id);
     if (result) {
-      setEditingClient(result);
+      setEditingStorage(result);
       setOpen(true);
     }
   };
@@ -187,11 +185,11 @@ const Client = (props) => {
       page: value - 1,
     };
 
-    setPageInfo({ ...pageInfo, page: value - 1 });
     setFilter({ ...filter, page: value - 1 });
+    setPageInfo({ ...pageInfo, page: value });
     replaceHistory(query);
 
-    // loadData({...filter, ...pageInfo});
+    // loadData(qs.stringify(query));
   };
 
   return (
@@ -199,13 +197,23 @@ const Client = (props) => {
       {/* Start modal */}
       <EditModal
         open={open}
-        editingClient={editingClient}
+        editingStorage={editingStorage}
         setOpen={setOpen}
-        setEditingClient={setEditingClient}
-        createClient={props.createClient}
-        updateClient={props.updateClient}
+        setEditingStorage={setEditingStorage}
+        createMainStorage={props.createMainStorage}
+        updateMainStorage={props.updateMainStorage}
         loadData={loadData}
         filter={filter}
+        showDialog={props.showDialog}
+        />
+
+      <SubsModal
+        open={subsOpen}
+        setOpen={setSubsOpen}
+        loadData={loadData}
+        filter={filter}
+        mainId={mainId}
+        mainName={mainName}
         showDialog={props.showDialog}
       />
       {/* End modal */}
@@ -249,28 +257,25 @@ const Client = (props) => {
 
         <div className="page-content">
           {/* Start list */}
-          {clients.map((item) => {
+          {storages.map((item) => {
             return (
-              <ListItemWithCheckboxAndEdit
+              <ListItemWithCheckboxAndEditAndOther
                 id={item.id}
                 key={item.id}
                 onClick={() => handleEditButtonClick(item.id)}
                 onChange={() => handleSelectionChange(item.id)}
+                onOther={() => {
+                  setSubsOpen(true);
+                  setMainId(item.id);
+                  setMainName(item.name);
+                }}
+                otherTitle="بخش ها"
+                otherIcon="th list"
               >
                 <SubItems
-                  data={["نام:", item.name, "کد اقتصادی:", item.codeEghtesadi]}
+                  data={["کد انبار:", item.code, "نام انبار:", item.name]}
                 />
-                <SubItems
-                  data={[
-                    "شماره ثبت:",
-                    item.shomareSabt,
-                    "شماره ملی:",
-                    item.shenaseMeli,
-                  ]}
-                />
-                <SubItems data={["استان:", item.state, "شهر:", item.city]} />
-                <SubItems data={["شماره تماس:", item.phoneNumber]} />
-              </ListItemWithCheckboxAndEdit>
+              </ListItemWithCheckboxAndEditAndOther>
             );
           })}
           {/* End list */}
@@ -298,10 +303,15 @@ const Client = (props) => {
 export default withRouter(
   connect(null, {
     showDialog,
-    getClients,
-    getClient,
-    deleteClients,
-    createClient,
-    updateClient,
-  })(Client)
+    getMainStorage,
+    getMainStorages,
+    getSubStorage,
+    getSubStorages,
+    createMainStorage,
+    createSubStorage,
+    deleteMainStorages,
+    deleteSubStorages,
+    updateMainStorage,
+    updateSubStorage,
+  })(MainStorage)
 );

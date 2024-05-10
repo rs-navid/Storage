@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getClients = (query) => {
   return async () => {
-    const results = await axios.get(`/client?${query}`);
+    const results = await axios.post(`/client/getall`, {...query, ordertype: query.order === "asc" ? false : true});
     if (results) {
       return results.data;
     }
@@ -12,7 +12,7 @@ export const getClients = (query) => {
 
 export const getClient = (id) => {
   return async () => {
-    const results = await axios.get(`/client/${id}`);
+    const results = await axios.post(`/client/getbyid`, {id});
     if (results) {
       return results.data;
     }
@@ -22,7 +22,7 @@ export const getClient = (id) => {
 
 export const deleteClients = (ids) => {
   return async () => {
-    const results = await axios.delete(`/client`, { data: { ids: ids } });
+    const results = await axios.post(`/client/deletebyid`, { ids: ids } );
     if (results) {
       return true;
     }
@@ -33,7 +33,7 @@ export const deleteClients = (ids) => {
 
 export const createClient = (client) => {
   return async () => {
-    const result = await axios.post("/client", {
+    const result = await axios.post("/client/create", {
       ...client,
     });
     if (!result) {
@@ -45,7 +45,7 @@ export const createClient = (client) => {
 
 export const updateClient = (client) => {
   return async () => {
-    const result = await axios.put(`/client/${client.id}`, {
+    const result = await axios.post(`/client/update`, {
       ...client,
     });
     if (!result) {

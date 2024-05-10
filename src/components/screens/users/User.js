@@ -6,10 +6,18 @@ import { withRouter } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 
 import EditModal from "./EditModal";
-import ListItemWithCheckboxAndEdit, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEdit";
+import ListItemWithCheckboxAndEdit, {
+  SubItems,
+} from "../../UI/list/ListItemWithCheckboxAndEdit";
 import Sidemenu, { Menu } from "../../UI/sidemenu/Sidemenu";
 
-import { getUsers, deleteUsers, createUser, updateUser, getUserPermissions } from "../../../store/actions/userActions";
+import {
+  getUsers,
+  deleteUsers,
+  createUser,
+  updateUser,
+  getUserPermissions,
+} from "../../../store/actions/userActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
 const orderbyValues = [
@@ -30,15 +38,21 @@ const User = (props) => {
   const [users, setUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [open, setOpen] = useState(false);
-  const [editingUser, setEditingUser] = useState({ name: "", username: "", password: "", password_confirm: "", id: 0 });
+  const [editingUser, setEditingUser] = useState({
+    name: "",
+    username: "",
+    password: "",
+    password_confirm: "",
+    id: 0,
+  });
   const [selectedPermissions, setSelectedPermissions] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   // Component did mount
   useEffect(() => {
     const query = qs.parse(props.location.search);
-    loadData(qs.stringify(query));
+    loadData(query);
 
     if (query.name || query.username) {
       setSearch({
@@ -48,7 +62,7 @@ const User = (props) => {
     }
 
     if (query.page) {
-      setPage(+query.page + 1);
+      setPage(+query.page);
     }
 
     if (query.order) {
@@ -58,7 +72,7 @@ const User = (props) => {
     }
 
     if (query.orderby) {
-      if (["id", "name", "useername"].includes(query.orderby)) {
+      if (["id", "name", "username"].includes(query.orderby)) {
         setOrderby(query.orderby);
       }
     }
@@ -104,14 +118,15 @@ const User = (props) => {
     }
 
     pushHistory(query);
-    loadData(qs.stringify(query));
+    loadData(query);
   };
 
   // Handle search inputs change
   const handleSearchInputs = (e) => {
     setSearch({
       ...search,
-      [e.target.name]: e.target.value,
+      [e.target.name === "username1" ? "username" : e.target.name]:
+        e.target.value,
     });
   };
 
@@ -127,7 +142,7 @@ const User = (props) => {
     };
 
     pushHistory(query);
-    loadData(qs.stringify(query));
+    loadData(query);
   };
 
   // Handle selection change
@@ -144,7 +159,10 @@ const User = (props) => {
   // Confirm delete
   const confirmDelete = () => {
     if (selectedUsers.length === 0) {
-      props.showDialog({ title: "خطا", text: "لطفا حداقل یک مورد را برای حذف انتخاب نمایید." });
+      props.showDialog({
+        title: "خطا",
+        text: "لطفا حداقل یک مورد را برای حذف انتخاب نمایید.",
+      });
     } else {
       props.showDialog({
         title: "حذف",
@@ -159,11 +177,15 @@ const User = (props) => {
   const deleteUsers = async () => {
     const resutlt = await props.deleteUsers(selectedUsers);
     if (resutlt) {
-      props.showDialog({ title: "حذف", text: "موارد انتخاب شده با موفقیت حذف شدند." });
+      props.showDialog({
+        title: "حذف",
+        text: "موارد انتخاب شده با موفقیت حذف شدند.",
+      });
       setSelectedUsers([]);
       setUsers([]);
 
-      loadData(props.location.search);
+      loadData({ ...search, ...orderby, ...order, ...page });
+      // loadData(props.location.search);
     }
   };
 
@@ -171,38 +193,60 @@ const User = (props) => {
   const handleInput = (e) => {
     setEditingUser({
       ...editingUser,
-      [e.target.name]: e.target.value,
+      [e.target.name === "password1" ? "password" : e.target.name]:
+        e.target.value,
     });
   };
 
   // Save
   const handleSaveUser = async () => {
     if (editingUser.name.trim() === "") {
-      props.showDialog({ title: "خطا", text: "نام و نام خانوادگی معتبر نمی باشد." });
+      props.showDialog({
+        title: "خطا",
+        text: "نام و نام خانوادگی معتبر نمی باشد.",
+      });
     } else if (editingUser.username.trim() === "") {
       props.showDialog({ title: "خطا", text: "نام کاربری معتبر نمی باشد." });
     } else if (
       editingUser.id === 0 &&
-      (editingUser.password.trim() === "" || editingUser.password_confirm.trim()) === ""
+      (editingUser.password.trim() === "" ||
+        editingUser.password_confirm.trim()) === ""
     ) {
       props.showDialog({ title: "خطا", text: "کلمه عبور معتبر نمی باشد." });
-    } else if (editingUser.password.trim() !== editingUser.password_confirm.trim()) {
-      props.showDialog({ title: "خطا", text: "کلمات عبور وارد شده یکسان نمی باشند." });
-    } else if (editingUser.password.trim() !== "" && editingUser.password.trim().length < 8) {
-      props.showDialog({ title: "خطا", text: "کلمه عبور باید حداقل 8 کاراکتر باشد." });
+    } else if (
+      editingUser.password.trim() !== editingUser.password_confirm.trim()
+    ) {
+      props.showDialog({
+        title: "خطا",
+        text: "کلمات عبور وارد شده یکسان نمی باشند.",
+      });
+    } else if (
+      editingUser.password.trim() !== "" &&
+      editingUser.password.trim().length < 6
+    ) {
+      props.showDialog({
+        title: "خطا",
+        text: "کلمه عبور باید حداقل 6 کاراکتر باشد.",
+      });
     } else {
       let result = null;
       if (editingUser.id === 0) {
-        result = await props.createUser({ ...editingUser, permissions: selectedPermissions });
+        result = await props.createUser({
+          ...editingUser,
+          permissions: selectedPermissions,
+        });
       } else {
-        result = await props.updateUser({ ...editingUser, permissions: selectedPermissions });
+        result = await props.updateUser({
+          ...editingUser,
+          permissions: selectedPermissions,
+        });
       }
 
       if (result) {
         if (result.data) {
           setEditingUser({
             ...editingUser,
-            id: result.data.id,
+            id: result.data,
           });
         }
 
@@ -210,7 +254,12 @@ const User = (props) => {
         setSelectedUsers([]);
         setUsers([]);
 
-        const results = await props.getUsers();
+        const results = await props.getUsers({
+          ...search,
+          orderby,
+          order,
+          page,
+        });
         if (results) {
           setUsers(results.rows);
           setTotalPages(results.totalPages);
@@ -221,7 +270,13 @@ const User = (props) => {
 
   // Click on new button
   const handleNewButtonClick = () => {
-    setEditingUser({ name: "", username: "", password: "", password_confirm: "", id: 0 });
+    setEditingUser({
+      name: "",
+      username: "",
+      password: "",
+      password_confirm: "",
+      id: 0,
+    });
     setSelectedPermissions([]);
     setOpen(true);
   };
@@ -229,7 +284,13 @@ const User = (props) => {
   // Click on edit button
   const handleEditButtonClick = async (id) => {
     const u = users.find((item) => item.id === id);
-    setEditingUser({ name: u.name, username: u.username, password: "", password_confirm: "", id: id });
+    setEditingUser({
+      name: u.name,
+      username: u.username,
+      password: "",
+      password_confirm: "",
+      id: id,
+    });
     const result = await props.getUserPermissions(id);
     setSelectedPermissions(result);
     setOpen(true);
@@ -261,13 +322,13 @@ const User = (props) => {
       ...query,
       order: order,
       orderby: orderby,
-      page: value - 1,
+      page: value - 1 ,
     };
 
-    setPage(value);
+    setPage(value - 1);
     pushHistory(query);
 
-    loadData(qs.stringify(query));
+    loadData(query);
   };
 
   return (
@@ -286,11 +347,23 @@ const User = (props) => {
 
       {/* Start actions */}
       <div className="actions pt-4 pb-5 align-left">
-        <Button icon labelPosition="right" color="blue" size="small" onClick={confirmDelete}>
+        <Button
+          icon
+          labelPosition="right"
+          color="blue"
+          size="small"
+          onClick={confirmDelete}
+        >
           حذف
           <Icon name="trash" />
         </Button>
-        <Button icon labelPosition="right" size="small" color="blue" onClick={handleNewButtonClick}>
+        <Button
+          icon
+          labelPosition="right"
+          size="small"
+          color="blue"
+          onClick={handleNewButtonClick}
+        >
           جدید
           <Icon name="add" />
         </Button>
@@ -317,7 +390,7 @@ const User = (props) => {
                 <Input
                   placeholder="نام کاربری"
                   type="text"
-                  name="username"
+                  name="username1"
                   value={search.username}
                   onChange={handleSearchInputs}
                 />
@@ -325,7 +398,12 @@ const User = (props) => {
               <div className="clearfix"></div>
               <div className="line-break"></div>
               <div className="search-button align-left">
-                <Button icon labelPosition="right" size="tiny" onClick={handleSearchClick}>
+                <Button
+                  icon
+                  labelPosition="right"
+                  size="tiny"
+                  onClick={handleSearchClick}
+                >
                   جستجو
                   <Icon name="search" />
                 </Button>
@@ -336,7 +414,10 @@ const User = (props) => {
 
           {/* Start sort */}
           <Menu title="مرتب سازی">
-            <div className="sort-wrapper d-flex align-items-center" style={{ flexWrap: "wrap" }}>
+            <div
+              className="sort-wrapper d-flex align-items-center"
+              style={{ flexWrap: "wrap" }}
+            >
               <Dropdown
                 selection
                 className="orderby my-3"
@@ -372,7 +453,14 @@ const User = (props) => {
                 onClick={() => handleEditButtonClick(item.id)}
                 onChange={() => handleSelectionChange(item.id)}
               >
-                <SubItems data={["نام و نام خانوادگی:", item.name, "نام کاربری:", item.username]} />
+                <SubItems
+                  data={[
+                    "نام و نام خانوادگی:",
+                    item.name,
+                    "نام کاربری:",
+                    item.username,
+                  ]}
+                />
               </ListItemWithCheckboxAndEdit>
             );
           })}
@@ -388,7 +476,7 @@ const User = (props) => {
               showFirstButton
               showLastButton
               siblingCount={0}
-              page={page}
+              page={page + 1}
               onChange={handlePageChange}
             />
           </div>
@@ -399,5 +487,12 @@ const User = (props) => {
 };
 
 export default withRouter(
-  connect(null, { getUsers, showDialog, deleteUsers, createUser, updateUser, getUserPermissions })(User)
+  connect(null, {
+    getUsers,
+    showDialog,
+    deleteUsers,
+    createUser,
+    updateUser,
+    getUserPermissions,
+  })(User)
 );

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import qs from "query-string";
 import Pagination from "@material-ui/lab/Pagination";
 
-import { getExams } from "../../../store/actions/examActions";
+// import { getExams } from "../../../store/actions/packActions";
 
 import Sidemenu from "../../UI/sidemenu/Sidemenu";
 import Modal from "../../UI/modal/Modal";
@@ -114,4 +114,4 @@ ExamModal.propTypes = {
   setSelected: PropTypes.func.isRequired,
 };
 
-export default connect(null, { getExams })(ExamModal);
+export default connect(null, {  })(ExamModal);

@@ -1,13 +1,21 @@
-import { SET_USER_TOKEN, REMOVE_USER_TOKEN, SET_USER_PERMISSIONS, SHOW_DIALOG } from "./actionTypes";
+import {
+  SET_USER_TOKEN,
+  REMOVE_USER_TOKEN,
+  SET_USER_PERMISSIONS,
+  SHOW_DIALOG,
+} from "./actionTypes";
 import axios from "axios";
 
 export const login = (username, password, platform, remember) => {
   return async (dispatch) => {
-    const user = await axios.post("/user/login", { username, password, platform, remember });
+    const user = await axios.post("/user/login", {
+      username,
+      password,
+    });
 
     if (user) {
-      localStorage.setItem("token", user.data.token);
-      dispatch(setUserToken(user.data.token));
+      localStorage.setItem("token", user.data);
+      dispatch(setUserToken(user.data));
     }
   };
 };
@@ -30,15 +38,19 @@ export const removeUserToken = () => {
 
 export const changePassword = (password, newPassword) => {
   return async (dispatch) => {
-    const result = await axios.put("/user/changecurrentuserpassword", {
+    const result = await axios.post("/user/changepassword", {
       password: password,
-      new_password: newPassword,
+      newpassword: newPassword,
     });
 
     if (result) {
       return dispatch({
         type: SHOW_DIALOG,
-        payload: { type: "ok", title: "تایید تغییر کلمه عبور", text: "کلمه عبور با موفقیت تغییر کرد." },
+        payload: {
+          type: "ok",
+          title: "تایید تغییر کلمه عبور",
+          text: "کلمه عبور با موفقیت تغییر کرد.",
+        },
       });
     }
   };
@@ -61,7 +73,11 @@ export const changePeriod = (id) => {
     if (results) {
       return dispatch({
         type: SHOW_DIALOG,
-        payload: { type: "ok", title: "تایید تغییر دوره", text: "دوره با موفقیت تغییر کرد." },
+        payload: {
+          type: "ok",
+          title: "تایید تغییر دوره",
+          text: "دوره با موفقیت تغییر کرد.",
+        },
       });
     }
   };
@@ -69,12 +85,12 @@ export const changePeriod = (id) => {
 
 export const getPermissions = () => {
   return async (dispatch) => {
-    const results = await axios.get("/user/permissions");
+    const results = await axios.post("/user/getpermissions");
 
     if (results) {
       dispatch({
         type: SET_USER_PERMISSIONS,
-        payload: results.data.permissions,
+        payload: results.data,
       });
     }
   };
@@ -82,7 +98,7 @@ export const getPermissions = () => {
 
 export const getUsers = (query) => {
   return async () => {
-    const results = await axios.get(`/user?${query}`);
+    const results = await axios.post(`/user/getall`, { ...query, ordertype: query.order === "asc" ? false : true });
     if (results) {
       return results.data;
     }
@@ -91,7 +107,9 @@ export const getUsers = (query) => {
 
 export const deleteUsers = (ids) => {
   return async () => {
-    const results = await axios.delete(`/user`, { data: { ids: ids } });
+    const results = await axios.post(`/user/deletebyids`, 
+      { ids: ids },
+    );
     if (results) {
       return true;
     }
@@ -102,7 +120,7 @@ export const deleteUsers = (ids) => {
 
 export const createUser = (user) => {
   return async () => {
-    const result = await axios.post("/user", {
+    const result = await axios.post("/user/register", {
       ...user,
     });
     if (!result) {
@@ -114,7 +132,7 @@ export const createUser = (user) => {
 
 export const updateUser = (user) => {
   return async () => {
-    const result = await axios.put(`/user/${user.id}`, {
+    const result = await axios.post(`/user/update`, {
       ...user,
     });
     if (!result) {
@@ -124,19 +142,29 @@ export const updateUser = (user) => {
   };
 };
 
+// export const getUserPermissions = (userId) => {
+//   return async () => {
+//     const result = await axios.post(`/user/getpermissionsbyid`, {userId});
+//     if (!result) {
+//       return [];
+//     }
+//     return result.data.permissions;
+//   };
+// };
+
 export const getUserPermissions = (userId) => {
   return async () => {
-    const result = await axios.get(`/user/permissionsbyid/${userId}`);
+    const result = await axios.post(`/user/getuserpermissions`, {id : Number(userId)});
     if (!result) {
       return [];
     }
-    return result.data.permissions;
+    return result.data;
   };
 };
 
 export const getUserInfo = () => {
   return async () => {
-    const info = await axios.get("/user/info");
+    const info = await axios.post("/user/getinfo");
     if (info) {
       return info.data;
     }

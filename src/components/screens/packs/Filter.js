@@ -20,11 +20,7 @@ const Filter = (props) => {
     query = {
       ...query,
       name: props.filter.name,
-      codeEghtesadi: props.filter.codeEghtesadi,
-      shomareSabt: props.filter.shomareSabt,
-      shenaseMeli: props.filter.shenaseMeli,
-      state: props.filter.state,
-      city: props.filter.city,
+      code: props.filter.code,
       order: props.filter.order,
       orderby: props.filter.orderby,
       page: props.filter.page
@@ -66,28 +62,8 @@ const Filter = (props) => {
       <Menu title="جستجو">
         <div className="search-wrapper">
           <div className="field-wrapper field-100 wrap">
-            <label>نام:</label>
-            <Input placeholder="نام" type="text" name="name" value={props.filter.name} onChange={handleSearchInputs} />
-          </div>
-          <div className="field-wrapper field-100 wrap">
-            <label>کد اقتصادی:</label>
-            <Input placeholder="کد اقتصادی" type="text" name="codeEghtesadi" value={props.filter.codeEghtesadi} onChange={handleSearchInputs} />
-          </div>
-          <div className="field-wrapper field-100 wrap">
-            <label>شماره ثبت:</label>
-            <Input placeholder="شماره ثبت" type="text" name="shomareSabt" value={props.filter.shomareSabt} onChange={handleSearchInputs} />
-          </div>
-          <div className="field-wrapper field-100 wrap">
-            <label>شناسه ملی:</label>
-            <Input placeholder="شناسه ملی" type="text" name="shenaseMeli" value={props.filter.shenaseMeli} onChange={handleSearchInputs} />
-          </div>
-          <div className="field-wrapper field-100 wrap">
-            <label>استان:</label>
-            <Input placeholder="استان" type="text" name="state" value={props.filter.state} onChange={handleSearchInputs} />
-          </div>
-          <div className="field-wrapper field-100 wrap">
-            <label>شهر:</label>
-            <Input placeholder="شهر" type="text" name="city" value={props.filter.city} onChange={handleSearchInputs} />
+            <label>نام بسته بندی:</label>
+            <Input placeholder="نام بسته بندی" type="text" name="name" value={props.filter.name} onChange={handleSearchInputs} />
           </div>
           <div className="clearfix"></div>
           <div className="line-break"></div>

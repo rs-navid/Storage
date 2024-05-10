@@ -10,7 +10,7 @@ import ListItemWithCheckboxAndEdit, { SubItems } from "../../UI/list/ListItemWit
 
 import methodTypes from "../../../configs/methodTypes";
 
-import { getExams } from "../../../store/actions/examActions";
+// import { getExams } from "../../../store/actions/packActions";
 import { getMethodsByExamId } from "../../../store/actions/methodActions";
 import { createMethods } from "../../../store/actions/sampleActions";
 import { showDialog } from "../../../store/actions/dialogActions";
@@ -144,4 +144,4 @@ AddMethodsModal.propTypes = {
   loadRequests: PropTypes.func.isRequired,
 };
 
-export default withRouter(connect(null, { getExams, getMethodsByExamId, showDialog, createMethods })(AddMethodsModal));
+export default withRouter(connect(null, {  getMethodsByExamId, showDialog, createMethods })(AddMethodsModal));

@@ -19,8 +19,8 @@ const ChangePassword = (props) => {
       props.showDialog({ title: "خطا", text: "کلمه عبور جدید یا تکرار آن معتبر نمی باشد." });
     } else if (passwords.newPassword !== passwords.newPasswordConfirm) {
       props.showDialog({ title: "خطا", text: "کلمات عبور جدید یکسان نمی باشند." });
-    } else if (passwords.newPassword.length < 8) {
-      props.showDialog({ title: "خطا", text: "کلمه عبور باید حداقل 8 کاراکتر باشد." });
+    } else if (passwords.newPassword.length < 6) {
+      props.showDialog({ title: "خطا", text: "کلمه عبور باید حداقل 6 کاراکتر باشد." });
     } else {
       props.changePassword(passwords.password, passwords.newPassword);
     }
