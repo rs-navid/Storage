@@ -1,6 +1,7 @@
 export const SET_USER_TOKEN = "SET_USER_TOKEN";
 export const REMOVE_USER_TOKEN = "REMOVE_USER_TOKEN";
 export const SET_USER_PERMISSIONS = "SET_USER_PERMISSIONS";
+export const SET_USER_PERIOD = "SET_USER_PERIOD";
 
 export const SHOW_DIALOG = "SHOW_DIALOG";
 export const HIDE_DIALOG = "HIDE_DIALOG";

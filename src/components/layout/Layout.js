@@ -32,14 +32,16 @@ const Packs = React.lazy(() => import("../screens/packs/Packs"));
 
 const Layout = (props) => {
   let token = localStorage.getItem("token");
-  if (!props.user.token && token) props.setUserToken(token);
+  let period = localStorage.getItem("period");
+
+  if (!props.user.token && token && !props.user.period && period) props.setUserToken(token, period);
 
   const [activeSidebar, setActiveSidebar] = useState(false);
 
   return (
     <Fragment>
       <Suspense fallback={<Spinner />}>
-        {!props.user.token ? (
+        {!props.user.token || !props.user.period ? (
           <Switch>
             <Route path="/" component={Login} />
             {/* <Redirect to="/"/> */}

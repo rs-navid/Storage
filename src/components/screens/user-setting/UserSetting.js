@@ -11,16 +11,16 @@ const UserSetting = () => {
   }, []);
   return (
     <div>
-      {/* <Tab
+      <Tab
         tabs={["تغییر کلمه عبور", "تغییر دوره"]}
         panels={[ChangePassword, ChangePeriod]}
         hash={["password", "period"]}
-      /> */}
-      <Tab
+      />
+      {/* <Tab
         tabs={["تغییر کلمه عبور"]}
         panels={[ChangePassword]}
         hash={["password"]}
-      />
+      /> */}
     </div>
   );
 };

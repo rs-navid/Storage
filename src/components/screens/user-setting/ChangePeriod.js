@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Dropdown, Button, Icon } from "semantic-ui-react";
 
-import { getUserPeriodAndAllPeriods, changePeriod } from "../../../store/actions/userActions";
+import { getPeriods, changePeriod } from "../../../store/actions/userActions";
 
 const ChangePeriod = (props) => {
   const [getPeriods, setPeriods] = useState([]);
@@ -11,12 +11,12 @@ const ChangePeriod = (props) => {
   // Component did mount
   useEffect(() => {
     const loadData = async () => {
-      const results = await props.getUserPeriodAndAllPeriods();
+      const results = await props.getPeriods();
 
       if (results) {
-        setActive(results.periodId);
+        setActive(props.periodId);
 
-        const periods = results.periods.map((p) => {
+        const periods = results.map((p) => {
           return {
             key: p.id,
             text: p.name,
@@ -38,6 +38,7 @@ const ChangePeriod = (props) => {
 
   // Save
   const saveHandler = async () => {
+    localStorage.setItem("period", getActive);
     props.changePeriod(getActive);
   };
 
@@ -63,4 +64,8 @@ const ChangePeriod = (props) => {
   );
 };
 
-export default connect(null, { getUserPeriodAndAllPeriods, changePeriod })(ChangePeriod);
+const mapStateToProps = (state) => ({
+  periodId: state.userReducer.period,
+});
+
+export default connect( mapStateToProps, { getPeriods, changePeriod })(ChangePeriod);

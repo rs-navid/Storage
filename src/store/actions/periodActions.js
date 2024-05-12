@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getPeriods = () => {
   return async () => {
-    const results = await axios.get("/period/periods");
+    const results = await axios.post("/period/getall", {});
     if (results) {
       return results.data;
     }
@@ -11,7 +11,7 @@ export const getPeriods = () => {
 
 export const deletePeriods = (ids) => {
   return async () => {
-    const result = await axios.post("/period/delete", { ids: ids });
+    const result = await axios.post("/period/deletebyid", { ids: ids });
     if (!result) {
       return false;
     }
@@ -21,11 +21,11 @@ export const deletePeriods = (ids) => {
 
 export const createPeriod = (period) => {
   return async () => {
-    const result = await axios.post("/period", {
+    const result = await axios.post("/period/create", {
       name: period.name,
-      key: period.key,
-      start: period.start,
-      end: period.end,
+      code: period.code,
+      startDateStr: period.start,
+      endDateStr: period.end,
     });
     if (!result) {
       return false;
@@ -36,11 +36,12 @@ export const createPeriod = (period) => {
 
 export const updatePeriod = (period) => {
   return async () => {
-    const result = await axios.put(`/period/${period.id}`, {
+    const result = await axios.post(`/period/update`, {
+      id: period.id,  
       name: period.name,
-      key: period.key,
-      start: period.start,
-      end: period.end,
+      code: period.code,
+      startDateStr: period.start,
+      endDateStr: period.end,
     });
     if (!result) {
       return false;

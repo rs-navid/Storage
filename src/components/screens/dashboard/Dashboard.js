@@ -49,24 +49,24 @@ let DashboardContent = (props) => {
       <div className="clearfix"></div>
       <div className="line-break"></div>
 
-      {/* <div className="field-wrapper field-50 right-50">
+      <div className="field-wrapper field-50 right-50">
         <label>نام دوره:</label>
-        <Input type="text" value={info.period} disabled />
-      </div> */}
-      {/* <div className="clearfix"></div>
-      <div className="line-break"></div> */}
+        <Input type="text" value={info.periodName} disabled />
+      </div>
+      <div className="clearfix"></div>
+      <div className="line-break"></div>
       <Link to={{ pathname: "/usersetting" }}>
         <Button icon labelPosition="right" color="blue" size="small">
           تغییر کلمه عبور
           <Icon name="key" />
         </Button>
       </Link>
-      {/* <Link to={{ pathname: "/usersetting", hash: "#period" }}>
+      <Link to={{ pathname: "/usersetting", hash: "#period" }}>
         <Button icon labelPosition="right" color="blue" size="small">
           تغییر دوره
           <Icon name="time" />
         </Button>
-      </Link> */}
+      </Link>
     </div>
   );
 };

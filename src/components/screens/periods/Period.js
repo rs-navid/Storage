@@ -17,13 +17,13 @@ const Period = (props) => {
   const [selected, setSelected] = useState([]);
   const [start, setStart] = useState(utils("fa").getToday());
   const [end, setEnd] = useState(utils("fa").getToday());
-  const [selectedPeriod, setSelectedPeriod] = useState({ name: "", key: "", id: 0 });
+  const [selectedPeriod, setSelectedPeriod] = useState({ name: "", code: "", id: 0 });
 
   // Component did mount
   useEffect(() => {
     const loadData = async () => {
       const results = await props.getPeriods();
-      setPeriods(results);
+      setPeriods(results.rows);
     };
 
     loadData();
@@ -39,7 +39,7 @@ const Period = (props) => {
       setPeriods([]);
 
       const results = await props.getPeriods();
-      setPeriods(results);
+      setPeriods(results.rows);
     }
   };
 
@@ -71,10 +71,10 @@ const Period = (props) => {
   // Click on edit button
   const handleEditClick = (id) => {
     const p = periods.find((item) => item.id === id);
-    setSelectedPeriod({ name: p.name, key: p.key, id: id });
+    setSelectedPeriod({ name: p.name, code: p.code, id: id });
 
-    const start = moment.from(p.start, "en", "YYYY-MM-DD").locale("fa").toObject();
-    const end = moment.from(p.end, "en", "YYYY-MM-DD").locale("fa").toObject();
+    const start = moment.from(p.startDate, "en", "YYYY-MM-DD").locale("fa").toObject();
+    const end = moment.from(p.endDate, "en", "YYYY-MM-DD").locale("fa").toObject();
 
     setStart({ year: start.years, month: start.months + 1, day: start.date });
     setEnd({ year: end.years, month: end.months + 1, day: end.date });
@@ -94,8 +94,8 @@ const Period = (props) => {
   const handleSave = async () => {
     if (selectedPeriod.name.trim() === "") {
       props.showDialog({ title: "خطا", text: "نام دوره معتبر نمی باشد." });
-    } else if (selectedPeriod.key.trim() === "") {
-      props.showDialog({ title: "خطا", text: "مشخصه دوره معتبر نمی باشد." });
+    } else if (selectedPeriod.code.trim() === "") {
+      props.showDialog({ title: "خطا", text: "کد دوره معتبر نمی باشد." });
     } else if (!moment(`${start.year}/${start.month}/${start.day}`, "jYYYY/jM/jD")) {
       props.showDialog({ title: "خطا", text: "تاریخ شروع معتبر نمی باشد." });
     } else if (!moment(`${end.year}/${end.month}/${end.day}`, "jYYYY/jM/jD")) {
@@ -124,14 +124,14 @@ const Period = (props) => {
         setPeriods([]);
 
         const results = await props.getPeriods();
-        setPeriods(results);
+        setPeriods(results.rows);
       }
     }
   };
 
   // Click on new button
   const newClick = () => {
-    setSelectedPeriod({ name: "", key: "", id: 0 });
+    setSelectedPeriod({ name: "", code: "", id: 0 });
     setStart(utils("fa").getToday());
     setEnd(utils("fa").getToday());
     setOpen(true);
@@ -155,7 +155,7 @@ const Period = (props) => {
         </div>
         <div className="field-wrapper field-50 left-50 label-sm">
           <label>مشخصه دوره:</label>
-          <Input placeholder="مشخصه دوره" type="text" name="key" value={selectedPeriod.key} onChange={handleInput} />
+          <Input placeholder="مشخصه دوره" type="text" name="code" value={selectedPeriod.code} onChange={handleInput} />
         </div>
         <div className="clearfix"></div>
         <div className="line-break"></div>
@@ -183,8 +183,8 @@ const Period = (props) => {
         </Button>
       </div>
       {periods.map((item) => {
-        const start = moment.from(item.start, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD");
-        const end = moment.from(item.end, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD");
+        const start = moment.from(item.startDate, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD");
+        const end = moment.from(item.endDate, "en", "YYYY-MM-DD").locale("fa").format("YYYY/MM/DD");
 
         return (
           <ListItemWithCheckboxAndEdit
@@ -193,7 +193,7 @@ const Period = (props) => {
             onClick={() => handleEditClick(item.id)}
             onChange={() => handleSelectionChange(item.id)}
           >
-            <SubItems data={["دوره:", item.name, "مشخصه دوره:", item.key]} />
+            <SubItems data={["دوره:", item.name, "کد دوره:", item.code]} />
             <SubItems data={["تاریخ شروع:", start, "تاریخ پایان:", end]} />
           </ListItemWithCheckboxAndEdit>
         );

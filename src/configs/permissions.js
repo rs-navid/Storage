@@ -29,12 +29,12 @@ const menu = [
   //   path: "/advancesetting",
   //   isHidden: true,
   // },
-  // {
-  //   id: 300,
-  //   text: "مدیریت دوره ها",
-  //   icon: faHistory,
-  //   path: "/periods",
-  // },
+  {
+    id: 30,
+    text: "مدیریت دوره ها",
+    icon: faHistory,
+    path: "/periods",
+  },
   {
     id: 50,
     text: "مدیریت کاربران",

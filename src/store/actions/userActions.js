@@ -1,5 +1,6 @@
 import {
   SET_USER_TOKEN,
+  SET_USER_PERIOD,
   REMOVE_USER_TOKEN,
   SET_USER_PERMISSIONS,
   SHOW_DIALOG,
@@ -14,17 +15,19 @@ export const login = (username, password, platform, remember) => {
     });
 
     if (user) {
-      localStorage.setItem("token", user.data);
-      dispatch(setUserToken(user.data));
+      localStorage.setItem("token", user.data[0]);
+      localStorage.setItem("period", user.data[1]);
+      dispatch(setUserToken(user.data[0], user.data[1]));
     }
   };
 };
 
-export const setUserToken = (token) => {
+export const setUserToken = (token, period) => {
   return {
     type: SET_USER_TOKEN,
     payload: {
       token,
+      period: Number(period)
     },
   };
 };
@@ -56,9 +59,9 @@ export const changePassword = (password, newPassword) => {
   };
 };
 
-export const getUserPeriodAndAllPeriods = () => {
+export const getPeriods = () => {
   return async () => {
-    const results = await axios.post("/user/getuserperiod");
+    const results = await axios.post("/user/getperiods");
 
     if (results) {
       return results.data;
@@ -68,9 +71,14 @@ export const getUserPeriodAndAllPeriods = () => {
 
 export const changePeriod = (id) => {
   return async (dispatch) => {
-    const results = await axios.post("/user/changeperiod", { periodId: id });
+    // const results = await axios.post("/user/changeperiod", { periodId: id });
 
-    if (results) {
+      dispatch({
+        type: SET_USER_PERIOD,
+        payload: {
+          period: id
+        },
+      });
       return dispatch({
         type: SHOW_DIALOG,
         payload: {
@@ -79,7 +87,6 @@ export const changePeriod = (id) => {
           text: "دوره با موفقیت تغییر کرد.",
         },
       });
-    }
   };
 };
 
