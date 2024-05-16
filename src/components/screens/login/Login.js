@@ -28,13 +28,21 @@ const Login = (props) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font = "30px Arial";
     ctx.fillStyle = "#000";
-    ctx.fillText(captchaText, 200, 40);
+
+    for(let i=0;i<captchaText.length; i++){
+      let y = Math.floor(Math.random() * (45 - 25 + 1) + 25);
+      let s = Math.floor(Math.random() * (35 - 25 + 1) + 25);
+      ctx.font= `bold ${s}px Arial`;
+      ctx.fillText(captchaText.charAt(i), 10*i+28, y);
+    }
+
+    // ctx.fillText(captchaText, 200, 40);
     ctx.beginPath();
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 25; i++) {
       ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
       ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
     }
-    ctx.strokeStyle = "#111";
+    ctx.strokeStyle = "#000";
     ctx.stroke();
     setCaptcha(captchaText.replaceAll(" ", ""));
   };
