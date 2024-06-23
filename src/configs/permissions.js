@@ -12,7 +12,8 @@ import {
   faFileInvoiceDollar,
   faBoxOpen,
   faPrint,
-  faDoorOpen
+  faDoorOpen,
+  faWeightHanging
 } from "@fortawesome/free-solid-svg-icons";
 
 const menu = [
@@ -60,8 +61,14 @@ const menu = [
     path: "/storages",
   },
   {
+    id: 90,
+    text: "مدیریت واحدهای اندازه گیری",
+    icon: faWeightHanging,
+    path: "/units",
+  },
+  {
     type: "sep",
-    container: [25, 50, 60, 70, 80],
+    container: [25, 50, 60, 70, 80, 90],
   },
   // {
   //   id: 500,

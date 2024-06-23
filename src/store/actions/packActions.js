@@ -10,16 +10,6 @@ export const getPacks = (query) => {
   };
 };
 
-export const getFirstExam = () => {
-  return async () => {
-    const results = await axios.get(`/exam/first`);
-    if (results) {
-      return results.data;
-    }
-    return false;
-  };
-};
-
 export const getPack = (id) => {
   return async () => {
     const results = await axios.post(`/packing/getbyid`, {id});
