@@ -13,7 +13,9 @@ import {
   faBoxOpen,
   faPrint,
   faDoorOpen,
-  faWeightHanging
+  faWeightHanging,
+  faInbox,
+  faReceipt
 } from "@fortawesome/free-solid-svg-icons";
 
 const menu = [
@@ -48,17 +50,23 @@ const menu = [
     icon: faRestroom,
     path: "/clients",
   },
-  {
-    id: 70,
-    text: "مدیریت بسته بندی ها",
-    icon: faBoxOpen,
-    path: "/packs",
-  },
+  // {
+  //   id: 70,
+  //   text: "مدیریت بسته بندی ها",
+  //   icon: faBoxOpen,
+  //   path: "/packs",
+  // },
   {
     id: 80,
     text: "مدیریت انبارها",
     icon: faDoorOpen,
     path: "/storages",
+  },
+  {
+    id: 85,
+    text: "مدیریت کالاها",
+    icon: faBoxOpen,
+    path: "/objects",
   },
   {
     id: 90,
@@ -70,12 +78,12 @@ const menu = [
     type: "sep",
     container: [25, 50, 60, 70, 80, 90],
   },
-  // {
-  //   id: 500,
-  //   text: "مدیریت آزمون ها",
-  //   icon: faVial,
-  //   path: "/exams",
-  // },
+  {
+    id: 100,
+    text: "رسید ورود کالا",
+    icon: faReceipt,
+    path: "/receipts",
+  },
   // {
   //   id: 550,
   //   text: "مدیریت روش های آزمون",
@@ -133,10 +141,10 @@ const menu = [
   //   icon: faStickyNote,
   //   path: "/resultsmanagement",
   // },
-  // {
-  //   type: "sep",
-  //   container: [700, 710, 720, 730, 740, 750],
-  // },
+  {
+    type: "sep",
+    container: [100],
+  },
   // {
   //   id: 800,
   //   text: "مدیریت صورتحساب ها",
