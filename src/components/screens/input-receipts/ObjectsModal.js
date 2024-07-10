@@ -3,101 +3,147 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Button, Icon } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
+import moment from "jalali-moment";
 
 import Modal from "../../UI/modal/Modal";
 import ListItemWithCheckboxAndEdit, { SubItems } from "../../UI/list/ListItemWithCheckboxAndEdit";
-import SubModal from "./SubModal";
+import ObjectModal from "./ObjectModal";
 // import MethodsModal from "./MethodsModal";
 // import openBase64NewTab from "../../../helpers/openBase64NewTab";
 
-import { getSubStorages, deleteSubStorages,updateSubStorage, createSubStorage } from "../../../store/actions/storageActions";
+import { getObjects, deleteObjects, getObject, createObject, updateObject } from "../../../store/actions/inputReceiptActions";
 import { showDialog } from "../../../store/actions/dialogActions";
 
 // import { printAgreement } from "../../../store/actions/requestActions";
 
-const storageObject = {
-  name: "",
-  code: "",
+const objectObject = {
+  number: 0,
+  objectId: 0,
   id: 0,
-  parentId: 0
+  receiptId: 0,
+  storageId: 0,
+  subUnitId: 0,
+  mainUnitId: 0,
+  subAmount: 0,
+  mainAmount: 0,
+  manufacturer: "",
+  batch: "",
+  startDateString: "",
+  endDateString: "",
+  objects: [],
+  units: [],
+  storages: []
 };
 
-const SubsModal = (props) => {
-  const [subs, setSubs] = useState([]);
-  const [selectedSub, setSelectedSub] = useState(0);
-  const [subModalStatus, setSubModalStatus] = useState(false);
+const ObjectsModal = (props) => {
+  const [objs, setObjs] = useState([]);
+  const [selectedObj, setSelectedObj] = useState(0);
+  const [objModalStatus, setObjModalStatus] = useState(false);
   // const [MethodsModalStatus, setMethodsModalStatus] = useState(false);
-  const [selectedSubs, setSelectedSubs] = useState([]);
-  const [editingStorage, setEditingStorage] = useState(storageObject);
+  const [selectedObjs, setSelectedObjs] = useState([]);
+  const [editingObj, setEditingObj] = useState(objectObject);
 
   useEffect(() => {
     if (props.open) {
-      loadSubs();
+      loadObjs();
     }
     // eslint-disable-next-line
-  }, [props.mainId]);
+  }, [props.id]);
 
   // Load samples
-  const loadSubs = async () => {
-    const results = await props.getSubStorages({parentId:props.mainId});
+  const loadObjs = async () => {
+    const results = await props.getObjects(props.id);
 
     if (results) {
-      setSubs(results.rows);
+      setObjs(results);
       // setPeriodKey(results.key);
-      setSelectedSubs([]);
+      setSelectedObjs([]);
     }
   };
 
   // Handle on edit click
-  const handleEditButtonClick = (id, name, code) => {
-    setEditingStorage({id, name, code, parentId: props.mainId});
-    setSubModalStatus(true);
+  const handleEditButtonClick = async (id) => {
+    const result = await props.getObject(id);
+    if (result) {
+      
+      var s = null;
+      var e = null;
+      
+      if(result.startDate) {
+        s = moment.from(result.startDate, "en", "YYYY-MM-DD").locale("fa").toObject();
+      }
+
+      if(result.endDate) {
+        e = moment.from(result.endDate, "en", "YYYY-MM-DD").locale("fa").toObject();
+      }
+
+      
+      setEditingObj({...result, startDateString : s ? { year: s.years, month: s.months + 1, day: s.date } : null, endDateString: e ? { year: e.years, month: e.months + 1, day: e.date } : null, receiptId: props.id});
+      setObjModalStatus(true);
+    }
   };
 
   // Handle on new click
-  const handleNewButtonClick = () => {
-    setEditingStorage({...storageObject, parentId: props.mainId});
-    setSubModalStatus(true);
+  const handleNewButtonClick = async () => {
+    const result = await props.getObject(0);
+    if (result) {
+      
+      var s = null;
+      var e = null;
+      
+      if(result.startDate) {
+        s = moment.from(result.startDate, "en", "YYYY-MM-DD").locale("fa").toObject();
+      }
+
+      if(result.endDate) {
+        e = moment.from(result.endDate, "en", "YYYY-MM-DD").locale("fa").toObject();
+      }
+
+      
+      setEditingObj({...result, startDateString : s, endDateString: e, receiptId: props.id});
+      setObjModalStatus(true);
+    }
+
   };
 
   // Handle selection change
   const handleSelectionChange = (id) => {
-    if (selectedSubs.indexOf(id) === -1) {
-      setSelectedSubs([...selectedSubs, id]);
+    if (selectedObjs.indexOf(id) === -1) {
+      setSelectedObjs([...selectedObjs, id]);
     } else {
-      const newSelected = [...selectedSubs];
-      newSelected.splice(selectedSubs.indexOf(id), 1);
-      setSelectedSubs(newSelected);
+      const newSelected = [...selectedObjs];
+      newSelected.splice(selectedObjs.indexOf(id), 1);
+      setSelectedObjs(newSelected);
     }
   };
 
   // Confirm delete
   const confirmDelete = () => {
-    if (selectedSubs.length === 0) {
+    if (selectedObjs.length === 0) {
       props.showDialog({ title: "خطا", text: "لطفا حداقل یک مورد را برای حذف انتخاب نمایید." });
     } else {
       props.showDialog({
         title: "حذف",
-        text: `آیا مایل به حذف ${selectedSubs.length} مورد هستید؟`,
+        text: `آیا مایل به حذف ${selectedObjs.length} مورد هستید؟`,
         type: "confirm",
-        yes: deleteSubs,
+        yes: deleteObjs,
       });
     }
   };
 
   // Delete
-  const deleteSubs = async () => {
-    const resutlt = await props.deleteSubStorages(selectedSubs);
+  const deleteObjs = async () => {
+    const resutlt = await props.deleteObjects(selectedObjs);
     if (resutlt) {
       props.showDialog({ title: "حذف", text: "موارد انتخاب شده با موفقیت حذف شدند." });
-      loadSubs();
+      loadObjs();
       props.loadData(props.filter);
     }
   };
 
   // Handle methods button click
   const handleMethodClick = (id) => {
-    setSelectedSub(id);
+    // setSelectedSub(id);
     // setMethodsModalStatus(true);
   };
 
@@ -114,20 +160,20 @@ const SubsModal = (props) => {
 
   return (
     <Fragment>
-      <SubModal
-        open={subModalStatus}
-        editingStorage={editingStorage}
-        setOpen={setSubModalStatus}
-        setEditingStorage={setEditingStorage}
-        createSubStorage={props.createSubStorage}
-        updateSubStorage={props.updateSubStorage}
-        loadData={loadSubs}
+      <ObjectModal
+        open={objModalStatus}
+        editingObject={editingObj}
+        setOpen={setObjModalStatus}
+        setEditingObject={setEditingObj}
+        createObject={props.createObject}
+        updateObject={props.updateObject}
+        loadData={loadObjs}
         showDialog={props.showDialog}
       />
 
       <Modal
         open={props.open}
-        title={`بخش های انبار (${props.mainName})`}
+        title={`کالا های رسید`}
         cancel={() => {
           // props.setRequestId(0);
           props.setOpen(false);
@@ -149,15 +195,18 @@ const SubsModal = (props) => {
 
         {/* Start list */}
         <div style={{ height: "350px", overflowY: "auto" }} className="container">
-          {subs.map((item) => {
+          {objs.map((item) => {
             return (
               <ListItemWithCheckboxAndEdit
                 id={item.id}
                 key={item.id}
-                onClick={() => handleEditButtonClick(item.id, item.name, item.code)}
+                onClick={() => handleEditButtonClick(item.id)}
                 onChange={() => handleSelectionChange(item.id)}
               >
-                <SubItems data={["کد بخش:", item.code, "نام بخش:", item.name]} />
+                <SubItems data={["کد یکتا:", item.number, "نام کالا:", item.object]} />
+                <SubItems data={["انبار:", item.storage.split(" | ")[1], "مقدار جزئی:", item.subAmount]} />
+                <SubItems data={["واحد جزئی:", item.subUnit, "مقدار کلی:", item.mainAmount]} />
+                <SubItems data={["واحد کلی:", item.mainUnit, "تولید کننده:", item.manufacturer]} />
               </ListItemWithCheckboxAndEdit>
             );
           })}
@@ -186,12 +235,12 @@ const SubsModal = (props) => {
   );
 };
 
-SubsModal.propTypes = {
-  mainId: PropTypes.number.isRequired,
+ObjectsModal.propTypes = {
+  id: PropTypes.number.isRequired,
   // setRequestId: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
   // loadRequests: PropTypes.func.isRequired,
 };
 
-export default withRouter(connect(null, { deleteSubStorages, getSubStorages, updateSubStorage, createSubStorage, showDialog })(SubsModal));
+export default withRouter(connect(null, { getObjects, deleteObjects, getObject, createObject, updateObject, showDialog })(ObjectsModal));

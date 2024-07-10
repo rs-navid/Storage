@@ -13,6 +13,7 @@ const Checkbox = props => {
         onChange={e => {
           props.onChange(e.target.checked);
         }}
+        checked={props.checked}
       />
       <div className="checkmark" style={props.checkstyle ? props.checkstyle : {}}></div>
       {props.children}

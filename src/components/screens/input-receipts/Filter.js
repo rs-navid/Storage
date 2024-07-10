@@ -21,7 +21,7 @@ const Filter = (props) => {
       ...query,
       client: props.filter.client,
       object: props.filter.object,
-      number: props.filter.number,
+      number: props.filter.number || 0,
       order: props.filter.order,
       orderby: props.filter.orderby,
       page: props.filter.page

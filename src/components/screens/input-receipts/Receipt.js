@@ -5,6 +5,7 @@ import qs from "query-string";
 import { withRouter } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 import DatePicker, { utils } from "react-modern-calendar-datepicker";
+import moment from "jalali-moment";
 
 import ListItemWithCheckboxAndEditAndOther, {
   SubItems,
@@ -12,7 +13,7 @@ import ListItemWithCheckboxAndEditAndOther, {
 import Sidemenu from "../../UI/sidemenu/Sidemenu";
 
 import EditModal from "./EditModal";
-import SubsModal from "./SubsModal";
+import ObjectsModal from "./ObjectsModal";
 import Filter from "./Filter";
 
 import {
@@ -38,13 +39,15 @@ const orderValues = [
 const receiptObject = {
   periodId: 0,
   clientId: 0,
-  number:0,
+  number: 0,
   date: "",
+  dateString: "",
   time: "00:00",
   driver: "",
   lp: "",
   cargo: "",
   id: 0,
+  clients: [],
 };
 
 const Receipt = (props) => {
@@ -53,17 +56,17 @@ const Receipt = (props) => {
     object: "",
     number: 0,
     orderby: orderbyValues[0].value,
-    order: orderValues[0].value,
+    order: orderValues[1].value,
     page: null,
   });
 
   const [receipts, setReceipts] = useState([]);
   const [selectedReceipts, setSelectedReceipts] = useState([]);
   const [open, setOpen] = useState(false);
-  const [subsOpen, setSubsOpen] = useState(false);
+  const [objsOpen, setObjsOpen] = useState(false);
   const [pageInfo, setPageInfo] = useState({ totalPages: 0, page: 0 });
   const [editingReceipt, setEditingReceipt] = useState(receiptObject);
-  const [receiptId, setreceiptId] = useState(0);
+  const [receiptId, setReceiptId] = useState(0);
 
   // Component did mount
   useEffect(() => {
@@ -75,7 +78,7 @@ const Receipt = (props) => {
       client: query.client || "",
       object: query.object || "",
       number: query.number || 0,
-      order: ["asc", "desc"].includes(query.order) ? query.order : "asc",
+      order: ["asc", "desc"].includes(query.order) ? query.order : "desc",
       orderby: ["id", "number", "date"].includes(query.orderby)
         ? query.orderby
         : "id",
@@ -99,7 +102,10 @@ const Receipt = (props) => {
   const loadData = async (query) => {
     setSelectedReceipts([]);
     setReceipts([]);
-    const results = await props.getReceipts({...query, periodId: props.user.period});
+    const results = await props.getReceipts({
+      ...query,
+      periodId: props.user.period,
+    });
 
     if (results) {
       setReceipts(results.rows);
@@ -161,8 +167,13 @@ const Receipt = (props) => {
   };
 
   // Click on new button
-  const handleNewButtonClick = () => {
-    setEditingReceipt(receiptObject);
+  const handleNewButtonClick = async () => {
+    const resutlt = await props.getReceipt(0);
+    setEditingReceipt({
+      ...receiptObject,
+      periodId: props.user.period,
+      clients: resutlt.clients,
+    });
     setOpen(true);
   };
 
@@ -170,7 +181,9 @@ const Receipt = (props) => {
   const handleEditButtonClick = async (id) => {
     const result = await props.getReceipt(id);
     if (result) {
-      setEditingReceipt(result);
+      const d = moment.from(result.date, "en", "YYYY-MM-DD").locale("fa").toObject();
+      
+      setEditingReceipt({...result, dateString : { year: d.years, month: d.months + 1, day: d.date }});
       setOpen(true);
     }
   };
@@ -195,7 +208,7 @@ const Receipt = (props) => {
   return (
     <Fragment>
       {/* Start modal */}
-      {/* <EditModal
+      <EditModal
         open={open}
         editingReceipt={editingReceipt}
         setOpen={setOpen}
@@ -205,17 +218,16 @@ const Receipt = (props) => {
         loadData={loadData}
         filter={filter}
         showDialog={props.showDialog}
-        /> */}
+      />
 
-      {/* <SubsModal
-        open={subsOpen}
-        setOpen={setSubsOpen}
+      <ObjectsModal
+        open={objsOpen}
+        setOpen={setObjsOpen}
         loadData={loadData}
         filter={filter}
-        mainId={mainId}
-        mainName={mainName}
+        id={receiptId}
         showDialog={props.showDialog}
-      /> */}
+      />
       {/* End modal */}
 
       {/* Start actions */}
@@ -258,6 +270,11 @@ const Receipt = (props) => {
         <div className="page-content">
           {/* Start list */}
           {receipts.map((item) => {
+            const d = moment
+              .from(item.date, "en", "YYYY-MM-DD")
+              .locale("fa")
+              .format("YYYY/MM/DD");
+
             return (
               <ListItemWithCheckboxAndEditAndOther
                 id={item.id}
@@ -265,16 +282,15 @@ const Receipt = (props) => {
                 onClick={() => handleEditButtonClick(item.id)}
                 onChange={() => handleSelectionChange(item.id)}
                 onOther={() => {
-                  // setSubsOpen(true);
-                  // setMainId(item.id);
-                  // setMainName(item.name);
+                  setObjsOpen(true);
+                  setReceiptId(item.id);
                 }}
-                otherTitle="بخش ها"
+                otherTitle="کالاها"
                 otherIcon="th list"
               >
-                <SubItems
-                  data={["کد انبار:", item.code, "نام انبار:", item.name]}
-                />
+                <SubItems data={["شماره:", item.number, "تاریخ:", d]} />
+                <SubItems data={["زمان:", item.time, "مشتری:", item.client]} />
+                <SubItems data={["راننده:", item.driver]} />
               </ListItemWithCheckboxAndEditAndOther>
             );
           })}
