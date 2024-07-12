@@ -100,6 +100,22 @@ body {
       overflow: visible;
     }
 
+    .lbl-load {
+      color: blue;
+      cursor: pointer;
+      position: absolute;
+      left: 5px;
+      top: 8px;
+      min-width: 20px !important;
+      font-size: 20px !important;
+      font-weight: bold;
+      transform: rotate(-90deg);
+    }
+
+    .txt-load {
+      line-height: 21px;
+    }
+
     .modal-title {
       padding: 10px 20px;
 
@@ -147,5 +163,108 @@ body {
 .WindowedSelect {
   div[class$="menu"] {
     font-size: 0.85rem;
+  }
+}
+
+
+.tbl-container {
+  padding: 0 !important;
+  margin-top: 15px;
+
+  .tbl-data {
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+
+    td {
+      border: 1px solid #eee;
+      padding: 5px;
+      text-align: center;
+    }
+    thead {
+      height: 45px;
+    }
+
+    thead > td {
+      background-color: lightgoldenrodyellow;
+    }
+
+    // object name
+    thead > td:nth-child(1) {
+      min-width: 150px;
+    }
+
+    // code
+    thead > td:nth-child(2) {
+      min-width: 100px;
+    }
+
+    // storage
+    thead > td:nth-child(3) {
+      min-width: 150px;
+    }
+
+    // date
+    thead > td:nth-child(4) {
+      min-width: 100px;
+    }
+
+    // client
+    thead > td:nth-child(5) {
+      min-width: 150px;
+    }
+
+    // manufacturer
+    thead > td:nth-child(6) {
+      min-width: 150px;
+    }
+
+    // batch
+    thead > td:nth-child(7) {
+      min-width: 150px;
+    }
+
+    // start date
+    thead > td:nth-child(8) {
+      min-width: 100px;
+    }
+
+    // end date
+    thead > td:nth-child(9) {
+      min-width: 100px;
+    }
+
+    // sub unit
+    thead > td:nth-child(10) {
+      min-width: 120px;
+    }
+
+    // main unit
+    thead > td:nth-child(11) {
+      min-width: 120px;
+    }
+
+    // total
+    thead > td:nth-child(12) {
+      min-width: 100px;
+    }
+
+    // remain amount
+    thead > td:nth-child(13) {
+      min-width: 80px;
+    }
+
+    // amount
+    thead > td:nth-child(14) {
+      min-width: 80px;
+    }
+
+    tbody > tr.has-amount {
+      background-color: #89d89c;
+    }
+
+    tbody > tr.has-error {
+      background-color: #ef9c9c;
+    }
   }
 }

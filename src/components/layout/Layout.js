@@ -20,6 +20,7 @@ const Storages = React.lazy(() => import("../screens/storages/Storages"));
 const Objects = React.lazy(() => import("../screens/objects/Objects"));
 const Units = React.lazy(() => import("../screens/units/Units"));
 const InputReceipt = React.lazy(() => import("../screens/input-receipts/Receipts"));
+const OutputReceipt = React.lazy(() => import("../screens/output-receipt/Receipts"));
 const Results = React.lazy(() => import("../screens/results/Results"));
 const Results1 = React.lazy(() => import("../screens/results/Results"));
 const Results2 = React.lazy(() => import("../screens/results/Results"));
@@ -65,6 +66,7 @@ const Layout = (props) => {
               <Route exact path="/objects" component={Objects} />
               <Route exact path="/units" component={Units} />
               <Route exact path="/receipts" component={InputReceipt} />
+              <Route exact path="/outreceipts" component={OutputReceipt} />
               <Route exact path="/microbilaresults" component={Results} />
               <Route exact path="/chemicalresults" component={Results1} />
               <Route exact path="/celluloseresults" component={Results2} />

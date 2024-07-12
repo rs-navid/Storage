@@ -15,7 +15,9 @@ import {
   faDoorOpen,
   faWeightHanging,
   faInbox,
-  faReceipt
+  faReceipt,
+  faArrowUp,
+  faArrowDown
 } from "@fortawesome/free-solid-svg-icons";
 
 const menu = [
@@ -81,8 +83,14 @@ const menu = [
   {
     id: 100,
     text: "رسید ورود کالا",
-    icon: faReceipt,
+    icon: faArrowDown,
     path: "/receipts",
+  },
+  {
+    id: 110,
+    text: "رسید خروج کالا",
+    icon: faArrowUp,
+    path: "/outreceipts",
   },
   // {
   //   id: 550,
@@ -143,7 +151,7 @@ const menu = [
   // },
   {
     type: "sep",
-    container: [100],
+    container: [100, 110],
   },
   // {
   //   id: 800,
