@@ -281,6 +281,8 @@ const Receipt = (props) => {
                 key={item.id}
                 onClick={() => handleEditButtonClick(item.id)}
                 onChange={() => handleSelectionChange(item.id)}
+                onPrint= {()=>{ window.open(`/printinput?id=${item.id}`, "_blank")}}
+                printTitle= "چاپ"
                 onOther={() => {
                   setObjsOpen(true);
                   setReceiptId(item.id);

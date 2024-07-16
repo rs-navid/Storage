@@ -291,6 +291,8 @@ const Receipt = (props) => {
                   setObjsOpen(true);
                   setReceiptId(item.id);
                 }}
+                onPrint= {()=>{ window.open(`/printoutput?id=${item.id}`, "_blank")}}
+                printTitle= "چاپ"
                 otherTitle="کالاها"
                 otherIcon="th list"
               >

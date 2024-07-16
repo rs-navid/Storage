@@ -54,7 +54,7 @@ const ObjectsModal = (props) => {
       loadObjs();
     }
     // eslint-disable-next-line
-  }, [props.id]);
+  }, [props.id, props.open]);
 
   // Load samples
   const loadObjs = async () => {

@@ -1,5 +1,5 @@
 import React, { Fragment, Suspense, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { setUserToken } from "../../store/actions/userActions";
@@ -10,36 +10,67 @@ import Spinner from "../UI/spinner/Spinner";
 
 const Login = React.lazy(() => import("../screens/login/Login"));
 const Dashboard = React.lazy(() => import("../screens/dashboard/Dashboard"));
-const UserSetting = React.lazy(() => import("../screens/user-setting/UserSetting"));
+const UserSetting = React.lazy(() =>
+  import("../screens/user-setting/UserSetting")
+);
 const Setting = React.lazy(() => import("../screens/setting/Setting"));
-const AdvanceSetting = React.lazy(() => import("../screens/advance-setting/AdvanceSetting"));
+const AdvanceSetting = React.lazy(() =>
+  import("../screens/advance-setting/AdvanceSetting")
+);
 const Periods = React.lazy(() => import("../screens/periods/Periods"));
 const Users = React.lazy(() => import("../screens/users/Users"));
 const Clients = React.lazy(() => import("../screens/clients/Clients"));
 const Storages = React.lazy(() => import("../screens/storages/Storages"));
 const Objects = React.lazy(() => import("../screens/objects/Objects"));
 const Units = React.lazy(() => import("../screens/units/Units"));
-const InputReceipt = React.lazy(() => import("../screens/input-receipts/Receipts"));
-const OutputReceipt = React.lazy(() => import("../screens/output-receipt/Receipts"));
+const PrintInput = React.lazy(() => import("../screens/reports/PrintInput"));
+const PrintOutput = React.lazy(() => import("../screens/reports/PrintOutput"));
+const InputReceipt = React.lazy(() =>
+  import("../screens/input-receipts/Receipts")
+);
+const OutputReceipt = React.lazy(() =>
+  import("../screens/output-receipt/Receipts")
+);
 const Results = React.lazy(() => import("../screens/results/Results"));
 const Results1 = React.lazy(() => import("../screens/results/Results"));
 const Results2 = React.lazy(() => import("../screens/results/Results"));
 const Results3 = React.lazy(() => import("../screens/results/Results"));
 const Results4 = React.lazy(() => import("../screens/results/Results"));
-const ResultManagement = React.lazy(() => import("../screens/results-management/Results"));
+const ResultManagement = React.lazy(() =>
+  import("../screens/results-management/Results")
+);
 const Invoices = React.lazy(() => import("../screens/invoice/Invoices"));
-const RequestsReport = React.lazy(() => import("../screens/requests-report/RequestsReport"));
-const SamplesReport = React.lazy(() => import("../screens/sampless-report/SamplesReport"));
+const RequestsReport = React.lazy(() =>
+  import("../screens/requests-report/RequestsReport")
+);
+const SamplesReport = React.lazy(() =>
+  import("../screens/sampless-report/SamplesReport")
+);
 
 const Packs = React.lazy(() => import("../screens/packs/Packs"));
 
 const Layout = (props) => {
   let token = localStorage.getItem("token");
   let period = localStorage.getItem("period");
+  const location = useLocation();
 
-  if (!props.user.token && token && !props.user.period && period) props.setUserToken(token, period);
+  console.log(location);
+
+  if (!props.user.token && token && !props.user.period && period)
+    props.setUserToken(token, period);
 
   const [activeSidebar, setActiveSidebar] = useState(false);
+
+  const menu = () => {
+    return !location.pathname.includes("print") ? (
+      <Fragment>
+        <Header onClick={setActiveSidebar} />
+        <Sidebar active={activeSidebar} onClick={setActiveSidebar} />
+      </Fragment>
+    ) : (
+      ""
+    );
+  };
 
   return (
     <Fragment>
@@ -51,8 +82,7 @@ const Layout = (props) => {
           </Switch>
         ) : (
           <Fragment>
-            <Header onClick={setActiveSidebar} />
-            <Sidebar active={activeSidebar} onClick={setActiveSidebar} />
+            {menu()}
             <Switch>
               <Route exact path="/" component={Dashboard} />
               <Route exact path="/usersetting" component={UserSetting} />
@@ -65,6 +95,8 @@ const Layout = (props) => {
               <Route exact path="/storages" component={Storages} />
               <Route exact path="/objects" component={Objects} />
               <Route exact path="/units" component={Units} />
+              <Route exact path="/printinput" component={PrintInput} />
+              <Route exact path="/printoutput" component={PrintOutput} />
               <Route exact path="/receipts" component={InputReceipt} />
               <Route exact path="/outreceipts" component={OutputReceipt} />
               <Route exact path="/microbilaresults" component={Results} />
@@ -72,7 +104,11 @@ const Layout = (props) => {
               <Route exact path="/celluloseresults" component={Results2} />
               <Route exact path="/packingresults" component={Results3} />
               <Route exact path="/environmentresults" component={Results4} />
-              <Route exact path="/resultsmanagement" component={ResultManagement} />
+              <Route
+                exact
+                path="/resultsmanagement"
+                component={ResultManagement}
+              />
               <Route exact path="/invoicemanagement" component={Invoices} />
               <Route exact path="/requestsreport" component={RequestsReport} />
               <Route exact path="/samplesreport" component={SamplesReport} />
