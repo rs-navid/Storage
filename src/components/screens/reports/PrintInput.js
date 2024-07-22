@@ -13,6 +13,7 @@ import {
   getReceipt,
   getObjects,
 } from "../../../store/actions/inputReceiptActions";
+import logo from "../../../assets/images/logo.png";
 
 // const objectObject = {
 //   number: 0,
@@ -100,8 +101,11 @@ const PrintModal = (props) => {
                 >
                   چاپ رسید
                 </button>
+                <img src={logo} width="100px"/>
+
               </td>
               <td>
+              <div className="header-title-comp">شرکت پخش استانی دارو، واکسن، سموم و مواد بیولوژیک کاوش نوین مهر فارمد</div>
                 <div className="header-title">رسید ورود کالا به انبار</div>
               </td>
               <td>

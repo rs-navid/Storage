@@ -10,9 +10,8 @@ import qs from "query-string";
 
 import { showDialog } from "../../../store/actions/dialogActions";
 import {
-  getReceipt,
-  getObjects,
-} from "../../../store/actions/outputReceiptActions";
+  getAllStorageAvailability
+} from "../../../store/actions/storageActions";
 import logo from "../../../assets/images/logo.png";
 
 
@@ -35,37 +34,31 @@ import logo from "../../../assets/images/logo.png";
 //   storages: []
 // };
 
-const receiptObject = {
-  periodId: 0,
-  clientId: 0,
-  number: 0,
-  date: "",
-  dateString: "",
-  time: "00:00",
-  driver: "",
-  lp: "",
-  cargo: "",
-  id: 0,
-  clients: [],
-  address: "",
-  phoneNumber: "",
-};
-
 const PrintModal = (props) => {
   const [objs, setObjs] = useState([]);
-  const [receipt, setReceipt] = useState(receiptObject);
 
   useEffect(async () => {
-    let query = qs.parse(props.location.search);
-    var result = await props.getReceipt(query.id ?? 0);
-    var result1 = await props.getObjects(query.id ?? 0);
+    const query = qs.parse(props.location.search);
+
+    var filter = {
+      number: query.number || 0,
+      client: query.client || "",
+      object: query.object || "",
+      storage: query.storage || "",
+      date: ["9", "0", "9999", "99", "999", "1", "2", "3", "4", "5", "6", "12"].includes(query.date) ? query.date : "9",
+      order: ["asc", "desc"].includes(query.order) ? query.order : "asc",
+      orderby: ["Id", "Number", "Object.Name", "Date", "EndDate", "Receipt.Client.Name", "SubStorage.Name"].includes(query.orderby)
+        ? query.orderby
+        : "id",
+      page: query.page ? +query.page : 0,
+    };
+
+    console.log(query)
+
+    var result = await props.getAllStorageAvailability(filter);
 
     if (result) {
-      setReceipt(result);
-    }
-
-    if (result1) {
-      setObjs(result1);
+      setObjs(result);
     }
   }, []);
 
@@ -81,12 +74,16 @@ const PrintModal = (props) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  const d = receipt.date
-    ? moment
-        .from(receipt.date, "en", "YYYY-MM-DD")
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = ("0"+(now.getMonth()+1)).slice(-2);
+  const a = ("0"+(now.getDate())).slice(-2);
+
+
+  const d = moment
+        .from(`${y}/${m}/${a}`, "en", "YYYY-MM-DD")
         .locale("fa")
-        .format("YYYY/MM/DD")
-    : "";
+        .format("YYYY/MM/DD");
 
   return (
     <Fragment>
@@ -104,21 +101,17 @@ const PrintModal = (props) => {
                     padding: "5px",
                   }}
                 >
-                  چاپ رسید
+                  چاپ
                 </button>
                 <img src={logo} width="100px"/>
               </td>
               <td>
                 <div className="header-title-comp">شرکت پخش استانی دارو، واکسن، سموم و مواد بیولوژیک کاوش نوین مهر فارمد</div>
-                <div className="header-title">رسید خروج کالا از انبار</div>
+                <div className="header-title">موجودی انبار</div>
               </td>
               <td>
                 <div className="">
-                  <div>
-                    شماره رسید: {receipt.periodCode}/{receipt.number}
-                  </div>
                   <div> تاریخ: {d}</div>
-                  <div> ساعت: {receipt.time}</div>
                 </div>
               </td>
             </tr>
@@ -132,50 +125,56 @@ const PrintModal = (props) => {
                     <td>#</td>
                     <td>کد یکتا</td>
                     <td>نام کالا</td>
-                    <td>مقدار</td>
+                    <td>تاریخ ورود</td>
+                    <td>محل انبارش</td>
+                    <td>تولید کننده</td>
+                    <td>بچ</td>
+                    <td>مشتری</td>
                     <td>واحد</td>
+                    <td>تاریخ تولید</td>
+                    <td>تاریخ انقضاء</td>
+                    <td>مقدار کل</td>
+                    <td>مقدار باقیمانده</td>
                   </thead>
                   <tbody>
                     {objs.map((item, index) => {
-                      if (item.amount == 0) return <Fragment></Fragment>;
-                      {
-                        row++;
-                      }
+                      const date = item.date
+                      ? moment
+                          .from(item.date, "en", "YYYY-MM-DD")
+                          .locale("fa")
+                          .format("YYYY/MM/DD")
+                      : "";
+                      const s = item.startDate
+                      ? moment
+                          .from(item.startDate, "en", "YYYY-MM-DD")
+                          .locale("fa")
+                          .format("YYYY/MM/DD")
+                      : "";
+                      const e = item.endDate
+                      ? moment
+                          .from(item.endDate, "en", "YYYY-MM-DD")
+                          .locale("fa")
+                          .format("YYYY/MM/DD")
+                      : "";
+
                       return (
                         <tr>
-                          <td>{row}</td>
+                          <td>{index+1}</td>
                           <td>{item.periodCode + "/" + item.number}</td>
                           <td>{item.object}</td>
-                          <td>{numberWithCommas(item.amount)}</td>
+                          <td>{date}</td>
+                          <td>{item.storage}</td>
+                          <td>{item.manufacturer}</td>
+                          <td>{item.batch}</td>
+                          <td>{item.client}</td>
                           <td>{item.mainUnit}</td>
+                          <td>{s}</td>
+                          <td>{e}</td>
+                          <td>{numberWithCommas(item.amount)}</td>
+                          <td>{numberWithCommas(item.remainAmount)}</td>
                         </tr>
                       );
                     })}
-                    <tr className="tbl-print-data-desc">
-                      <td colSpan={8}>
-                        گیرنده: {receipt.client}
-                        <br />
-                        آدرس: {receipt.address}
-                        <br />
-                        شماره های تماس: {receipt.phoneNumber}
-                      </td>
-                    </tr>
-                    <tr className="tbl-print-data-desc">
-                      <td colSpan={8}>
-                        کلیه اقلام فوق صحیح و سالم تحوبل راننده به نام و نام
-                        خانوادگی {receipt.driver} و خودرو به پلاک {receipt.lp} و
-                        بارنامه به شماره {receipt.cargo}
-                        گردید.
-                      </td>
-                    </tr>
-                    <tr className="tbl-print-data-signs">
-                      <td colSpan={4}>
-                        نام و امضاء راننده:
-                        <br /> <br />
-                        <br />
-                      </td>
-                      <td colSpan={4}>نام و امضاء مسئول انبار:</td>
-                    </tr>
                   </tbody>
                 </table>
               </td>
@@ -197,5 +196,5 @@ PrintModal.propTypes = {
 };
 
 export default withRouter(
-  connect(null, { getReceipt, getObjects })(PrintModal)
+  connect(null, { getAllStorageAvailability })(PrintModal)
 );

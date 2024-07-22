@@ -165,16 +165,16 @@ const menu = [
   //   icon: faPrint,
   //   path: "/requestsreport",
   // },
-  // {
-  //   id: 860,
-  //   text: "گزارش نمونه ها",
-  //   icon: faPrint,
-  //   path: "/samplesreport",
-  // },
-  // {
-  //   type: "sep",
-  //   container: [800, 850, 860],
-  // },
+  {
+    id: 120,
+    text: "گزارش موجودی انبار",
+    icon: faPrint,
+    path: "/storageavailability",
+  },
+  {
+    type: "sep",
+    container: [120],
+  },
 ];
 
 export default menu;

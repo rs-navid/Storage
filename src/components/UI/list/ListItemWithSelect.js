@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import { Button, Icon } from "semantic-ui-react";
 
 const ListItemWithSelect = (props) => {
+  var cls = `list-item d-flex align-items-center with-select ${props.className ?? ""}`;
   return (
-      <div className="list-item d-flex align-items-center with-select">
+      <div className={cls}>
         <div className="info">{props.children}</div>
         <div className="action align-left mt-2 pl-3">
           {props.title ? (<Button icon labelPosition="right" size="mini" onClick={props.onClick}>

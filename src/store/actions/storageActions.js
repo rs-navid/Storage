@@ -109,3 +109,29 @@ export const updateSubStorage = (storage) => {
     return true;
   };
 };
+
+export const getStorageAvailability = (query) => {
+  return async () => {
+    const results = await axios.post(`/storage/StorageAvailability`, {
+      ...query, ordertype: query.order === "asc" ? false : true,
+      number: !parseInt(query.number) ? 0 : parseInt(query.number)
+    });
+    if (results) {
+      return results.data;
+    }
+    return false;
+  };
+};
+
+export const getAllStorageAvailability = (query) => {
+  return async () => {
+    const results = await axios.post(`/storage/AllStorageAvailability`, {
+      ...query, ordertype: query.order === "asc" ? false : true,
+      number: !parseInt(query.number) ? 0 : parseInt(query.number)
+    });
+    if (results) {
+      return results.data;
+    }
+    return false;
+  };
+};

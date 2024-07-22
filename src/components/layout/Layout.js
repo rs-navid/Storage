@@ -25,13 +25,14 @@ const Objects = React.lazy(() => import("../screens/objects/Objects"));
 const Units = React.lazy(() => import("../screens/units/Units"));
 const PrintInput = React.lazy(() => import("../screens/reports/PrintInput"));
 const PrintOutput = React.lazy(() => import("../screens/reports/PrintOutput"));
+const PrintStorageAvailibility = React.lazy(() => import("../screens/reports/PrintStorageAvailibility"));
 const InputReceipt = React.lazy(() =>
   import("../screens/input-receipts/Receipts")
 );
 const OutputReceipt = React.lazy(() =>
   import("../screens/output-receipt/Receipts")
 );
-const Results = React.lazy(() => import("../screens/results/Results"));
+const StorageAvailability = React.lazy(() => import("../screens/storage-availibility/Storages"));
 const Results1 = React.lazy(() => import("../screens/results/Results"));
 const Results2 = React.lazy(() => import("../screens/results/Results"));
 const Results3 = React.lazy(() => import("../screens/results/Results"));
@@ -97,9 +98,10 @@ const Layout = (props) => {
               <Route exact path="/units" component={Units} />
               <Route exact path="/printinput" component={PrintInput} />
               <Route exact path="/printoutput" component={PrintOutput} />
+              <Route exact path="/printstorageavailibility" component={PrintStorageAvailibility} />
               <Route exact path="/receipts" component={InputReceipt} />
               <Route exact path="/outreceipts" component={OutputReceipt} />
-              <Route exact path="/microbilaresults" component={Results} />
+              <Route exact path="/storageavailability" component={StorageAvailability} />
               <Route exact path="/chemicalresults" component={Results1} />
               <Route exact path="/celluloseresults" component={Results2} />
               <Route exact path="/packingresults" component={Results3} />
